@@ -2,7 +2,7 @@
 $controller = $this->router->fetch_class();
 $action = $this->router->fetch_method();
 ?>
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
 	<meta charset="utf-8">
@@ -14,23 +14,24 @@ $action = $this->router->fetch_method();
 	<link rel="icon" href="<?php echo base_url('public/images/favicon.ico') ?>">
 
 	<title>Quản lí website bán hàng</title>
-	<!-- Bootstrap Styles-->
-	<link href="<?php echo base_url('public/dist/css/bootstrap.min.css') ?>" rel="stylesheet">
-<!--	<link href="assets/css/bootstrap.css" rel="stylesheet" />-->
-	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+
+	<!-- VENDOR CSS -->
+	<link rel="stylesheet" href="<?php echo base_url('public/dist/assets/vendor/bootstrap/css/bootstrap.min.css') ?>">
+	<link rel="stylesheet" href="<?php echo base_url('public/dist/assets/vendor/font-awesome/css/font-awesome.min.css') ?>">
+	<link rel="stylesheet" href="<?php echo base_url('public/dist/assets/vendor/linearicons/style.css') ?>">
+	<link rel="stylesheet" href="<?php echo base_url('public/dist/assets/vendor/chartist/css/chartist-custom.css') ?>">
+	<!-- MAIN CSS -->
+	<link rel="stylesheet" href="<?php echo base_url('public/dist/assets/css/main.css') ?>">
+	<!-- GOOGLE FONTS -->
+	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
+
+	<!--	 IE10 viewport hack for Surface/desktop Windows 8 bug-->
 	<link href="<?php echo base_url('public/assets/css/ie10-viewport-bug-workaround.css') ?>" rel="stylesheet">
 	<!-- FontAwesome Styles-->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<!--	<link href="assets/css/font-awesome.css" rel="stylesheet" />-->
-	<!-- Morris Chart Styles-->
-<!--	<link href="--><?php //echo base_url('public/dist/js/morris/morris-0.4.3.min.css') ?><!--" rel="stylesheet" />-->
 	<!-- Custom Styles-->
-	<link href="<?php echo base_url('public/dist/css/custom-styles.css') ?>" rel="stylesheet" />
 	<link href="<?php echo base_url('public/dist/css/customize.css') ?>" rel="stylesheet">
 	<script src="<?php echo base_url('public/dist/js/jquery-3.6.0.js') ?>"></script>
-	<!-- Google Fonts-->
-	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
-<!--	<link rel="stylesheet" href="assets/js/Lightweight-Chart/cssCharts.css">-->
 	<!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
 	<!--[if lt IE 9]>
 	<script src="<?php echo base_url('public/assets/js/ie8-responsive-file-warning.js') ?>"></script><![endif]-->
@@ -46,420 +47,211 @@ $action = $this->router->fetch_method();
 		}
 	</script>
 </head>
+
 <body>
+<!-- WRAPPER -->
 <div id="wrapper">
-	<nav class="navbar navbar-default top-navbar" role="navigation">
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
-				<span class="sr-only">Toggle navigation</span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-			</button>
-			<a class="navbar-brand" href="<?php echo base_url('admin') ?>"><strong>QUẢN LÍ WEBSITE</strong></a>
-			<div id="sideNav" href="">
-				<i class="fa fa-bars icon"></i>
+	<!-- NAVBAR -->
+	<nav class="navbar navbar-default navbar-fixed-top">
+		<div class="brand" style="width: 260px;">
+			<a href="<?php echo base_url('admin') ?>"><span style="font-size: 20px;">QUẢN LÍ WEBSITE</span></a>
+		</div>
+		<div class="container-fluid">
+			<div class="navbar-btn">
+				<button type="button" class="btn-toggle-fullwidth"><i class="lnr lnr-arrow-left-circle"></i></button>
+			</div>
+			<form class="navbar-form navbar-left">
+				<div class="input-group">
+					<input type="text" value="" class="form-control" placeholder="Nhập để tìm kiếm . . . . .">
+					<span class="input-group-btn"><button type="button" class="btn btn-primary">Tìm kiếm</button></span>
+				</div>
+			</form>
+			<div id="navbar-menu">
+				<ul class="nav navbar-nav navbar-right">
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle icon-menu" data-toggle="dropdown">
+							<i class="lnr lnr-alarm"></i>
+							<span class="badge bg-danger">5</span>
+						</a>
+						<ul class="dropdown-menu notifications">
+							<li><a href="#" class="notification-item"><span class="dot bg-warning"></span>System space is almost full</a></li>
+							<li><a href="#" class="notification-item"><span class="dot bg-danger"></span>You have 9 unfinished tasks</a></li>
+							<li><a href="#" class="notification-item"><span class="dot bg-success"></span>Monthly report is available</a></li>
+							<li><a href="#" class="notification-item"><span class="dot bg-warning"></span>Weekly meeting in 1 hour</a></li>
+							<li><a href="#" class="notification-item"><span class="dot bg-success"></span>Your request has been approved</a></li>
+							<li><a href="#" class="more">See all notifications</a></li>
+						</ul>
+					</li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="lnr lnr-question-circle"></i> <span>Help</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
+						<ul class="dropdown-menu">
+							<li><a href="#">Basic Use</a></li>
+							<li><a href="#">Working With Data</a></li>
+							<li><a href="#">Security</a></li>
+							<li><a href="#">Troubleshooting</a></li>
+						</ul>
+					</li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="<?php echo base_url('public/images/favicon.ico') ?>" class="img-circle" alt="Avatar">
+							<span>Samuel</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
+						<ul class="dropdown-menu">
+							<li><a href="#"><i class="lnr lnr-user"></i> <span>My Profile</span></a></li>
+							<li><a href="#"><i class="lnr lnr-envelope"></i> <span>Message</span></a></li>
+							<li><a href="#"><i class="lnr lnr-cog"></i> <span>Settings</span></a></li>
+							<li><a href="#"><i class="lnr lnr-exit"></i> <span>Logout</span></a></li>
+						</ul>
+					</li>
+				</ul>
 			</div>
 		</div>
-		<ul class="nav navbar-top-links navbar-right">
-			<li class="dropdown">
-				<a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
-					<i class="fa fa-envelope fa-fw"></i> <i class="fa fa-caret-down"></i>
-				</a>
-				<ul class="dropdown-menu dropdown-messages">
-					<li>
-						<a href="#">
-							<div>
-								<strong>John Doe</strong>
-								<span class="pull-right text-muted">
-                                        <em>Today</em>
-                                    </span>
-							</div>
-							<div>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s...</div>
-						</a>
-					</li>
-					<li class="divider"></li>
-					<li>
-						<a href="#">
-							<div>
-								<strong>John Smith</strong>
-								<span class="pull-right text-muted">
-                                        <em>Yesterday</em>
-                                    </span>
-							</div>
-							<div>Lorem Ipsum has been the industry's standard dummy text ever since an kwilnw...</div>
-						</a>
-					</li>
-					<li class="divider"></li>
-					<li>
-						<a href="#">
-							<div>
-								<strong>John Smith</strong>
-								<span class="pull-right text-muted">
-                                        <em>Yesterday</em>
-                                    </span>
-							</div>
-							<div>Lorem Ipsum has been the industry's standard dummy text ever since the...</div>
-						</a>
-					</li>
-					<li class="divider"></li>
-					<li>
-						<a class="text-center" href="#">
-							<strong>Read All Messages</strong>
-							<i class="fa fa-angle-right"></i>
-						</a>
-					</li>
-				</ul>
-				<!-- /.dropdown-messages -->
-			</li>
-			<!-- /.dropdown -->
-			<li class="dropdown">
-				<a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
-					<i class="fa fa-tasks fa-fw"></i> <i class="fa fa-caret-down"></i>
-				</a>
-				<ul class="dropdown-menu dropdown-tasks">
-					<li>
-						<a href="#">
-							<div>
-								<p>
-									<strong>Task 1</strong>
-									<span class="pull-right text-muted">60% Complete</span>
-								</p>
-								<div class="progress progress-striped active">
-									<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
-										<span class="sr-only">60% Complete (success)</span>
-									</div>
-								</div>
-							</div>
-						</a>
-					</li>
-					<li class="divider"></li>
-					<li>
-						<a href="#">
-							<div>
-								<p>
-									<strong>Task 2</strong>
-									<span class="pull-right text-muted">28% Complete</span>
-								</p>
-								<div class="progress progress-striped active">
-									<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="28" aria-valuemin="0" aria-valuemax="100" style="width: 28%">
-										<span class="sr-only">28% Complete</span>
-									</div>
-								</div>
-							</div>
-						</a>
-					</li>
-					<li class="divider"></li>
-					<li>
-						<a href="#">
-							<div>
-								<p>
-									<strong>Task 3</strong>
-									<span class="pull-right text-muted">60% Complete</span>
-								</p>
-								<div class="progress progress-striped active">
-									<div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
-										<span class="sr-only">60% Complete (warning)</span>
-									</div>
-								</div>
-							</div>
-						</a>
-					</li>
-					<li class="divider"></li>
-					<li>
-						<a href="#">
-							<div>
-								<p>
-									<strong>Task 4</strong>
-									<span class="pull-right text-muted">85% Complete</span>
-								</p>
-								<div class="progress progress-striped active">
-									<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" style="width: 85%">
-										<span class="sr-only">85% Complete (danger)</span>
-									</div>
-								</div>
-							</div>
-						</a>
-					</li>
-					<li class="divider"></li>
-					<li>
-						<a class="text-center" href="#">
-							<strong>See All Tasks</strong>
-							<i class="fa fa-angle-right"></i>
-						</a>
-					</li>
-				</ul>
-				<!-- /.dropdown-tasks -->
-			</li>
-			<!-- /.dropdown -->
-			<li class="dropdown">
-				<a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
-					<i class="fa fa-bell fa-fw"></i> <i class="fa fa-caret-down"></i>
-				</a>
-				<ul class="dropdown-menu dropdown-alerts">
-					<li>
-						<a href="#">
-							<div>
-								<i class="fa fa-comment fa-fw"></i> New Comment
-								<span class="pull-right text-muted small">4 min</span>
-							</div>
-						</a>
-					</li>
-					<li class="divider"></li>
-					<li>
-						<a href="#">
-							<div>
-								<i class="fa fa-twitter fa-fw"></i> 3 New Followers
-								<span class="pull-right text-muted small">12 min</span>
-							</div>
-						</a>
-					</li>
-					<li class="divider"></li>
-					<li>
-						<a href="#">
-							<div>
-								<i class="fa fa-envelope fa-fw"></i> Message Sent
-								<span class="pull-right text-muted small">4 min</span>
-							</div>
-						</a>
-					</li>
-					<li class="divider"></li>
-					<li>
-						<a href="#">
-							<div>
-								<i class="fa fa-tasks fa-fw"></i> New Task
-								<span class="pull-right text-muted small">4 min</span>
-							</div>
-						</a>
-					</li>
-					<li class="divider"></li>
-					<li>
-						<a href="#">
-							<div>
-								<i class="fa fa-upload fa-fw"></i> Server Rebooted
-								<span class="pull-right text-muted small">4 min</span>
-							</div>
-						</a>
-					</li>
-					<li class="divider"></li>
-					<li>
-						<a class="text-center" href="#">
-							<strong>See All Alerts</strong>
-							<i class="fa fa-angle-right"></i>
-						</a>
-					</li>
-				</ul>
-				<!-- /.dropdown-alerts -->
-			</li>
-			<!-- /.dropdown -->
-			<li class="dropdown">
-				<a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
-					<i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
-				</a>
-				<ul class="dropdown-menu dropdown-user">
-					<li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
-					</li>
-					<li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
-					</li>
-					<li class="divider"></li>
-					<li><a href="#"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-					</li>
-				</ul>
-				<!-- /.dropdown-user -->
-			</li>
-			<!-- /.dropdown -->
-		</ul>
 	</nav>
-	<!--/. NAV TOP  -->
-	<nav class="navbar-default navbar-side" role="navigation">
-		<div class="sidebar-collapse scrollbar">
-			<ul class="nav" id="main-menu">
-				<li>
-					<a class="<?php echo (($controller == 'home') ? 'active-menu' : '') ?>" href="<?php echo base_url('admin') ?>">
-						<i class="fa fa-home"></i>Trang chủ</a>
-				</li>
-				<li>
-					<a class="<?php echo (in_array($controller, array('')) ? 'active-menu' : '') ?>" href="#">
-						<i class="fa fa-th"></i>QL.Danh mục<span class="fa arrow"></span></a>
-					<ul class="nav nav-second-level">
-						<li>
-							<a href="#">Mục 1</a>
-						</li>
-						<li>
-							<a href="#">Mục 2</a>
-						</li>
-					</ul>
-				</li>
-				<li>
-					<a class="<?php echo (in_array($controller, array('')) ? 'active-menu' : '') ?>" href="#">
-						<i class="fa fa-dropbox"></i>QL.Sản phẩm<span class="fa arrow"></span></a>
-					<ul class="nav nav-second-level">
-						<li>
-							<a href="#">Mục 1</a>
-						</li>
-						<li>
-							<a href="#">Mục 2</a>
-						</li>
-					</ul>
-				</li>
-				<li>
-					<a class="<?php echo (in_array($controller, array('')) ? 'active-menu' : '') ?>" href="#">
-						<i class="fa fa-file-text"></i>QL.Đơn hàng<span class="fa arrow"></span></a>
-					<ul class="nav nav-second-level">
-						<li>
-							<a href="#">Mục 1</a>
-						</li>
-						<li>
-							<a href="#">Mục 2</a>
-						</li>
-					</ul>
-				</li>
-				<li>
-					<a class="<?php echo (in_array($controller, array('')) ? 'active-menu' : '') ?>" href="#">
-						<i class="fa fa-truck"></i>QL.Ship hàng<span class="fa arrow"></span></a>
-					<ul class="nav nav-second-level">
-						<li>
-							<a href="#">Mục 1</a>
-						</li>
-						<li>
-							<a href="#">Mục 2</a>
-						</li>
-					</ul>
-				</li>
-				<li>
-					<a class="<?php echo (in_array($controller, array('customer')) ? 'active-menu' : '') ?>" href="#">
-						<i class="fa fa-user"></i>QL.Khách hàng<span class="fa arrow"></span></a>
-					<ul class="nav nav-second-level">
-						<li>
-							<a class="active-2" href="<?php echo base_url('admin/customer/index') ?>">Danh sách khách hàng</a>
-						</li>
-						<li>
-							<a href="#">Mục 2</a>
-						</li>
-					</ul>
-				</li>
-				<li>
-					<a class="<?php echo (in_array($controller, array('')) ? 'active-menu' : '') ?>" href="#">
-						<i class="fa fa-files-o"></i>Thống kê<span class="fa arrow"></span></a>
-					<ul class="nav nav-second-level">
-						<li>
-							<a href="#">Mục 1</a>
-						</li>
-						<li>
-							<a href="#">Mục 2</a>
-						</li>
-					</ul>
-				</li>
-				<li>
-					<a class="<?php echo (in_array($controller, array('')) ? 'active-menu' : '') ?>" href="#">
-						<i class="fa fa-university"></i>QL.Kho hàng<span class="fa arrow"></span></a>
-					<ul class="nav nav-second-level">
-						<li>
-							<a href="#">Mục 1</a>
-						</li>
-						<li>
-							<a href="#">Mục 2</a>
-						</li>
-					</ul>
-				</li>
-				<li>
-					<a class="<?php echo (in_array($controller, array('')) ? 'active-menu' : '') ?>" href="#">
-						<i class="fa fa-percent"></i>QL.Giảm giá<span class="fa arrow"></span></a>
-					<ul class="nav nav-second-level">
-						<li>
-							<a href="#">Mục 1</a>
-						</li>
-						<li>
-							<a href="#">Mục 2</a>
-						</li>
-					</ul>
-				</li>
-				<li>
-					<a href="#"><i class="fa fa-sitemap"></i> Multi-Level Dropdown<span class="fa arrow"></span></a>
-					<ul class="nav nav-second-level">
-						<li>
-							<a href="#">Second Level Link</a>
-						</li>
-						<li>
-							<a href="#">Second Level Link<span class="fa arrow"></span></a>
-							<ul class="nav nav-third-level">
-								<li>
-									<a href="#">Third Level Link</a>
-								</li>
-								<li>
-									<a href="#">Third Level Link</a>
-								</li>
-								<li>
-									<a href="#">Third Level Link</a>
-								</li>
+	<!-- END NAVBAR -->
+	<!-- LEFT SIDEBAR -->
+	<div id="sidebar-nav" class="sidebar">
+		<div class="sidebar-scroll">
+			<nav>
+				<ul class="nav">
+					<li style="margin-top: 8px;">
+						<a href="<?php echo base_url('admin') ?>" class="<?php echo (($controller == 'home') ? 'active' : '') ?>">
+							<i class="fa fa-home"></i>Trang chủ
+						</a>
+					</li>
 
+					<li>
+						<a href="#category" data-toggle="collapse" class="collapsed <?php echo (in_array($controller, array('')) ? 'active' : '') ?>">
+							<i class="fa fa-th"></i>QL.Danh mục
+							<i class="icon-submenu lnr lnr-chevron-left"></i>
+						</a>
+						<div id="category" class="collapse">
+							<ul class="nav">
+								<li><a href="#" class="">Mục 1</a></li>
+								<li><a href="#" class="">Mục 2</a></li>
 							</ul>
-						</li>
-					</ul>
-				</li>
-<!--				<li>-->
-<!--					<a><i class="fa fa-home"></i>Trang chủ</a>-->
-<!--				</li>-->
-<!--				<li>-->
-<!--					<a><i class="fa fa-home"></i>Trang chủ</a>-->
-<!--				</li>-->
-<!--				<li>-->
-<!--					<a><i class="fa fa-home"></i>Trang chủ</a>-->
-<!--				</li>-->
-<!--				<li>-->
-<!--					<a><i class="fa fa-home"></i>Trang chủ</a>-->
-<!--				</li>-->
-<!--				<li>-->
-<!--					<a><i class="fa fa-home"></i>Trang chủ</a>-->
-<!--				</li>-->
-			</ul>
+						</div>
+					</li>
+
+					<li>
+						<a href="#product" data-toggle="collapse" class="collapsed <?php echo (in_array($controller, array('')) ? 'active' : '') ?>">
+							<i class="fa fa-dropbox"></i>QL.Sản phẩm
+							<i class="icon-submenu lnr lnr-chevron-left"></i>
+						</a>
+						<div id="product" class="collapse">
+							<ul class="nav">
+								<li><a href="#" class="">Mục 1</a></li>
+								<li><a href="#" class="">Mục 2</a></li>
+							</ul>
+						</div>
+					</li>
+
+					<li>
+						<a href="#order" data-toggle="collapse" class="collapsed <?php echo (in_array($controller, array('')) ? 'active' : '') ?>">
+							<i class="fa fa-file-text"></i>QL.Đơn hàng
+							<i class="icon-submenu lnr lnr-chevron-left"></i>
+						</a>
+						<div id="order" class="collapse">
+							<ul class="nav">
+								<li><a href="#" class="">Mục 1</a></li>
+								<li><a href="#" class="">Mục 2</a></li>
+							</ul>
+						</div>
+					</li>
+
+					<li>
+						<a href="#ship" data-toggle="collapse" class="collapsed <?php echo (in_array($controller, array('')) ? 'active' : '') ?>">
+							<i class="fa fa-truck"></i>QL.Ship hàng
+							<i class="icon-submenu lnr lnr-chevron-left"></i>
+						</a>
+						<div id="ship" class="collapse">
+							<ul class="nav">
+								<li><a href="#" class="">Mục 1</a></li>
+								<li><a href="#" class="">Mục 2</a></li>
+							</ul>
+						</div>
+					</li>
+
+					<li>
+						<a href="#customer" data-toggle="collapse" class="collapsed <?php echo (in_array($controller, array('customer')) ? 'active' : '') ?>">
+							<i class="fa fa-user"></i>QL.Khách hàng
+							<i class="icon-submenu lnr lnr-chevron-left"></i>
+						</a>
+						<div id="customer" class="collapse">
+							<ul class="nav">
+								<li><a href="<?php echo base_url('admin/customer/index') ?>" class="">Danh sách khách hàng</a></li>
+								<li><a href="#" class="">Mục 2</a></li>
+							</ul>
+						</div>
+					</li>
+
+					<li>
+						<a href="#statistic" data-toggle="collapse" class="collapsed <?php echo (in_array($controller, array('')) ? 'active' : '') ?>">
+							<i class="fa fa-files-o"></i>Thống kê
+							<i class="icon-submenu lnr lnr-chevron-left"></i>
+						</a>
+						<div id="statistic" class="collapse">
+							<ul class="nav">
+								<li><a href="#" class="">Mục 1</a></li>
+								<li><a href="#" class="">Mục 2</a></li>
+							</ul>
+						</div>
+					</li>
+
+					<li>
+						<a href="#storage" data-toggle="collapse" class="collapsed <?php echo (in_array($controller, array('')) ? 'active' : '') ?>">
+							<i class="fa fa-university"></i>QL.Kho hàng
+							<i class="icon-submenu lnr lnr-chevron-left"></i>
+						</a>
+						<div id="storage" class="collapse">
+							<ul class="nav">
+								<li><a href="#" class="">Mục 1</a></li>
+								<li><a href="#" class="">Mục 2</a></li>
+							</ul>
+						</div>
+					</li>
+
+					<li>
+						<a href="#discount" data-toggle="collapse" class="collapsed <?php echo (in_array($controller, array('')) ? 'active-menu' : '') ?>">
+							<i class="fa fa-percent"></i>QL.Giảm giá
+							<i class="icon-submenu lnr lnr-chevron-left"></i>
+						</a>
+						<div id="discount" class="collapse">
+							<ul class="nav">
+								<li><a href="#" class="">Mục 1</a></li>
+								<li><a href="#" class="">Mục 2</a></li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</nav>
 		</div>
-	</nav>
-	<!-- /. NAV SIDE  -->
-	<div id="page-wrapper" style="background-color: white;">
-		<div class="container" style="padding-bottom: 30px; padding-top: 30px;">
-			<?php (isset($load_page) && $load_page) ? $this->load->view($load_page) : ''; ?>
-			<footer>
-				<p>Thegioibanhang.com</p>
-			</footer>
-		</div>
-		<!-- /. PAGE WRAPPER  -->
 	</div>
-	<!-- /. WRAPPER  -->
-	<!-- JS Scripts-->
-	<!-- jQuery Js -->
-	<!-- Bootstrap core JavaScript
-    ================================================== -->
-	<!-- Placed at the end of the document so the pages load faster -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-	<script>window.jQuery || document.write('<script src="<?php echo base_url('public/assets/js/vendor/jquery.min.js') ?>"><\/script>')</script>
-	<script src="<?php echo base_url('public/dist/js/bootstrap.min.js') ?>"></script>
-	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-	<script src="<?php echo base_url('public/assets/js/ie10-viewport-bug-workaround.js') ?>"></script>
-<!--	<script src="assets/js/jquery-1.10.2.js"></script>-->
-	<!-- Bootstrap Js -->
-<!--	<script src="assets/js/bootstrap.min.js"></script>-->
-	<!-- Metis Menu Js -->
-	<script src="<?php echo base_url('public/dist/js/jquery.metisMenu.js') ?>"></script>
-	<!-- Morris Chart Js -->
-<!--	<script src="--><?php //echo base_url('public/dist/js/morris/raphael-2.1.0.min.js') ?><!--"></script>-->
-<!--	<script src="--><?php //echo base_url('public/dist/js/morris/morris.js') ?><!--"></script>-->
-<!--	<script src="assets/js/easypiechart.js"></script>-->
-<!--	<script src="assets/js/easypiechart-data.js"></script>-->
-<!--	<script src="assets/js/Lightweight-Chart/jquery.chart.js"></script>-->
-	<!-- Custom Js -->
-	<script src="<?php echo base_url('public/dist/js/custom-scripts.js') ?>"></script>
-	<!-- Chart Js -->
-<!--	<script type="text/javascript" src="assets/js/Chart.min.js"></script>-->
-<!--	<script type="text/javascript" src="assets/js/chartjs.js"></script>-->
+	<!-- END LEFT SIDEBAR -->
+	<!-- MAIN -->
+	<div class="main">
+		<!-- MAIN CONTENT -->
+		<div class="main-content">
+			<div class="container-fluid">
+				<div class="container" style="color: black; background-color: white">
+					<?php (isset($load_page) && $load_page) ? $this->load->view($load_page) : ''; ?>
+				</div>
+			</div>
+		</div>
+		<!-- END MAIN CONTENT -->
+	</div>
+	<!-- END MAIN -->
+	<div class="clearfix"></div>
+	<footer>
+		<div class="container-fluid">
+			<p class="copyright">&copy; 2017 <a href="https://www.themeineed.com" target="_blank">Theme I Need</a>. All Rights Reserved.</p>
+		</div>
+	</footer>
+</div>
+<!-- END WRAPPER -->
+<!-- Javascript -->
+<script src="<?php echo base_url('public/dist/assets/vendor/jquery/jquery.min.js') ?>"></script>
+<script src="<?php echo base_url('public/dist/assets/vendor/bootstrap/js/bootstrap.min.js') ?>"></script>
+<script src="<?php echo base_url('public/dist/assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js') ?>"></script>
+<script src="<?php echo base_url('public/dist/assets/vendor/jquery.easy-pie-chart/jquery.easypiechart.min.js') ?>"></script>
+<script src="<?php echo base_url('public/dist/assets/vendor/chartist/js/chartist.min.js') ?>"></script>
+<script src="<?php echo base_url('public/dist/assets/scripts/klorofil-common.js') ?>"></script>
 </body>
 </html>
-<style>
-	.scrollbar {
-		float: left;
-		height: 725px;
-		width: 260px;
-		overflow-y: scroll;
-		margin-top: -20px;
-	}
-</style>

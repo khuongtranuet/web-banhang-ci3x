@@ -2,7 +2,7 @@
 	<div class="col-lg-12">
 		<h3>Danh sách người dùng</h3>
 	</div>
-	<div class="col-lg-12 text-center mb-1" style="position: absolute; top: 20px; right: 0px">
+	<div class="col-lg-12 text-center mb-1" style="position: absolute; top: 50px; right: 0px">
 		<img src="<?php echo base_url('public/images/data-loading.gif') ?>" id="data-loading" style="display: none; width: 65px">
 	</div>
 	<div class="col-lg-12" style="margin-top: 20px;">
@@ -32,7 +32,7 @@
 				<a class="btn btn-primary" id="reset_search" style="margin-left: -15px;">Tải lại</a>
 			</div>
 			<!-- Thêm mới -->
-			<div class="col-lg-2" style="float: right; text-align: right">
+			<div class="col-lg-2" style="float: right; text-align: right;">
 				<a href="<?php echo base_url('admin/customer/add'); ?>">
 					<button class="btn btn-primary">Thêm mới</button>
 				</a>
