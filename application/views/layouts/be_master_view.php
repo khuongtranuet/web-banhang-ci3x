@@ -16,19 +16,21 @@ $action = $this->router->fetch_method();
 	<title>Quản lí website bán hàng</title>
 	<!-- Bootstrap Styles-->
 	<link href="<?php echo base_url('public/dist/css/bootstrap.min.css') ?>" rel="stylesheet">
-	<link href="assets/css/bootstrap.css" rel="stylesheet" />
+<!--	<link href="assets/css/bootstrap.css" rel="stylesheet" />-->
 	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 	<link href="<?php echo base_url('public/assets/css/ie10-viewport-bug-workaround.css') ?>" rel="stylesheet">
 	<!-- FontAwesome Styles-->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link href="assets/css/font-awesome.css" rel="stylesheet" />
+<!--	<link href="assets/css/font-awesome.css" rel="stylesheet" />-->
 	<!-- Morris Chart Styles-->
-	<link href="assets/js/morris/morris-0.4.3.min.css" rel="stylesheet" />
+<!--	<link href="--><?php //echo base_url('public/dist/js/morris/morris-0.4.3.min.css') ?><!--" rel="stylesheet" />-->
 	<!-- Custom Styles-->
 	<link href="<?php echo base_url('public/dist/css/custom-styles.css') ?>" rel="stylesheet" />
+	<link href="<?php echo base_url('public/dist/css/customize.css') ?>" rel="stylesheet">
+	<script src="<?php echo base_url('public/dist/js/jquery-3.6.0.js') ?>"></script>
 	<!-- Google Fonts-->
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
-	<link rel="stylesheet" href="assets/js/Lightweight-Chart/cssCharts.css">
+<!--	<link rel="stylesheet" href="assets/js/Lightweight-Chart/cssCharts.css">-->
 	<!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
 	<!--[if lt IE 9]>
 	<script src="<?php echo base_url('public/assets/js/ie8-responsive-file-warning.js') ?>"></script><![endif]-->
@@ -38,6 +40,11 @@ $action = $this->router->fetch_method();
 	<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 	<![endif]-->
+	<script>
+		window.ajax_url = {
+			'customer_list': '<?php echo base_url("admin/customer/ajax_list") ?>',
+		}
+	</script>
 </head>
 <body>
 <div id="wrapper">
@@ -265,7 +272,7 @@ $action = $this->router->fetch_method();
 	</nav>
 	<!--/. NAV TOP  -->
 	<nav class="navbar-default navbar-side" role="navigation">
-		<div class="sidebar-collapse">
+		<div class="sidebar-collapse scrollbar">
 			<ul class="nav" id="main-menu">
 				<li>
 					<a class="<?php echo (($controller == 'home') ? 'active-menu' : '') ?>" href="<?php echo base_url('admin') ?>">
@@ -320,11 +327,11 @@ $action = $this->router->fetch_method();
 					</ul>
 				</li>
 				<li>
-					<a class="<?php echo (in_array($controller, array('')) ? 'active-menu' : '') ?>" href="#">
+					<a class="<?php echo (in_array($controller, array('customer')) ? 'active-menu' : '') ?>" href="#">
 						<i class="fa fa-user"></i>QL.Khách hàng<span class="fa arrow"></span></a>
 					<ul class="nav nav-second-level">
 						<li>
-							<a href="#">Mục 1</a>
+							<a class="active-2" href="<?php echo base_url('admin/customer/index') ?>">Danh sách khách hàng</a>
 						</li>
 						<li>
 							<a href="#">Mục 2</a>
@@ -390,6 +397,21 @@ $action = $this->router->fetch_method();
 						</li>
 					</ul>
 				</li>
+<!--				<li>-->
+<!--					<a><i class="fa fa-home"></i>Trang chủ</a>-->
+<!--				</li>-->
+<!--				<li>-->
+<!--					<a><i class="fa fa-home"></i>Trang chủ</a>-->
+<!--				</li>-->
+<!--				<li>-->
+<!--					<a><i class="fa fa-home"></i>Trang chủ</a>-->
+<!--				</li>-->
+<!--				<li>-->
+<!--					<a><i class="fa fa-home"></i>Trang chủ</a>-->
+<!--				</li>-->
+<!--				<li>-->
+<!--					<a><i class="fa fa-home"></i>Trang chủ</a>-->
+<!--				</li>-->
 			</ul>
 		</div>
 	</nav>
@@ -414,21 +436,30 @@ $action = $this->router->fetch_method();
 	<script src="<?php echo base_url('public/dist/js/bootstrap.min.js') ?>"></script>
 	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 	<script src="<?php echo base_url('public/assets/js/ie10-viewport-bug-workaround.js') ?>"></script>
-	<script src="assets/js/jquery-1.10.2.js"></script>
+<!--	<script src="assets/js/jquery-1.10.2.js"></script>-->
 	<!-- Bootstrap Js -->
-	<script src="assets/js/bootstrap.min.js"></script>
+<!--	<script src="assets/js/bootstrap.min.js"></script>-->
 	<!-- Metis Menu Js -->
 	<script src="<?php echo base_url('public/dist/js/jquery.metisMenu.js') ?>"></script>
 	<!-- Morris Chart Js -->
-	<script src="assets/js/morris/raphael-2.1.0.min.js"></script>
-	<script src="assets/js/morris/morris.js"></script>
-	<script src="assets/js/easypiechart.js"></script>
-	<script src="assets/js/easypiechart-data.js"></script>
-	<script src="assets/js/Lightweight-Chart/jquery.chart.js"></script>
+<!--	<script src="--><?php //echo base_url('public/dist/js/morris/raphael-2.1.0.min.js') ?><!--"></script>-->
+<!--	<script src="--><?php //echo base_url('public/dist/js/morris/morris.js') ?><!--"></script>-->
+<!--	<script src="assets/js/easypiechart.js"></script>-->
+<!--	<script src="assets/js/easypiechart-data.js"></script>-->
+<!--	<script src="assets/js/Lightweight-Chart/jquery.chart.js"></script>-->
 	<!-- Custom Js -->
 	<script src="<?php echo base_url('public/dist/js/custom-scripts.js') ?>"></script>
 	<!-- Chart Js -->
-	<script type="text/javascript" src="assets/js/Chart.min.js"></script>
-	<script type="text/javascript" src="assets/js/chartjs.js"></script>
+<!--	<script type="text/javascript" src="assets/js/Chart.min.js"></script>-->
+<!--	<script type="text/javascript" src="assets/js/chartjs.js"></script>-->
 </body>
 </html>
+<style>
+	.scrollbar {
+		float: left;
+		height: 725px;
+		width: 260px;
+		overflow-y: scroll;
+		margin-top: -20px;
+	}
+</style>
