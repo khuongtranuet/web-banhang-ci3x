@@ -44,6 +44,10 @@ $action = $this->router->fetch_method();
 	<script>
 		window.ajax_url = {
 			'customer_list': '<?php echo base_url("admin/customer/ajax_list") ?>',
+			'repository_list': '<?php echo base_url("admin/repository/ajax_list") ?>',
+			'detail_repository_list': '<?php echo base_url("admin/repository/ajax_detail_list") ?>',
+			'district_list': '<?php echo base_url("admin/home/ajax_district") ?>',
+			'ward_list': '<?php echo base_url("admin/home/ajax_ward") ?>',
 		}
 	</script>
 </head>
@@ -177,7 +181,7 @@ $action = $this->router->fetch_method();
 						<div id="customer" class="collapse">
 							<ul class="nav">
 								<li><a href="<?php echo base_url('admin/customer/index') ?>" class="">Danh sách khách hàng</a></li>
-								<li><a href="#" class="">Mục 2</a></li>
+								<li><a href="<?php echo base_url('admin/customer/add') ?>" class="">Thêm mới khách hàng</a></li>
 							</ul>
 						</div>
 					</li>
@@ -202,8 +206,8 @@ $action = $this->router->fetch_method();
 						</a>
 						<div id="storage" class="collapse">
 							<ul class="nav">
-								<li><a href="#" class="">Mục 1</a></li>
-								<li><a href="#" class="">Mục 2</a></li>
+								<li><a href="<?php echo base_url('admin/repository/index') ?>" class="">Danh sách kho hàng</a></li>
+								<li><a href="<?php echo base_url('admin/repository/add') ?>" class="">Thêm mới kho hàng</a></li>
 							</ul>
 						</div>
 					</li>
