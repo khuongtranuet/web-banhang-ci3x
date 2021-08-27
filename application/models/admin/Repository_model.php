@@ -20,7 +20,7 @@ class Repository_model extends CI_Model
 	/**
 	 * Hàm lấy danh sách kho hàng
 	 */
-	public function repository_list($params, $is_count) {
+	public function repository_list($params, $is_count, $is_api = false) {
 		$page_index = isset($params['page_index']) ? $params['page_index'] : 1;
 		$page_size = isset($params['page_size']) ? $params['page_size'] : 10;
 		$from = isset($params['from']) ? $params['from'] : 0;
@@ -34,6 +34,9 @@ class Repository_model extends CI_Model
 		$this->db->join('districts', 'districts.id = repositories.district_id');
 		$this->db->join('wards', 'wards.id = repositories.ward_id');
 		$this->db->where(" repositories.id > 0");
+		if (isset($params['id'])) {
+			$this->db->where(" repositories.id = '".$params['id']."'");
+		}
 		if ($keyword) {
 			$this->db->where(" (repositories.name LIKE '%" . $keyword . "%' OR repositories.address LIKE '%" . $keyword . "%' 
 								OR repositories.mobile LIKE '%" . $keyword . "%') ");
@@ -43,7 +46,9 @@ class Repository_model extends CI_Model
 			return $this->db->count_all_results();
 		}
 		$this->db->order_by('repositories.id', 'desc');
-		$this->db->limit($page_size, $from);
+		if ($is_api) {
+			$this->db->limit($page_size, $from);
+		}
 		$query = $this->db->get();
 		return $query->result_array();
 	}
@@ -136,6 +141,8 @@ class Repository_model extends CI_Model
 		$keyword = isset($params['keyword']) ? $params['keyword'] : '';
 		$category = isset($params['category']) ? $params['category'] : -1;
 		$sort = isset($params['sort']) ? $params['sort'] : -1;
+		$brand = isset($params['brand']) ? $params['brand'] : -1;
+		$repository_id = isset($params['repository_id']) ? $params['repository_id'] : -1;
 		$this->db->select(' *, SUM(product_repository.quantity) AS total, products.name AS product_name, brands.name AS brand_name, categories.name AS category_name');
 		$this->db->from('product_repository');
 		$this->db->join('products', 'products.id = product_repository.product_id');
@@ -149,6 +156,12 @@ class Repository_model extends CI_Model
 		if (isset($category) && $category != -1) {
 			$this->db->where(" products.category_id = '". $category. "'");
 		}
+		if (isset($brand) && $brand != -1) {
+			$this->db->where(" products.brand_id = '". $brand. "'");
+		}
+		if (isset($repository_id) && $repository_id != -1) {
+			$this->db->where(" product_repository.repository_id = '". $repository_id. "'");
+		}
 		$this->db->group_by("product_repository.product_id");
 		if (isset($sort) && $sort != -1) {
 			if ($sort == '0') {
@@ -160,15 +173,125 @@ class Repository_model extends CI_Model
 		}else{
 			$this->db->order_by('product_repository.product_id', 'DESC');
 		}
-		$this->db->limit($page_size, $from);
-//		echo $category.'<br>';
-//		echo $sort.'<br>';
-//		echo $this->db->get_compiled_select();
+		$sql = $this->db->get_compiled_select();
 		if ($is_count) {
-			return $this->db->count_all_results();
+			$result = $this->db->query($sql)->result_array();
+			return count($result);
 		}
-		$query = $this->db->get();
+		$sql .= " LIMIT ".$from.", ".$page_size."";
+		$result = $this->db->query($sql);
+		return $result->result_array();
+	}
 
-		return $query->result_array();
+	/**
+	 * Hàm lấy thông tin kho hàng
+	 */
+	public function delete_repository($id) {
+		$this->db->where('repository_id', $id);
+		$result = $this->db->delete('product_repository');
+
+		$this->db->where('id', $id);
+		$result = $this->db->delete('repositories');
+		if (isset($result)) {
+			return '1';
+		}
+	}
+
+	/**
+	 * Hàm lấy thông tin nhập kho
+	 */
+	public function store_list($params, $is_count, $detail = null)
+	{
+		$page_index = isset($params['page_index']) ? $params['page_index'] : 1;
+		$page_size = isset($params['page_size']) ? $params['page_size'] : 10;
+		$from = isset($params['from']) ? $params['from'] : 0;
+		$keyword = isset($params['keyword']) ? $params['keyword'] : '';
+		$start_date = isset($params['start_date']) ? $params['start_date'] : '';
+		$end_date = isset($params['end_date']) ? $params['end_date'] : '';
+
+		$this->db->select(' *, repositories.name AS repository_name, products.name AS product_name, brands.name AS brand_name,
+			categories.name AS category_name, product_repository.id AS store_id');
+		$this->db->from('product_repository');
+		$this->db->join('products', 'products.id = product_repository.product_id');
+		$this->db->join('repositories', 'repositories.id = product_repository.repository_id');
+		$this->db->join('brands', 'brands.id = products.brand_id');
+		$this->db->join('categories', 'categories.id = products.category_id');
+		$this->db->where('product_repository.repository_id > 0');
+		if ($keyword) {
+			$this->db->where(" (repositories.name LIKE '%" . $keyword . "%') ");
+		}
+		if (isset($start_date) && $start_date) {
+			$this->db->where(" product_repository.import_date >= '" . $start_date . "'");
+		}
+		if (isset($end_date) && $end_date) {
+			$this->db->where(" product_repository.import_date <= '" . $end_date . "'");
+		}
+		if ($detail == null) {
+			$this->db->group_by(array("product_repository.repository_id", "product_repository.import_date"));
+			$this->db->order_by('product_repository.import_date', 'DESC');
+		}
+		if (isset($detail['repository_id'])) {
+			$this->db->where(" product_repository.repository_id = '".$detail['repository_id']."'");
+		}
+		if (isset($detail['import_date'])) {
+			$this->db->where(" product_repository.import_date = '".$detail['import_date']."'");
+		}
+		if (isset($params['id']) && $params['id']) {
+			$this->db->where(" product_repository.id = '".$params['id']."'");
+		}
+		$sql = $this->db->get_compiled_select();
+		if ($is_count) {
+			$result = $this->db->query($sql)->result_array();
+			return count($result);
+		}
+		if ($detail == null) {
+			$sql .= " LIMIT " . $from . ", " . $page_size . "";
+		}
+		$result = $this->db->query($sql);
+		return $result->result_array();
+	}
+
+	/**
+	 * Thêm thông tin nhập kho
+	 */
+	public function insert_store($data) {
+		$story = array();
+		if (isset($data['repository']) && $data['repository'] != null) {
+			$story['once']['repository_id'] = $data['repository'];
+		}
+		if (isset($data['import_date']) && $data['import_date'] != null) {
+			$story['once']['import_date'] = date("Y-m-d H:i:s", strtotime($data['import_date']));
+		}
+		if (isset($data['product']) && $data['product'] != null) {
+			$story['once']['product_id'] = $data['product'];
+		}
+		if (isset($data['import_quantity']) && $data['import_quantity'] != null) {
+			$story['once']['import_quantity'] = $data['import_quantity'];
+			$story['once']['quantity'] = $data['import_quantity'];
+		}
+		$story['once']['created_at'] = date('Y-m-d H:i:s');
+		$story['once']['updated_at'] = date('Y-m-d H:i:s');
+		$this->db->insert('product_repository', $story['once']);
+		if (isset($data['number_store'])) {
+			for ($i = 0; $i < $data['number_store']; $i++) {
+				if (isset($data['repository']) && $data['repository'] != null) {
+					$story[$i]['repository_id'] = $data['repository'];
+				}
+				if (isset($data['import_date']) && $data['import_date'] != null) {
+					$story[$i]['import_date'] = date("Y-m-d H:i:s", strtotime($data['import_date']));
+				}
+				if (isset($data['product'.$i.'']) && $data['product'.$i.''] != null) {
+					$story[$i]['product_id'] = $data['product'.$i.''];
+				}
+				if (isset($data['import_quantity'.$i.'']) && $data['import_quantity'.$i.''] != null) {
+					$story[$i]['import_quantity'] = $data['import_quantity'.$i.''];
+					$story[$i]['quantity'] = $data['import_quantity'.$i.''];
+				}
+				$story[$i]['created_at'] = date('Y-m-d H:i:s');
+				$story[$i]['updated_at'] = date('Y-m-d H:i:s');
+				$this->db->insert('product_repository', $story[$i]);
+			}
+		}
+		return '1';
 	}
 }

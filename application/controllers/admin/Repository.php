@@ -38,7 +38,7 @@ class Repository extends CI_Controller
 		$data['from'] = $params['from'] = ($params['page_index'] - 1) * $params['page_size'];
 		$total_record = $this->repository_model->repository_list($params, true);
 
-		$data['result_repository'] = $this->repository_model->repository_list($params, false);
+		$data['result_repository'] = $this->repository_model->repository_list($params, false, true);
 		$data['pagination_link'] = paginate_ajax($total_record, $params['page_index'], $params['page_size']);
 		$this->load->view('admin/repository/ajax_list_view', $data);
 	}
@@ -47,7 +47,8 @@ class Repository extends CI_Controller
 	 * Hàm thêm mới kho hàng
 	 * URL: /admin/repository/add
 	 */
-	public function add() {
+	public function add()
+	{
 		$this->form_validation->set_rules('name', 'Tên kho hàng', 'required',
 			array('required' => '<h5 style="color: red; height: 0px;">Trường này không được để trống!</h5>')
 		);
@@ -94,10 +95,11 @@ class Repository extends CI_Controller
 	 * Hàm chỉnh sửa thông tin kho hàng
 	 * URL: /admin/repository/edit/(id kho hàng)
 	 */
-	public function edit($id = null) {
+	public function edit($id = null)
+	{
 		if (!isset($id) || $id == NULL) {
 			redirect('admin/repository/index');
-		}else{
+		} else {
 			$data['id'] = $id;
 			$this->session->set_flashdata('id', $id);
 		}
@@ -131,14 +133,14 @@ class Repository extends CI_Controller
 				}
 				$province_id = $data['repository'][0]['province_id'];
 				$district_id = $data['repository'][0]['district_id'];
-				$data['district'] = $this->repository_model->select('*', 'districts', 'WHERE province_id = '.$province_id.'');
-				$data['ward'] = $this->repository_model->select('*', 'wards', 'WHERE district_id = '.$district_id.' AND province_id = '.$province_id.'');
-			}else{
+				$data['district'] = $this->repository_model->select('*', 'districts', 'WHERE province_id = ' . $province_id . '');
+				$data['ward'] = $this->repository_model->select('*', 'wards', 'WHERE district_id = ' . $district_id . ' AND province_id = ' . $province_id . '');
+			} else {
 				$this->session->set_flashdata('error', 'Kho hàng không tồn tại!');
 				redirect('admin/repository/index');
 			}
 			$this->load->view('layouts/be_master_view', $data);
-		}else{
+		} else {
 			$data['title'] = 'Chỉnh sửa kho hàng';
 			$data['load_page'] = 'admin/repository/edit_view';
 			if (is_numeric($id)) {
@@ -150,8 +152,8 @@ class Repository extends CI_Controller
 				}
 				$province_id = $data['repository'][0]['province_id'];
 				$district_id = $data['repository'][0]['district_id'];
-				$data['district'] = $this->repository_model->select('*', 'districts', 'WHERE province_id = '.$province_id.'');
-				$data['ward'] = $this->repository_model->select('*', 'wards', 'WHERE district_id = '.$district_id.' AND province_id = '.$province_id.'');
+				$data['district'] = $this->repository_model->select('*', 'districts', 'WHERE province_id = ' . $province_id . '');
+				$data['ward'] = $this->repository_model->select('*', 'wards', 'WHERE district_id = ' . $district_id . ' AND province_id = ' . $province_id . '');
 				if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
 					$repository = array();
 					foreach ($_POST as $key => $value) {
@@ -163,7 +165,7 @@ class Repository extends CI_Controller
 						redirect('admin/repository/index');
 					}
 				}
-			}else{
+			} else {
 				$this->session->set_flashdata('error', 'Kho hàng không tồn tại!');
 				redirect('admin/repository/index');
 			}
@@ -174,19 +176,20 @@ class Repository extends CI_Controller
 	/**
 	 * Hàm callback rule check số điện thoại tồn tại
 	 */
-	public function mobile_check($mobile) {
+	public function mobile_check($mobile)
+	{
 		$id = $this->session->flashdata('id');
-		$repository = $this->repository_model->select('*', 'repositories', 'WHERE id = '.$id.'');
+		$repository = $this->repository_model->select('*', 'repositories', 'WHERE id = ' . $id . '');
 		if (isset($repository) && count($repository) > 0) {
 			if ($repository[0]['mobile'] == $mobile) {
 				return TRUE;
 			}
 		}
-		$check = $this->repository_model->select('*', 'repositories', "WHERE mobile = '".$mobile."'");
-		if(isset($check) && count($check) > 0) {
+		$check = $this->repository_model->select('*', 'repositories', "WHERE mobile = '" . $mobile . "'");
+		if (isset($check) && count($check) > 0) {
 			$this->form_validation->set_message('mobile_check', '<h5 style="color: red; height: 0px;">Số điện thoại đã tồn tại!</h5>');
 			return FALSE;
-		}else{
+		} else {
 			return TRUE;
 		}
 	}
@@ -195,10 +198,11 @@ class Repository extends CI_Controller
 	 * Hiển thị thông tin chi tiết kho hàng
 	 * URL: /admin/repository/edit/(id kho hàng)
 	 */
-	public function detail($id = null) {
+	public function detail($id = null)
+	{
 		if (!isset($id) || $id == NULL) {
 			redirect('admin/repository/index');
-		}else{
+		} else {
 			$data['id'] = $id;
 		}
 		if (is_numeric($id)) {
@@ -210,7 +214,8 @@ class Repository extends CI_Controller
 			$data['title_page'] = 'Chi tiết kho hàng';
 			$data['load_page'] = 'admin/repository/detail_view';
 			$data['category'] = $this->repository_model->select(' *', ' categories', " WHERE parent_id = '0'");
-		}else{
+			$data['brand'] = $this->repository_model->select(' *', ' brands');
+		} else {
 			$this->session->set_flashdata('error', 'Kho hàng không tồn tại!');
 			redirect('admin/repository/index');
 		}
@@ -221,19 +226,296 @@ class Repository extends CI_Controller
 	 * Hàm lấy dữ liệu hàng trong kho theo ajax
 	 * URL: /admin/repository/ajax_detail_list
 	 */
-	public function ajax_detail_list() {
+	public function ajax_detail_list()
+	{
 		$params['keyword'] = $this->input->post('keyword');
 		$params['category'] = $this->input->post('category');
 		$params['sort'] = $this->input->post('sort');
+		$params['brand'] = $this->input->post('brand');
+		$params['repository_id'] = $this->input->post('repository_id');
 		$params['page_index'] = $this->input->post('page_index');
 		$params['page_size'] = 10;
 
-		if ($params['page_index'] < 1) { $params['page_index'] = 1; }
-		$data['from'] = $params['from'] = ($params['page_index'] - 1)* $params['page_size'];
+		if ($params['page_index'] < 1) {
+			$params['page_index'] = 1;
+		}
+		$data['from'] = $params['from'] = ($params['page_index'] - 1) * $params['page_size'];
 		$total_record = $this->repository_model->detail_repository_list($params, true);
-
 		$data['detail_repository'] = $this->repository_model->detail_repository_list($params, false);
 		$data['pagination_link'] = paginate_ajax($total_record, $params['page_index'], $params['page_size']);
-		$this->load->view('admin/customer/ajax_detail_view', $data);
+		$this->load->view('admin/repository/ajax_detail_view', $data);
+	}
+
+	/**
+	 * Hàm xóa thông tin kho hàng
+	 * URL: /admin/repository/delete/(id kho hàng)
+	 */
+	public function delete($id = null)
+	{
+		if (!isset($id) || $id == NULL) {
+			redirect('admin/repository/index');
+		} else {
+			$data['id'] = $id;
+		}
+		if (is_numeric($id)) {
+			$repository = $this->repository_model->select(' *', ' repositories', " WHERE id = '" . $id . "'");
+			if (count($repository) == 0) {
+				$this->session->set_flashdata('error', 'Kho hàng không tồn tại!');
+				redirect('admin/repository/index');
+			}
+			$delete = $this->repository_model->delete_repository($id);
+			if (isset($delete) && $delete) {
+				$this->session->set_flashdata('success', 'Xóa kho hàng thành công!');
+				redirect('admin/repository/index');
+			}
+		} else {
+			$this->session->set_flashdata('error', 'Kho hàng không tồn tại!');
+			redirect('admin/repository/index');
+		}
+	}
+
+	/**
+	 * Thông tin nhập kho
+	 * URL: /admin/repository/store/(id kho hàng)
+	 */
+	public function store()
+	{
+		$data['title_page'] = 'Nhập kho';
+		$data['load_page'] = 'admin/repository/store_list_view';
+		$this->load->view('layouts/be_master_view', $data);
+	}
+
+	/**
+	 * Hàm lấy dữ liệu nhập kho theo ajax
+	 * URL: /admin/repository/ajax_store_list
+	 */
+	public function ajax_store_list()
+	{
+		$params['keyword'] = $this->input->post('keyword');
+		$params['start_date'] = $this->input->post('start_date');
+		$params['end_date'] = $this->input->post('end_date');
+		$params['page_index'] = $this->input->post('page_index');
+		$params['page_size'] = 10;
+
+		if ($params['page_index'] < 1) {
+			$params['page_index'] = 1;
+		}
+		$data['from'] = $params['from'] = ($params['page_index'] - 1) * $params['page_size'];
+		$total_record = $this->repository_model->store_list($params, true);
+
+		$data['store'] = $this->repository_model->store_list($params, false);
+		$data['pagination_link'] = paginate_ajax($total_record, $params['page_index'], $params['page_size']);
+		$this->load->view('admin/repository/ajax_store_view', $data);
+	}
+
+	/**
+	 * Thêm thông tin nhập kho
+	 * URL: /admin/repository/add_store
+	 */
+	public function add_store()
+	{
+		$_SESSION['product_store'] = 0;
+		$this->form_validation->set_rules('repository', 'Kho hàng', 'greater_than[-1]',
+			array('greater_than' => '<h5 style="color: red; height: 0px;">Vui lòng chọn trường này!</h5>'));
+		$this->form_validation->set_rules('import_date', 'Ngày nhập', 'required',
+			array('required' => '<h5 style="color: red; height: 0px;">Trường này không được để trống!</h5>'));
+		$this->form_validation->set_rules('product[]', 'Sản phẩm', 'greater_than[-1]',
+			array('greater_than' => '<h5 style="color: red; height: 0px;">Vui lòng chọn trường này!</h5>'));
+		$this->form_validation->set_rules('import_quantity', 'Số lượng', 'required',
+			array('required' => '<h5 style="color: red; height: 0px;">Trường này không được để trống!</h5>'));
+		if ($this->form_validation->run() == FALSE) {
+			$data['title'] = 'Thêm mới nhập kho';
+			$data['load_page'] = 'admin/repository/add_store_view';
+			$data['repository'] = $this->repository_model->select(' *', ' repositories');
+			$data['product'] = $this->repository_model->select(' *', 'products');
+
+			$this->load->view('layouts/be_master_view', $data);
+		} else {
+			$data['title'] = 'Thêm mới nhập kho';
+			$data['load_page'] = 'admin/repository/add_store_view';
+			$data['repository'] = $this->repository_model->select(' *', ' repositories');
+			$data['product'] = $this->repository_model->select(' *', 'products');
+
+			$receipt = array();
+			foreach ($_POST as $key => $value) {
+				$receipt[$key] = htmlspecialchars($value);
+			}
+			if ($this->session->flashdata('number_store')) {
+				$receipt['number_store'] = $this->session->flashdata('number_store');
+			}
+			echo_pre($receipt);
+			$data['insert_store'] = $this->repository_model->insert_store($receipt);
+			if (isset($data['insert_store']) && $data['insert_store']) {
+				$this->session->set_flashdata('success', 'Đã thêm thông tin nhập kho!');
+				redirect('admin/repository/store');
+			}
+			$this->load->view('layouts/be_master_view', $data);
+		}
+	}
+
+	/**
+	 * Hàm thêm sản phẩm nhập kho theo ajax
+	 * URL: /admin/repository/ajax_product_store
+	 */
+	public function ajax_product_store()
+	{
+		$type = $this->input->post('type');
+		if ($type == 'plus') {
+			$_SESSION['product_store']++;
+			$type = 0;
+		} elseif ($type == 'minus' && $_SESSION['product_store'] > 0) {
+			$_SESSION['product_store']--;
+			$type = 0;
+		}
+		$data['type'] = $_SESSION['product_store'];
+		$this->session->set_flashdata('number_store', $data['type']);
+		$data['product'] = $this->repository_model->select(' *', 'products');
+		$this->load->view('admin/repository/ajax_product_view', $data);
+	}
+
+	/**
+	 * Chỉnh sửa thông tin nhập kho
+	 * URL: /admin/repository/edit_store/(id kho hàng)
+	 */
+	public function edit_store($id = null)
+	{
+		if (!isset($id) || $id == NULL) {
+			redirect('admin/repository/store');
+		} else {
+			$data['id'] = $id;
+		}
+		if (is_numeric($id)) {
+			$params['id'] = $id;
+			$data['store'] = $this->repository_model->store_list($params, false);
+			if (count($data['store']) == 0) {
+				$this->session->set_flashdata('error', 'Thông tin nhập kho không tồn tại!');
+				redirect('admin/repository/store');
+			}
+		} else {
+			$this->session->set_flashdata('error', 'Thông tin nhập kho không tồn tại!');
+			redirect('admin/repository/store');
+		}
+		$params['repository_id'] = $data['store'][0]['repository_id'];
+		$params['import_date'] = $data['store'][0]['import_date'];
+		$data['product_store'] = $this->repository_model->store_list('', false, $params);
+		$total_valid = count($data['product_store']);
+		$this->form_validation->set_rules('repository', 'Kho hàng', 'greater_than[-1]',
+			array('greater_than' => '<h5 style="color: red; height: 0px;">Vui lòng chọn trường này!</h5>'));
+		$this->form_validation->set_rules('import_date', 'Ngày nhập', 'required',
+			array('required' => '<h5 style="color: red; height: 0px;">Trường này không được để trống!</h5>'));
+		for ($i = 0; $i < $total_valid; $i++) {
+			$this->form_validation->set_rules('product' . $i . '', 'Sản phẩm', 'greater_than[-1]',
+				array('greater_than' => '<h5 style="color: red; height: 0px;">Vui lòng chọn trường này!</h5>'));
+			$this->form_validation->set_rules('import_quantity' . $i . '', 'Số lượng', 'required',
+				array('required' => '<h5 style="color: red; height: 0px;">Trường này không được để trống!</h5>'));
+		}
+		if ($this->form_validation->run() == FALSE) {
+			$data['title_page'] = 'Chỉnh sửa nhập kho';
+			$data['load_page'] = 'admin/repository/edit_store_view';
+			$data['repository'] = $this->repository_model->select(' *', ' repositories');
+			$data['product'] = $this->repository_model->select(' *', 'products');
+
+			$this->load->view('layouts/be_master_view', $data);
+		} else {
+			$data['title_page'] = 'Chỉnh sửa nhập kho';
+			$data['load_page'] = 'admin/repository/edit_store_view';
+			$data['repository'] = $this->repository_model->select(' *', ' repositories');
+			$data['product'] = $this->repository_model->select(' *', 'products');
+
+			$receipt = array();
+			foreach ($_POST as $key => $value) {
+				$receipt[$key] = htmlspecialchars($value);
+			}
+			if ($this->session->flashdata('number_store')) {
+				$receipt['number_store'] = $this->session->flashdata('number_store');
+			}
+			echo_pre($receipt);
+			$data['insert_store'] = $this->repository_model->insert_store($receipt);
+			if (isset($data['insert_store']) && $data['insert_store']) {
+				$this->session->set_flashdata('success', 'Đã thêm thông tin nhập kho!');
+				redirect('admin/repository/store');
+			}
+			$this->load->view('layouts/be_master_view', $data);
+		}
+	}
+
+	public function list_repository($id = null)
+	{
+		if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+			$params = [];
+			if (isset($_GET['page']) && isset($_GET['page_size'])) {
+				$data['page'] = $params['page_index'] = $_GET['page'];
+				$data['page_size'] = $params['page_size'] = $_GET['page_size'];
+				$params['from'] = ($params['page_index'] - 1) * $params['page_size'];
+			}
+			if (isset($_GET['keyword'])) {
+				$params['keyword'] = $_GET['keyword'];
+			}
+			if (isset($id)) {
+				$params['id'] = $id;
+				$data['result_repository'] = $this->repository_model->repository_list($params, false, true);
+			} else {
+				$data['result_repository'] = $this->repository_model->repository_list($params, false, true);
+				$data['total_rows'] = $this->repository_model->repository_list($params, true, true);
+			}
+
+			$this->load->view('admin/api/api_repository/list_repository', $data);
+		}
+
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+			$params['name'] = $this->input->post('name');
+			$params['mobile'] = $this->input->post('mobile');
+			$params['province'] = $this->input->post('province');
+			$params['district'] = $this->input->post('district');
+			$params['ward'] = $this->input->post('ward');
+			$params['address'] = $this->input->post('address');
+
+			if ($params['name'] == '') {
+				$error_exist['error_name'] = 'Không được để trống trường này!';
+			}
+			if ($params['mobile'] == '') {
+				$error_exist['error_mobile'] = 'Không được để trống trường này!';
+			}else{
+				$result_mobile = $this->repository_model->select('*', 'repositories', 'WHERE id= ' . $params['mobile'] . '');
+				if (count($result_mobile) > 0) {
+					$error_exist['error_mobile'] = 'Số điện thoại đã tồn tại, kho đã tồn tại!';
+				}
+			}
+			if ($params['province'] == '' || $params['province'] == '-1') {
+				$error_exist['error_province'] = 'Không được để trống trường này!';
+			}
+			if ($params['district'] == '' || $params['district'] == '-1') {
+				$error_exist['error_district'] = 'Không được để trống trường này!';
+			}
+			if ($params['ward'] == '' || $params['ward'] == '-1') {
+				$error_exist['error_ward'] = 'Không được để trống trường này!';
+			}
+			if ($params['address'] == '') {
+				$error_exist['error_address'] = 'Không được để trống trường này!';
+			}
+			if (isset($error_exist)) {
+				header('Access-Control-Allow-Origin: *');
+
+				echo json_encode([
+					'code' => 500,
+					'message' => 'Đã xảy ra lỗi!',
+					'error' => $error_exist,
+					'meta_data'=> null,
+				]);
+			} else {
+				header('Access-Control-Allow-Origin: *');
+				$data['insert_repository'] = $this->repository_model->insert_repository($params);
+				if (isset($data['insert_repository']) && $data['insert_repository']) {
+					header('Access-Control-Allow-Origin: *');
+					echo json_encode([
+						'code' => 201,
+						'message' => 'Thêm mới kho hàng thành công!',
+						'data' => $params,
+						'meta_data'=> null,
+					]);
+				}
+			}
+			die();
+		}
 	}
 }
