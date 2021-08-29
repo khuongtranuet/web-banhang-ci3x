@@ -319,7 +319,7 @@ class Repository extends CI_Controller
 			array('greater_than' => '<h5 style="color: red; height: 0px;">Vui lòng chọn trường này!</h5>'));
 		$this->form_validation->set_rules('import_date', 'Ngày nhập', 'required',
 			array('required' => '<h5 style="color: red; height: 0px;">Trường này không được để trống!</h5>'));
-		$this->form_validation->set_rules('product[]', 'Sản phẩm', 'greater_than[-1]',
+		$this->form_validation->set_rules('product', 'Sản phẩm', 'greater_than[-1]',
 			array('greater_than' => '<h5 style="color: red; height: 0px;">Vui lòng chọn trường này!</h5>'));
 		$this->form_validation->set_rules('import_quantity', 'Số lượng', 'required',
 			array('required' => '<h5 style="color: red; height: 0px;">Trường này không được để trống!</h5>'));
@@ -439,83 +439,4 @@ class Repository extends CI_Controller
 		}
 	}
 
-	public function list_repository($id = null)
-	{
-		if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-			$params = [];
-			if (isset($_GET['page']) && isset($_GET['page_size'])) {
-				$data['page'] = $params['page_index'] = $_GET['page'];
-				$data['page_size'] = $params['page_size'] = $_GET['page_size'];
-				$params['from'] = ($params['page_index'] - 1) * $params['page_size'];
-			}
-			if (isset($_GET['keyword'])) {
-				$params['keyword'] = $_GET['keyword'];
-			}
-			if (isset($id)) {
-				$params['id'] = $id;
-				$data['result_repository'] = $this->repository_model->repository_list($params, false, true);
-			} else {
-				$data['result_repository'] = $this->repository_model->repository_list($params, false, true);
-				$data['total_rows'] = $this->repository_model->repository_list($params, true, true);
-			}
-
-			$this->load->view('admin/api/api_repository/list_repository', $data);
-		}
-
-		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-			$params['name'] = $this->input->post('name');
-			$params['mobile'] = $this->input->post('mobile');
-			$params['province'] = $this->input->post('province');
-			$params['district'] = $this->input->post('district');
-			$params['ward'] = $this->input->post('ward');
-			$params['address'] = $this->input->post('address');
-
-			if ($params['name'] == '') {
-				$error_exist['error_name'] = 'Không được để trống trường này!';
-			}
-			if ($params['mobile'] == '') {
-				$error_exist['error_mobile'] = 'Không được để trống trường này!';
-			}else{
-				$result_mobile = $this->repository_model->select('*', 'repositories', 'WHERE id= ' . $params['mobile'] . '');
-				if (count($result_mobile) > 0) {
-					$error_exist['error_mobile'] = 'Số điện thoại đã tồn tại, kho đã tồn tại!';
-				}
-			}
-			if ($params['province'] == '' || $params['province'] == '-1') {
-				$error_exist['error_province'] = 'Không được để trống trường này!';
-			}
-			if ($params['district'] == '' || $params['district'] == '-1') {
-				$error_exist['error_district'] = 'Không được để trống trường này!';
-			}
-			if ($params['ward'] == '' || $params['ward'] == '-1') {
-				$error_exist['error_ward'] = 'Không được để trống trường này!';
-			}
-			if ($params['address'] == '') {
-				$error_exist['error_address'] = 'Không được để trống trường này!';
-			}
-			if (isset($error_exist)) {
-				header('Access-Control-Allow-Origin: *');
-
-				echo json_encode([
-					'code' => 500,
-					'message' => 'Đã xảy ra lỗi!',
-					'error' => $error_exist,
-					'meta_data'=> null,
-				]);
-			} else {
-				header('Access-Control-Allow-Origin: *');
-				$data['insert_repository'] = $this->repository_model->insert_repository($params);
-				if (isset($data['insert_repository']) && $data['insert_repository']) {
-					header('Access-Control-Allow-Origin: *');
-					echo json_encode([
-						'code' => 201,
-						'message' => 'Thêm mới kho hàng thành công!',
-						'data' => $params,
-						'meta_data'=> null,
-					]);
-				}
-			}
-			die();
-		}
-	}
 }

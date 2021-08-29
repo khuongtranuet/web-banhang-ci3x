@@ -45,7 +45,7 @@
 						<label class="control-label" for="product">Sản phẩm<span style="color: red;">(*)</span>:</label>
 					</div>
 					<div class="col-lg-8">
-						<select class="form-control selectpicker" data-live-search="true" data-size="15" name="product[]" id="product">
+						<select class="form-control selectpicker" data-live-search="true" data-size="15" name="product" id="product">
 							<option value="-1">- Sản phẩm -</option>
 							<?php if(isset($product) && $product):?>
 								<?php foreach ($product as $result_product):?>
@@ -54,7 +54,7 @@
 								<?php endforeach; ?>
 							<?php endif; ?>
 						</select>
-						<?php echo form_error('product[]'); ?>
+						<?php echo form_error('product'); ?>
 					</div>
 				</div>
 			</div>
@@ -64,7 +64,7 @@
 						<label class="control-label" for="import_quantity">Số lượng<span style="color: red;">(*)</span>:</label>
 					</div>
 					<div class="col-lg-8">
-						<input type="text" class="form-control" id="import_quantity" name="import_quantity[]" value="<?php echo set_value('import_quantity'); ?>">
+						<input type="text" class="form-control" id="import_quantity" name="import_quantity" value="<?php echo set_value('import_quantity'); ?>">
 						<?php echo form_error('import_quantity'); ?>
 					</div>
 				</div>
@@ -93,7 +93,7 @@
 			fieldHTML += '<label class="control-label" for="product">Sản phẩm<span style="color: red;">(*)</span>:</label>';
 			fieldHTML += '</div>';
 			fieldHTML += '<div class="col-lg-8">';
-			fieldHTML += '<select class="form-control" name="product[]" id="product">';
+			fieldHTML += '<select class="form-control" name="product" id="product">';
 			fieldHTML += '<option value="-1">- Sản phẩm -</option>';
 			fieldHTML += "<?php if(isset($product) && $product):?>";
 			fieldHTML += "<?php foreach ($product as $result_product):?>";
@@ -115,7 +115,7 @@
 			fieldHTML += '<label class="control-label" for="import_quantity">Số lượng<span style="color: red;">(*)</span>:</label>';
 			fieldHTML += '</div>';
 			fieldHTML += '<div class="col-lg-8">';
-			fieldHTML += '<input type="text" class="form-control" id="import_quantity" name="import_quantity[]" value="<?php echo set_value('import_quantity'); ?>">';
+			fieldHTML += '<input type="text" class="form-control" id="import_quantity" name="import_quantity" value="<?php echo set_value('import_quantity'); ?>">';
 			fieldHTML += '<?php echo form_error('import_quantity'); ?>';
 			fieldHTML += '</div>';
 			fieldHTML += '</div>';

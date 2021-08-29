@@ -54,17 +54,17 @@ $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
 //API
-$route['admin/repository'] = 'admin/repository/list_repository';
-$route['admin/repository/(:num)'] = 'admin/repository/list_repository/$1';
-$route['admin/province'] = 'admin/home/ajax_provinces';
-$route['admin/district'] = 'admin/home/ajax_district';
-$route['admin/ward'] = 'admin/home/ajax_ward';
-
-$route['admin/repository/index'] = 'api/repository/index';
-$route['admin/repository/index/(:num)'] = 'api/repository/index/$1';
-
-$route['admin/customer/index'] = 'api/customer/index';
-$route['admin/customer/index/(:num)'] = 'api/customer/index/$1';
-
-$route['admin/customer/register'] = 'api/customer/register';
-$route['admin/customer/login'] = 'api/customer/login';
+//$route['admin/repository'] = 'admin/repository/list_repository';
+//$route['admin/repository/(:num)'] = 'admin/repository/list_repository/$1';
+//$route['admin/province'] = 'admin/home/ajax_provinces';
+//$route['admin/district'] = 'admin/home/ajax_district';
+//$route['admin/ward'] = 'admin/home/ajax_ward';
+//
+//$route['admin/repository/index'] = 'api/repository/index';
+//$route['admin/repository/index/(:num)'] = 'api/repository/index/$1';
+//
+//$route['admin/customer/index'] = 'api/customer/index';
+//$route['admin/customer/index/(:num)'] = 'api/customer/index/$1';
+//
+//$route['admin/customer/register'] = 'api/customer/register';
+//$route['admin/customer/login'] = 'api/customer/login';

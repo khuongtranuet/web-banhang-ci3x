@@ -164,7 +164,7 @@ class Customer extends RestController
 						$token = JWT::encode($payload, $key);
 						header('Access-Control-Allow-Origin: *');
 						header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
-						header('Access-Control-Allow-Headers: Content-Type, X-Auth-Token, Origin, Authorization');
+//						header('Access-Control-Allow-Headers: Content-Type, X-Auth-Token, Origin, Authorization');
 						$this->response([
 							'code' => 200,
 							'message' => 'Đăng nhập thành công!',
@@ -175,7 +175,7 @@ class Customer extends RestController
 					}else{
 						header('Access-Control-Allow-Origin: *');
 						header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
-						header('Access-Control-Allow-Headers: Content-Type, X-Auth-Token, Origin, Authorization');
+//						header('Access-Control-Allow-Headers: Content-Type, X-Auth-Token, Origin, Authorization');
 						$this->response([
 							'code' => 400,
 							'message' => 'Đăng nhập thất bại!',
@@ -184,7 +184,7 @@ class Customer extends RestController
 				} else {
 					header('Access-Control-Allow-Origin: *');
 					header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
-					header('Access-Control-Allow-Headers: Content-Type, X-Auth-Token, Origin, Authorization');
+//					header('Access-Control-Allow-Headers: Content-Type, X-Auth-Token, Origin, Authorization');
 					$this->response([
 						'code' => 400,
 						'message' => 'Đăng nhập thất bại!',
@@ -195,51 +195,65 @@ class Customer extends RestController
 	}
 
 	public function register_post() {
-		if (isset($_POST)) {
-			$customer = array();
-			foreach ($_POST as $key => $value) {
-				if($_POST[$key] == '') {
-					$error_exist[$key] = 'Trường này không được để trống!';
+		if (isset($_POST) && $_POST) {
+			if(isset($_POST['fullname']) && isset($_POST['mobile']) && isset($_POST['email']) && isset($_POST['password']) &&
+				isset($_POST['confirmPassword'])) {
+				$customer = array();
+				foreach ($_POST as $key => $value) {
+					if ($_POST[$key] == '') {
+						$error_exist[$key] = 'Trường này không được để trống!';
+					}
+					if ($_POST[$key] !== '' && $key == 'mobile') {
+						$result_mobile = $this->customer_model->select('*', 'customers', 'WHERE mobile= ' . $_POST['mobile'] . '');
+						if (count($result_mobile) > 0) {
+							$error_exist['mobile'] = 'Số điện thoại đã tồn tại, khách hàng đã tồn tại!';
+						}
+					}
+					if ($_POST[$key] !== '' && $key == 'email') {
+						$result_email = $this->customer_model->select('*', 'customers', 'WHERE email= "' . $_POST['email'] . '"');
+						if (count($result_email) > 0) {
+							$error_exist['email'] = 'Email đã tồn tại, khách hàng đã tồn tại!';
+						}
+					}
+					$customer[$key] = htmlspecialchars($value);
 				}
-				if($_POST[$key] !== '' && $key == 'mobile') {
-					$result_mobile = $this->customer_model->select('*', 'customers', 'WHERE mobile= ' . $_POST['mobile'] . '');
-					if (count($result_mobile) > 0) {
-						$error_exist['mobile'] = 'Số điện thoại đã tồn tại, khách hàng đã tồn tại!';
+				if (isset($customer['password']) && isset($customer['confirmPassword'])) {
+					if ($customer['password'] !== $customer['confirmPassword']) {
+						$error_exist['confirm_password'] = 'Mật khẩu không khớp!';
 					}
 				}
-				if($_POST[$key] !== '' && $key == 'email') {
-					$result_email = $this->customer_model->select('*', 'customers', 'WHERE email= "'. $_POST['email'] .'"');
-					if (count($result_email) > 0) {
-						$error_exist['email'] = 'Email đã tồn tại, khách hàng đã tồn tại!';
+				if (isset($error_exist)) {
+					header('Access-Control-Allow-Origin: *');
+					$this->response([
+						'code' => 200,
+						'message' => 'Đã xảy ra lỗi!',
+						'error' => $error_exist,
+					], 200);
+				} else {
+					header('Access-Control-Allow-Origin: *');
+					if (isset($customer['password'])) {
+						$customer['password'] = password_hash($customer['password'], PASSWORD_DEFAULT);
+					}
+					$data['insert_customer'] = $this->customer_model->register_customer($customer);
+					if (isset($data['insert_customer']) && $data['insert_customer']) {
+						header('Access-Control-Allow-Origin: *');
+						$this->response([
+							'code' => 201,
+							'message' => 'Đăng ký thành công!',
+							'data' => null,
+							'meta_data' => null,
+						], 201);
 					}
 				}
-				$customer[$key] = htmlspecialchars($value);
-			}
-			if($customer['password'] != $customer['confirm_password']) {
-				$error_exist['confirm_password'] = 'Mật khẩu không khớp!';
-			}
-			if (isset($error_exist)) {
+				die();
+			}else{
 				header('Access-Control-Allow-Origin: *');
 				$this->response([
 					'code' => 200,
 					'message' => 'Đã xảy ra lỗi!',
-					'error' => $error_exist,
+					'error' => 'Thiếu thông tin cần thiết',
 				], 200);
-			}else{
-				header('Access-Control-Allow-Origin: *');
-				$customer['password'] = password_hash($customer['password'], PASSWORD_DEFAULT);
-				$data['insert_customer'] = $this->customer_model->register_customer($customer);
-				if (isset($data['insert_customer']) && $data['insert_customer']) {
-					header('Access-Control-Allow-Origin: *');
-					$this->response([
-						'code' => 201,
-						'message' => 'Đăng ký thành công!',
-						'data' => null,
-						'meta_data' => null,
-					], 201);
-				}
 			}
-			die();
 		}
 	}
 }
