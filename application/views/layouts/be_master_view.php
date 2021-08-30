@@ -44,6 +44,8 @@ $action = $this->router->fetch_method();
 	<script>
 		window.ajax_url = {
 			'customer_list': '<?php echo base_url("admin/customer/ajax_list") ?>',
+			'category_list': '<?php echo base_url("admin/category/ajax_list") ?>',
+			'product_list' : '<?php echo base_url("admin/product/ajax_list")?>'
 		}
 	</script>
 </head>
@@ -124,8 +126,8 @@ $action = $this->router->fetch_method();
 						</a>
 						<div id="category" class="collapse">
 							<ul class="nav">
-								<li><a href="#" class="">Mục 1</a></li>
-								<li><a href="#" class="">Mục 2</a></li>
+								<li><a href=<?php echo base_url('admin/category/index') ?>>Danh sách các danh mục</a></li>
+								<li><a href=<?php echo base_url('admin/category/add') ?>>Thêm danh mục</a></li>
 							</ul>
 						</div>
 					</li>
@@ -137,8 +139,8 @@ $action = $this->router->fetch_method();
 						</a>
 						<div id="product" class="collapse">
 							<ul class="nav">
-								<li><a href="#" class="">Mục 1</a></li>
-								<li><a href="#" class="">Mục 2</a></li>
+								<li><a href="<?php echo base_url('admin/product/index') ?>" class="">Danh sách sản phẩm</a></li>
+								<li><a href="<?php echo base_url('admin/product/add') ?>" class="">Thêm sản phẩm</a></li>
 							</ul>
 						</div>
 					</li>
