@@ -32,6 +32,7 @@ $action = $this->router->fetch_method();
 	<!-- Custom Styles-->
 	<link href="<?php echo base_url('public/dist/css/customize.css') ?>" rel="stylesheet">
 	<script src="<?php echo base_url('public/dist/js/jquery-3.6.0.js') ?>"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
 	<!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
 	<!--[if lt IE 9]>
 	<script src="<?php echo base_url('public/assets/js/ie8-responsive-file-warning.js') ?>"></script><![endif]-->
@@ -48,6 +49,8 @@ $action = $this->router->fetch_method();
 			'detail_repository_list': '<?php echo base_url("admin/repository/ajax_detail_list") ?>',
 			'district_list': '<?php echo base_url("admin/home/ajax_district") ?>',
 			'ward_list': '<?php echo base_url("admin/home/ajax_ward") ?>',
+			'store_list': '<?php echo base_url("admin/repository/ajax_store_list") ?>',
+			'product_store': '<?php echo base_url("admin/repository/ajax_product_store") ?>',
 		}
 	</script>
 </head>
@@ -87,7 +90,7 @@ $action = $this->router->fetch_method();
 						</ul>
 					</li>
 					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="lnr lnr-question-circle"></i> <span>Help</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="lnr lnr-question-circle"></i> <span>Trợ giúp</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
 						<ul class="dropdown-menu">
 							<li><a href="#">Basic Use</a></li>
 							<li><a href="#">Working With Data</a></li>
@@ -97,7 +100,7 @@ $action = $this->router->fetch_method();
 					</li>
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="<?php echo base_url('public/images/favicon.ico') ?>" class="img-circle" alt="Avatar">
-							<span>Samuel</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
+							<span>ADMIN</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
 						<ul class="dropdown-menu">
 							<li><a href="#"><i class="lnr lnr-user"></i> <span>My Profile</span></a></li>
 							<li><a href="#"><i class="lnr lnr-envelope"></i> <span>Message</span></a></li>
@@ -208,6 +211,7 @@ $action = $this->router->fetch_method();
 							<ul class="nav">
 								<li><a href="<?php echo base_url('admin/repository/index') ?>" class="">Danh sách kho hàng</a></li>
 								<li><a href="<?php echo base_url('admin/repository/add') ?>" class="">Thêm mới kho hàng</a></li>
+								<li><a href="<?php echo base_url('admin/repository/store') ?>" class="">Nhập kho</a></li>
 							</ul>
 						</div>
 					</li>
@@ -255,7 +259,11 @@ $action = $this->router->fetch_method();
 <script src="<?php echo base_url('public/dist/assets/vendor/bootstrap/js/bootstrap.min.js') ?>"></script>
 <script src="<?php echo base_url('public/dist/assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js') ?>"></script>
 <script src="<?php echo base_url('public/dist/assets/vendor/jquery.easy-pie-chart/jquery.easypiechart.min.js') ?>"></script>
-<script src="<?php echo base_url('public/dist/assets/vendor/chartist/js/chartist.min.js') ?>"></script>
+<!--<script src="--><?php //echo base_url('public/dist/assets/vendor/chartist/js/chartist.min.js') ?><!--"></script>-->
 <script src="<?php echo base_url('public/dist/assets/scripts/klorofil-common.js') ?>"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>-->
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.js"></script>
 </body>
 </html>

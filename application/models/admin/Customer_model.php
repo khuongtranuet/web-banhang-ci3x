@@ -63,7 +63,7 @@ class Customer_model extends CI_Model
 		$this->db->join('districts', 'districts.id = addresses.district_id');
 		$this->db->join('wards', 'wards.id = addresses.ward_id');
 		$this->db->join('customers', 'customers.id = addresses.customer_id');
-		$this->db->where('addresses.customer_id = '.$id.'');
+		$this->db->where('customers.id = '.$id.'');
 		if($status_address == true) {
 			$this->db->where("addresses.status = '1'");
 		}
@@ -104,7 +104,8 @@ class Customer_model extends CI_Model
 		}
 		$customer['created_at'] = date('Y-m-d H:i:s');
 		$customer['updated_at'] = date('Y-m-d H:i:s');
-
+		$this->db->insert('customers', $customer);
+		$customer_id = $this->db->insert_id();
 		if (isset($data['province']) && $data['province'] != null) {
 			$address['province_id'] = $data['province'];
 		}
@@ -125,9 +126,6 @@ class Customer_model extends CI_Model
 		}
 		$address['created_at'] = date('Y-m-d H:i:s');
 		$address['updated_at'] = date('Y-m-d H:i:s');
-
-		$this->db->insert('customers', $customer);
-		$customer_id = $this->db->insert_id();
 		$address['customer_id'] = $customer_id;
 		$this->db->insert('addresses', $address);
 		return '1';

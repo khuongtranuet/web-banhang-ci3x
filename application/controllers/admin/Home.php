@@ -20,15 +20,28 @@ class Home extends CI_Controller
 		$data['load_page'] = 'admin/home/index_view';
 		$this->load->view('layouts/be_master_view', $data);
 	}
-
+	/**
+	 * Hàm lấy dữ liệu tỉnh/TP
+	 * URL: /admin/home/province
+	 */
+	public function ajax_provinces() {
+		$data['province'] = $this->home_model->select('*', 'provinces');
+		$this->load->view('admin/home/provinces', $data);
+	}
 	/**
 	 * Hàm lấy dữ liệu quận/huyện từ tỉnh theo ajax
 	 * URL: /admin/home/ajax_district
 	 */
 	public function ajax_district() {
-		$param['province_id'] = $this->input->post('id_address');
-		$data['district'] = $this->home_model->select('*', 'districts', 'WHERE province_id = '.$param['province_id'].'');
-		$this->load->view('admin/ajax/ajax_address_view', $data);
+//		if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+//			if (isset($_GET['province_id']))  {
+//				$param['province_id'] = $_GET['province_id'];
+//			}
+			$param['province_id'] = $this->input->post('id_address');
+			$data['district'] = $this->home_model->select('*', 'districts', 'WHERE province_id = ' . $param['province_id'] . '');
+			$this->load->view('admin/ajax/ajax_address_view', $data);
+//			$this->load->view('admin/home/districts', $data);
+//		}
 	}
 
 	/**
@@ -36,8 +49,14 @@ class Home extends CI_Controller
 	 * URL: /admin/home/ajax_ward
 	 */
 	public function ajax_ward() {
-		$param['district_id'] = $this->input->post('id_address');
-		$data['ward'] = $this->home_model->select('*', 'wards', 'WHERE district_id = '.$param['district_id'].'');
-		$this->load->view('admin/ajax/ajax_address_view', $data);
+//		if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+//			if (isset($_GET['district_id'])) {
+//				$param['district_id'] = $_GET['district_id'];
+//			}
+			$param['district_id'] = $this->input->post('id_address');
+			$data['ward'] = $this->home_model->select('*', 'wards', 'WHERE district_id = ' . $param['district_id'] . '');
+			$this->load->view('admin/ajax/ajax_address_view', $data);
+//			$this->load->view('admin/home/wards', $data);
+//		}
 	}
 }
