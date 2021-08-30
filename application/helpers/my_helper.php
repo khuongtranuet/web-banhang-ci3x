@@ -2,26 +2,6 @@
 //require_once('barcode-generator/barcode-generator-master/CodeItNow/BarcodeBundle/Utils/QrCode.php');
 //use CodeItNow\BarcodeBundle\Utils\QrCode;
 
-if ( ! function_exists('get_zone_name_by_code')) {
-	function get_zone_name_by_code($code){
-		$zone_name = null;
-		if ($code) {
-			switch ($code){
-				case 'MB-TBB': $zone_name = 'Miền Bắc - Tây Bắc Bộ'; break;
-				case 'MB-DBB': $zone_name = 'Miền Bắc - Đông Bắc Bộ'; break;
-				case 'MB-DBSH': $zone_name = 'Miền Bắc - Đồng Bằng Sông Hồng'; break;
-				case 'MT-BTB': $zone_name = 'Miền Trung - Bắc Trung Bộ'; break;
-				case 'MT-NTB': $zone_name = 'Miền Trung - Nam Trung Bộ'; break;
-				case 'MT-TN': $zone_name = 'Miền Trung - Tây Nguyên'; break;
-				case 'MN-DNB': $zone_name = 'Miền Nam - Đông Nam Bộ'; break;
-				case 'MN-TNB': $zone_name = 'Miền Nam - Tây Nam Bộ'; break;
-				default: $zone_name = '?';
-			}
-		}
-		return $zone_name;
-	}
-}
-
 if ( ! function_exists('paginate_ajax')) {
 	function paginate_ajax($total_record, $page_index = 1, $page_size = 2, $onclick = 'changePage')
 	{
@@ -198,4 +178,13 @@ function randomString($length) {
 		$str .= $chars[rand(0,$size - 1)];
 	}
 	return $str;
+}
+
+function isFormValidated($errors)
+{
+	if(count($errors) > 0) {
+		return false;
+	} else {
+		return true;
+	}
 }

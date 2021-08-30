@@ -85,6 +85,13 @@ defined('EXIT__AUTO_MIN')      OR define('EXIT__AUTO_MIN', 9); // lowest automat
 defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
 
 define('TBL_CUSTOMERS', 'customers');
+define('TBL_CATEGORIES', 'categories');
+define('TBL_PRODUCTS', 'products');
+define('TBL_BRANDS', 'brands');
+define('TBL_ATTRIBUTES', 'attributes');
+define('TBL_PRODUCT_ATTRIBUTE', 'product_attribute');
+define('TBL_PRODUCT_IMAGES', 'product_images');
 define('TBL_REPOSITORIES', 'repositories');
 
 date_default_timezone_set('Asia/Ho_Chi_Minh');
+
