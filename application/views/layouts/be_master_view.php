@@ -46,7 +46,7 @@ $action = $this->router->fetch_method();
 		window.ajax_url = {
 			'customer_list': '<?php echo base_url("admin/customer/ajax_list") ?>',
 			'category_list': '<?php echo base_url("admin/category/ajax_list") ?>',
-			'product_list' : '<?php echo base_url("admin/product/ajax_list")?>'
+			'product_list' : '<?php echo base_url("admin/product/ajax_list")?>',
 			'repository_list': '<?php echo base_url("admin/repository/ajax_list") ?>',
 			'detail_repository_list': '<?php echo base_url("admin/repository/ajax_detail_list") ?>',
 			'district_list': '<?php echo base_url("admin/home/ajax_district") ?>',

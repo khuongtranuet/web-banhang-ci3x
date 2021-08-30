@@ -37,6 +37,7 @@ class Home extends CI_Controller
 //			if (isset($_GET['province_id']))  {
 //				$param['province_id'] = $_GET['province_id'];
 //			}
+		echo $this->input->post('id_address');
 			$param['province_id'] = $this->input->post('id_address');
 			$data['district'] = $this->home_model->select('*', 'districts', 'WHERE province_id = ' . $param['province_id'] . '');
 			$this->load->view('admin/ajax/ajax_address_view', $data);

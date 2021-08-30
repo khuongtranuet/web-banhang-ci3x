@@ -31,11 +31,9 @@ class Customer extends CI_Controller
 		$params['status'] = $this->input->post('status');
 		$params['page_index'] = $this->input->post('page_index');
 		$params['page_size'] = 10;
-
 		if ($params['page_index'] < 1) { $params['page_index'] = 1; }
 		$data['from'] = $params['from'] = ($params['page_index'] - 1)* $params['page_size'];
 		$total_record = $this->customer_model->customer_list($params, true);
-
 		$data['result_customer'] = $this->customer_model->customer_list($params, false);
 		$data['pagination_link'] = paginate_ajax($total_record, $params['page_index'], $params['page_size']);
 		$this->load->view('admin/customer/ajax_list_view', $data);
