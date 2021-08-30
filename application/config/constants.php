@@ -91,3 +91,7 @@ define('TBL_BRANDS', 'brands');
 define('TBL_ATTRIBUTES', 'attributes');
 define('TBL_PRODUCT_ATTRIBUTE', 'product_attribute');
 define('TBL_PRODUCT_IMAGES', 'product_images');
+define('TBL_REPOSITORIES', 'repositories');
+
+date_default_timezone_set('Asia/Ho_Chi_Minh');
+

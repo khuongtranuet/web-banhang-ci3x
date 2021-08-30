@@ -1,4 +1,4 @@
-<table class="table table-bordered" id="tableuser">
+<table class="table table-bordered" id="tablecustomer">
 	<thead>
 	<tr>
 		<th class="text-center">STT</th>
@@ -47,7 +47,7 @@
 	<?php endif; ?>
 	</tbody>
 </table>
-<div class="text-center">
+<div class="text-center" style="margin-bottom: 20px;">
 	<?php echo $pagination_link; ?>
 </div>
 <?php die(); ?>
