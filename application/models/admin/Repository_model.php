@@ -273,7 +273,7 @@ class Repository_model extends CI_Model
 		$story['once']['updated_at'] = date('Y-m-d H:i:s');
 		$this->db->insert('product_repository', $story['once']);
 		if (isset($data['number_store'])) {
-			for ($i = 0; $i < $data['number_store']; $i++) {
+			for ($i = 1; $i < $data['number_store']; $i++) {
 				if (isset($data['repository']) && $data['repository'] != null) {
 					$story[$i]['repository_id'] = $data['repository'];
 				}

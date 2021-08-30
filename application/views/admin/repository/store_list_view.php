@@ -87,9 +87,6 @@
 
 		function callAjax(page_index, url_ajax) {
 			$('#data-loading').show();
-			console.log($('#keyword').val());
-			console.log($('#start_date').val());
-			console.log($('#end_date').val());
 			var keyword = $('#keyword').val();
 			var start_date = $('#start_date').val();
 			var end_date = $('#end_date').val();

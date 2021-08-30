@@ -10,7 +10,7 @@
 						<div class="col-lg-5">
 							<input type="checkbox" id="allproduct" name="allproduct" value="-1"
 								   style="margin-top:3px; padding-top:3px">
-							<span> Tất cả (0 sản phẩm)</span>
+							<span> Tất cả (1 sản phẩm)</span>
 						</div>
 						<div class="col-lg-2">
 							<span>Đơn giá</span>
@@ -41,7 +41,7 @@
 								</div>
 								<div class="col-lg-7" style="margin-left:-30px; width:(100% + 30px);">
 									<div class="row">
-										<strong>Điện thoại Iphone 12 128GB</strong>
+										<strong>Điện thoại Iphone 12 64GB</strong>
 									</div>
 									<div class="row">
 										<a href="#">Màu: Đen <span class="caret"></span></a>
@@ -50,7 +50,7 @@
 							</div>
 						</div>
 						<div class="col-lg-2">
-							<strong>25.000.000đ</strong>
+							<strong>22.990.000đ</strong>
 						</div>
 						<div class="col-lg-2">
 							<button class="quatity-cart">-</button>
@@ -58,7 +58,7 @@
 							<button class="quatity-cart">+</button>
 						</div>
 						<div class="col-lg-2">
-							<strong style=" color:#ff424e;">25.000.000đ</strong>
+							<strong style=" color:#ff424e;">22.990.000đ</strong>
 						</div>
 						<div class="col-lg-1">
 							<a href="#">
@@ -101,7 +101,7 @@
 					<div class="row product-v2-heading">
 						<div class="col-lg-12">
 							<span>Tạm tính</span>
-							<span class="position-right">25.000.000đ</span>
+							<span class="position-right">22.990.000đ</span>
 						</div>
 						<div class="col-lg-12">
 							<span>Giảm giá</span>
@@ -118,7 +118,7 @@
 						</div>
 						<div class="col-lg-12">
 							<span>Tổng cộng</span>
-							<strong class="position-right" style="color:#ff424e;">25.000.000đ</strong>
+							<strong class="position-right" style="color:#ff424e;">22.990.000đ</strong>
 						</div>
 					</div>
 				</div>

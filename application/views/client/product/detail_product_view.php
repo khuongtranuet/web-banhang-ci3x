@@ -14,7 +14,7 @@
 	<div class="col-lg-12">
 		<div class="row">
 			<div class="col-lg-6">
-				<h4 style="display: inline-block">Điện thoại Iphone 12 64Gb</h4>
+				<h4 style="display: inline-block">Điện thoại Iphone 12 64GB</h4>
 				<div class="detail-rate" style="display: inline-block">
 					<p>
 						<i class="fa fa-star"></i>
@@ -44,10 +44,12 @@
 					<!-- Wrapper for slides -->
 					<div class="carousel-inner" role="listbox">
 						<div class="item active">
-							<img src="<?php echo base_url('public/images/header/iphone-12-slider.jpg') ?>" alt="Chania" width="460" height="345">
+							<img src="<?php echo base_url('public/images/header/iphone-12-slider.jpg') ?>" alt="Chania"
+								 width="460" height="345">
 						</div>
 						<div class="item">
-							<img src="<?php echo base_url('public/images/header/iphone-12-slider2.jpg') ?>" alt="Chania" width="460" height="345">
+							<img src="<?php echo base_url('public/images/header/iphone-12-slider2.jpg') ?>" alt="Chania"
+								 width="460" height="345">
 						</div>
 					</div>
 					<!-- Left and right controls -->
@@ -60,6 +62,7 @@
 						<span class="sr-only">Next</span>
 					</a>
 				</div>
+				<h4>Mô tả sản phẩm</h4>
 			</div>
 			<div class="col-lg-5">
 				<div class="row">
@@ -68,14 +71,79 @@
 						<a class="btn">128GB</a>
 						<a class="btn">256GB</a>
 					</div>
-					<div class="col-lg-12">Giá bán</div>
+					<div class="col-lg-12">Giá sản phẩm</div>
 					<div class="col-lg-12"><h4>22.990.000₫</h4></div>
 					<div class="col-lg-12"><strong class="stock_product">CÒN HÀNG</strong></div>
 					<div class="col-lg-12">
 						<p style="height:1px; background-color: #cccccc;"></p>
 					</div>
 					<div class="col-lg-12">
-						<button type="submit" class="btn btn-buy">MUA HÀNG</button>
+						<button type="submit" class="btn btn-buy">MUA NGAY</button>
+					</div>
+					<div class="col-lg-12">
+						<button type="submit" class="btn btn-add">THÊM VÀO GIỎ HÀNG</button>
+					</div>
+					<div class="col-lg-12">
+						<p class="p-center">Gọi đặt mua <a>1800.0000</a> (7h30 - 22h)</p>
+					</div>
+					<div class="col-lg-12">
+						<h4>Cấu hình Điện thoại iPhone 12 64GB</h4>
+					</div>
+					<div class="col-lg-12">
+						<div class="col-lg-4">
+							<p>Màn hình:</p>
+						</div>
+						<div class="col-lg-8">
+							<p>OLED, 6.1", Super Retina XDR</p>
+						</div>
+						<div class="col-lg-4">
+							<p>Hệ điều hành:</p>
+						</div>
+						<div class="col-lg-8">
+							<p>iOS 14</p>
+						</div>
+						<div class="col-lg-4">
+							<p>Camera sau:</p>
+						</div>
+						<div class="col-lg-8">
+							<p>2 camera 12 MP</p>
+						</div>
+						<div class="col-lg-4">
+							<p>Camera trước:</p>
+						</div>
+						<div class="col-lg-8">
+							<p>12 MP</p>
+						</div>
+						<div class="col-lg-4">
+							<p>Chip:</p>
+						</div>
+						<div class="col-lg-8">
+							<p>Apple A14 Bionic</p>
+						</div>
+						<div class="col-lg-4">
+							<p>RAM:</p>
+						</div>
+						<div class="col-lg-8">
+							<p>4 GB</p>
+						</div>
+						<div class="col-lg-4">
+							<p>Bộ nhớ trong:</p>
+						</div>
+						<div class="col-lg-8">
+							<p>64 GB</p>
+						</div>
+						<div class="col-lg-4">
+							<p>SIM:</p>
+						</div>
+						<div class="col-lg-8">
+							<p>1 Nano SIM & 1 eSIMHỗ trợ 5G</p>
+						</div>
+						<div class="col-lg-4">
+							<p>Pin, Sạc:</p>
+						</div>
+						<div class="col-lg-8">
+							<p>2815 mAh20 W</p>
+						</div>
 					</div>
 				</div>
 			</div>

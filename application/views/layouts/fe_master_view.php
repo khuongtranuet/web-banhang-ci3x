@@ -121,7 +121,7 @@ $action = $this->router->fetch_method();
 							<div class="dropdown-toggle btn row" data-toggle="dropdown" role="button"
 								 aria-haspopup="true"
 								 aria-expanded="false"
-								 style="color: white;margin-top: 0px;display: flex;margin-left: 15px;">
+								 style="color: white;margin-top: 0px;display: flex;margin-left: -30px;">
 								<div class="col-lg-3">
 									<i class="fa fa-user-circle-o list_i"></i>
 								</div>
@@ -148,11 +148,13 @@ $action = $this->router->fetch_method();
 										<a href="<?php echo base_url('client/home/register') ?>">Tạo tài khoản</a>
 									</li>
 								<?php endif; ?>
+								<?php if (isset($_SESSION['login'])): ?>
 								<li role="separator" class="divider"></li>
 								<li>
 									<a href="<?php echo base_url('client/home/logout') ?>"
 									   onclick="confirm('Bạn có chắc chắn muốn thoát không?')">Thoát</a>
 								</li>
+								<?php endif; ?>
 							</ul>
 						</div>
 					</div>
@@ -170,7 +172,7 @@ $action = $this->router->fetch_method();
 <script src="<?php echo base_url('public/dist/assets/vendor/bootstrap/js/bootstrap.min.js') ?>"></script>
 <script src="<?php echo base_url('public/dist/assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js') ?>"></script>
 <script src="<?php echo base_url('public/dist/assets/vendor/jquery.easy-pie-chart/jquery.easypiechart.min.js') ?>"></script>
-<script src="<?php echo base_url('public/dist/assets/vendor/chartist/js/chartist.min.js') ?>"></script>
+<!--<script src="--><?php //echo base_url('public/dist/assets/vendor/chartist/js/chartist.min.js') ?><!--"></script>-->
 <script src="<?php echo base_url('public/dist/assets/scripts/klorofil-common.js') ?>"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>

@@ -7,11 +7,11 @@ class Product extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->model(array(
-			'admin/home_model'
+			'client/product_model'
 		));
 	}
 
-	public function detail() {
+	public function detail($id = null) {
 		$data['title_page'] = 'Sản phẩm';
 		$data['load_page'] = 'client/product/detail_product_view';
 		$this->load->view('layouts/fe_master_view', $data);

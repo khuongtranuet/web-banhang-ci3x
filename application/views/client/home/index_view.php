@@ -56,18 +56,32 @@
 	</div>
 	<div class="col-lg-12">
 		<h3 style="font-weight: 600;display: inline-block;">ĐIỆN THOẠI NỔI BẬT NHẤT</h3>
-		<a class="position-right all_product"><h3 style="font-size: 15px;">Xem tất cả <b>100</b> điện thoại</h3></a>
+		<a class="position-right all_product"><h3 style="font-size: 15px;">Xem tất cả điện thoại</h3></a>
 	</div>
 	<div class="col-lg-12">
 		<div class="listproduct">
+			<?php if (isset($product_list) && $product_list): ?>
+			<?php foreach ($product_list as $result_phone): ?>
 			<div class="item">
-				<a>
+				<a href="<?php echo base_url('client/product/detail/'.$result_phone['id'])?>">
 					<div class="item-label"></div>
 					<div class="item-img">
-						<img class="img-product" src="<?php echo base_url('public/images/header/iphone-12-den-200x200.jpg') ?>"
+						<img class="img-product" src="<?php echo base_url('uploads/product_image/'.$result_phone['path'].'') ?>"
 							 style="width: 197px;height: auto">
-						<h3>Samsung GalaxyZ Fold3 256Gb</h3>
-						<strong class="price">16.990.000₫</strong>
+						<h3><?php echo $result_phone['name']; ?></h3>
+						<?php $str_reverse = strrev($result_phone['price']);
+						$total_trim = ceil(strlen($result_phone['price'])/3);
+						$str_final = '';
+						for($i=0; $i < $total_trim; $i++) {
+							$str_trim = substr($str_reverse, ($i)*3, 3);
+							if($i < $total_trim - 1) {
+								$str_final .= $str_trim . '.';
+							}else{
+								$str_final .= $str_trim;
+							}
+						}
+						$result_phone['price'] = strrev($str_final); ?>
+						<strong class="price"><?php echo $result_phone['price']; ?>₫</strong>
 						<p class="item-gift">Quà <b>400.000₫</b></p>
 						<div class="item-rating">
 							<p>
@@ -82,97 +96,58 @@
 					</div>
 				</a>
 			</div>
-			<div class="item">
-				<a>
-					<div class="item-label"></div>
-					<div class="item-img">
-						<img class="img-product" src="<?php echo base_url('public/images/header/iphone-12-den-200x200.jpg') ?>"
-							 style="width: 197px;height: auto">
-						<h3>Samsung GalaxyZ Fold3 256Gb</h3>
-						<strong class="price">16.990.000₫</strong>
-						<p class="item-gift">Quà <b>400.000₫</b></p>
-						<div class="item-rating">
-							<p>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star-o"></i>
-							</p>
-							<p class="item-rating-total">134</p>
-						</div>
-					</div>
-				</a>
-			</div>
-			<div class="item">
-				<a>
-					<div class="item-label"></div>
-					<div class="item-img">
-						<img class="img-product" src="<?php echo base_url('public/images/header/iphone-12-den-200x200.jpg') ?>"
-							 style="width: 197px;height: auto">
-						<h3>Samsung GalaxyZ Fold3 256Gb</h3>
-						<strong class="price">16.990.000₫</strong>
-						<p class="item-gift">Quà <b>400.000₫</b></p>
-						<div class="item-rating">
-							<p>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star-o"></i>
-							</p>
-							<p class="item-rating-total">134</p>
-						</div>
-					</div>
-				</a>
-			</div>
-			<div class="item">
-				<a>
-					<div class="item-label"></div>
-					<div class="item-img">
-						<img class="img-product" src="<?php echo base_url('public/images/header/iphone-12-den-200x200.jpg') ?>"
-							 style="width: 197px;height: auto">
-						<h3>Samsung GalaxyZ Fold3 256Gb</h3>
-						<strong class="price">16.990.000₫</strong>
-						<p class="item-gift">Quà <b>400.000₫</b></p>
-						<div class="item-rating">
-							<p>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star-o"></i>
-							</p>
-							<p class="item-rating-total">134</p>
-						</div>
-					</div>
-				</a>
-			</div>
-			<div class="item">
-				<a>
-					<div class="item-label"></div>
-					<div class="item-img">
-						<img class="img-product" src="<?php echo base_url('public/images/header/iphone-12-den-200x200.jpg') ?>"
-							 style="width: 197px;height: auto">
-						<h3>Samsung GalaxyZ Fold3 256Gb</h3>
-						<strong class="price">16.990.000₫</strong>
-						<p class="item-gift">Quà <b>400.000₫</b></p>
-						<div class="item-rating">
-							<p>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star-o"></i>
-							</p>
-							<p class="item-rating-total">134</p>
-						</div>
-					</div>
-				</a>
-			</div>
+			<?php endforeach; ?>
+			<?php endif; ?>
 		</div>
 	</div>
 	<div class="col-lg-12">
-		<h3 style="font-weight: 600">LAPTOP, TABLE NỔI BẬT NHẤT</h3>
+		<h3 style="font-weight: 600;display: inline-block;">LAPTOP, TABLE NỔI BẬT NHẤT</h3>
+		<a class="position-right all_product"><h3 style="font-size: 15px;">Xem tất cả laptop, table</h3></a>
+	</div>
+	<div class="col-lg-12">
+		<div class="listproduct">
+			<?php if (isset($laptop_list) && $laptop_list): ?>
+				<?php foreach ($laptop_list as $result_laptop): ?>
+					<div class="item">
+						<a href="<?php echo base_url('client/product/detail/'.$result_laptop['id'])?> ">
+							<div class="item-label"></div>
+							<div class="item-img">
+								<img class="img-product" src="<?php echo base_url('uploads/product_image/'.$result_laptop['path'].'') ?>"
+									 style="width: 197px;height: auto">
+								<h3><?php echo $result_laptop['name']; ?></h3>
+								<?php $str_reverse = strrev($result_laptop['price']);
+								$total_trim = ceil(strlen($result_laptop['price'])/3);
+								$str_final = '';
+								for($i=0; $i < $total_trim; $i++) {
+									$str_trim = substr($str_reverse, ($i)*3, 3);
+									if($i < $total_trim - 1) {
+										$str_final .= $str_trim . '.';
+									}else{
+										$str_final .= $str_trim;
+									}
+								}
+								$result_laptop['price'] = strrev($str_final); ?>
+								<strong class="price"><?php echo $result_laptop['price']; ?>₫</strong>
+								<p class="item-gift">Quà <b>400.000₫</b></p>
+								<div class="item-rating">
+									<p>
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star-o"></i>
+									</p>
+									<p class="item-rating-total">134</p>
+								</div>
+							</div>
+						</a>
+					</div>
+				<?php endforeach; ?>
+			<?php endif; ?>
+		</div>
+	</div>
+	<div class="col-lg-12">
+		<h3 style="font-weight: 600;display: inline-block;">PHỤ KIỆN NỔI BẬT NHẤT</h3>
+		<a class="position-right all_product"><h3 style="font-size: 15px;">Xem tất cả phụ kiện</h3></a>
 	</div>
 </div>

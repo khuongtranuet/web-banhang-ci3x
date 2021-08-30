@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 class Repository extends CI_Controller
 {
@@ -319,31 +319,28 @@ class Repository extends CI_Controller
 			array('greater_than' => '<h5 style="color: red; height: 0px;">Vui lòng chọn trường này!</h5>'));
 		$this->form_validation->set_rules('import_date', 'Ngày nhập', 'required',
 			array('required' => '<h5 style="color: red; height: 0px;">Trường này không được để trống!</h5>'));
-		$this->form_validation->set_rules('product', 'Sản phẩm', 'greater_than[-1]',
-			array('greater_than' => '<h5 style="color: red; height: 0px;">Vui lòng chọn trường này!</h5>'));
-		$this->form_validation->set_rules('import_quantity', 'Số lượng', 'required',
-			array('required' => '<h5 style="color: red; height: 0px;">Trường này không được để trống!</h5>'));
+//		$this->form_validation->set_rules('product', 'Sản phẩm', 'greater_than[-1]',
+//			array('greater_than' => '<h5 style="color: red; height: 0px;">Vui lòng chọn trường này!</h5>'));
+//		$this->form_validation->set_rules('import_quantity', 'Số lượng', 'required',
+//			array('required' => '<h5 style="color: red; height: 0px;">Trường này không được để trống!</h5>'));
 		if ($this->form_validation->run() == FALSE) {
 			$data['title'] = 'Thêm mới nhập kho';
 			$data['load_page'] = 'admin/repository/add_store_view';
 			$data['repository'] = $this->repository_model->select(' *', ' repositories');
-			$data['product'] = $this->repository_model->select(' *', 'products');
+			$data['product'] = $this->repository_model->select(' *', 'products', ' ORDER BY products.name ASC');
 
 			$this->load->view('layouts/be_master_view', $data);
 		} else {
 			$data['title'] = 'Thêm mới nhập kho';
 			$data['load_page'] = 'admin/repository/add_store_view';
 			$data['repository'] = $this->repository_model->select(' *', ' repositories');
-			$data['product'] = $this->repository_model->select(' *', 'products');
+			$data['product'] = $this->repository_model->select(' *', 'products', ' ORDER BY products.name ASC');
 
 			$receipt = array();
 			foreach ($_POST as $key => $value) {
 				$receipt[$key] = htmlspecialchars($value);
 			}
-			if ($this->session->flashdata('number_store')) {
-				$receipt['number_store'] = $this->session->flashdata('number_store');
-			}
-			echo_pre($receipt);
+			$receipt['number_store'] = (count($receipt) - 3) / 2;
 			$data['insert_store'] = $this->repository_model->insert_store($receipt);
 			if (isset($data['insert_store']) && $data['insert_store']) {
 				$this->session->set_flashdata('success', 'Đã thêm thông tin nhập kho!');

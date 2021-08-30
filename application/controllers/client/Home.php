@@ -18,6 +18,8 @@ class Home extends CI_Controller
 	public function index() {
 		$data['title_page'] = 'Trang chủ';
 		$data['load_page'] = 'client/home/index_view';
+		$data['product_list'] = $this->home_model->product_list('1');
+		$data['laptop_list'] = $this->home_model->product_list('2');
 		$this->load->view('layouts/fe_master_view', $data);
 	}
 
