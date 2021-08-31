@@ -47,6 +47,7 @@ $action = $this->router->fetch_method();
 			'customer_list': '<?php echo base_url("admin/customer/ajax_list") ?>',
 			'category_list': '<?php echo base_url("admin/category/ajax_list") ?>',
 			'product_list' : '<?php echo base_url("admin/product/ajax_list")?>',
+			'voucher_list' : '<?php echo base_url("admin/voucher/ajax_list")?>',
 			'repository_list': '<?php echo base_url("admin/repository/ajax_list") ?>',
 			'detail_repository_list': '<?php echo base_url("admin/repository/ajax_detail_list") ?>',
 			'district_list': '<?php echo base_url("admin/home/ajax_district") ?>',
@@ -225,8 +226,8 @@ $action = $this->router->fetch_method();
 						</a>
 						<div id="discount" class="collapse">
 							<ul class="nav">
-								<li><a href="#" class="">Mục 1</a></li>
-								<li><a href="#" class="">Mục 2</a></li>
+								<li><a href="<?php echo base_url('admin/voucher/index') ?>" class="">Danh sách mã giảm giá</a></li>
+								<li><a href="<?php echo base_url('admin/voucher/add') ?>" class="">Thêm mã giảm giá</a></li>
 							</ul>
 						</div>
 					</li>

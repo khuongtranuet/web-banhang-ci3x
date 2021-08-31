@@ -135,4 +135,10 @@ p.p-center {
 	text-align: center;
 	margin-top: 5px;
 }
-
+.content-product{
+	word-wrap: break-word;
+	word-break: keep-all;
+}
+.active-product{
+	border-color: rgb(46,134,189);
+}

@@ -63,11 +63,14 @@
 					</a>
 				</div>
 				<h4>Mô tả sản phẩm</h4>
+				<div class="col-lg-12 content-product">
+					<p>Apple đã trang bị con chip mới nhất của hãng (tính đến 11/2020) cho iPhone 12 đó là A14 Bionic, được sản xuất trên tiến trình 5 nm với hiệu suất ổn định hơn so với chip A13 được trang bị trên phiên bản tiền nhiệm iPhone 11.</p>
+				</div>
 			</div>
 			<div class="col-lg-5">
 				<div class="row">
 					<div class="col-lg-12">
-						<a class="btn">64GB</a>
+						<a class="btn active-product">64GB</a>
 						<a class="btn">128GB</a>
 						<a class="btn">256GB</a>
 					</div>
@@ -144,6 +147,9 @@
 						<div class="col-lg-8">
 							<p>2815 mAh20 W</p>
 						</div>
+					</div>
+					<div class="col-lg-12">
+						<h4>Sản phẩm liên quan</h4>
 					</div>
 				</div>
 			</div>
