@@ -27,6 +27,7 @@ class Home_model extends CI_Model
 		if(isset($type) && $type == 2) {
 			$this->db->where("products.category_id = '2'");
 		}
+		$this->db->where(TBL_PRODUCT_IMAGES.".type = '1'");
 		$this->db->order_by('products.sold', 'DESC');
 		$this->db->limit('10');
 		$query = $this->db->get();

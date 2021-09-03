@@ -45,7 +45,9 @@ class Home extends CI_Controller
 					setcookie("password", '');
 				}
 				$result = $this->home_model->select(' *', ' customers', ' WHERE (email = "'.$_POST['mobile'].'" OR mobile = "'.$_POST['mobile'].'")');
-				$result = $result[0];
+				if(count($result) > 0) {
+					$result = $result[0];
+				}
 				if(count($result) > 0 && $_POST['password'] == $result['password']) {
 					$_SESSION['login'] = true;
 					$_SESSION['id'] =  $result['id'];
@@ -61,25 +63,5 @@ class Home extends CI_Controller
 				$this->load->view('layouts/fe_master_view', $data);
 			}
 		}
-	}
-
-	public function logout() {
-		$logout = $this->uri->segment('3');
-		if (isset($logout) && $logout == 'logout') {
-			session_destroy();
-			redirect('client/home/index');
-		}
-	}
-
-	public function register() {
-		$data['title_page'] = 'Đăng ký';
-		$data['load_page'] = 'client/home/register_view';
-		$this->load->view('layouts/fe_master_view', $data);
-	}
-
-	public function cart() {
-		$data['title_page'] = 'Giỏ hàng';
-		$data['load_page'] = 'client/cart/cart_login_view';
-		$this->load->view('layouts/fe_master_view', $data);
 	}
 }

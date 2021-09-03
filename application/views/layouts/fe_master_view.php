@@ -46,6 +46,13 @@ $action = $this->router->fetch_method();
 	<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 	<![endif]-->
+	<script>
+		window.ajax_url = {
+			'cart_list': '<?php echo base_url("client/cart/ajax_list") ?>',
+            'district_list': '<?php echo base_url("admin/home/ajax_district") ?>',
+            'ward_list': '<?php echo base_url("admin/home/ajax_ward") ?>',
+		}
+	</script>
 </head>
 
 <body>
@@ -104,7 +111,7 @@ $action = $this->router->fetch_method();
 					</div>
 				</div>
 				<div class="col-lg-2">
-					<a href="<?php echo base_url('client/home/cart') ?>">
+					<a href="<?php echo base_url('client/cart/detail') ?>">
 						<div class="row btn" style=" color: white; ">
 							<div class="col-lg-4">
 								<i class="fa fa-shopping-cart list_i"></i>
@@ -134,7 +141,19 @@ $action = $this->router->fetch_method();
 							<ul class="dropdown-menu">
 								<?php if (isset($_SESSION['login'])): ?>
 									<li>
-										<a href="<?php echo base_url('client/home/register') ?>">Thông tin tài khoản</a>
+										<a href="<?php echo base_url('client/account/edit') ?>">Thông tin tài khoản</a>
+									</li>
+								<?php endif; ?>
+								<?php if (isset($_SESSION['login'])): ?>
+									<li role="separator" class="divider"></li>
+									<li>
+										<a href="<?php echo base_url('client/order/history') ?>">Quản lý đơn hàng</a>
+									</li>
+								<?php endif; ?>
+								<?php if (isset($_SESSION['login'])): ?>
+									<li role="separator" class="divider"></li>
+									<li>
+										<a href="<?php echo base_url('client/account/address') ?>">Sổ địa chỉ</a>
 									</li>
 								<?php endif; ?>
 								<?php if (!isset($_SESSION['login'])): ?>
@@ -145,13 +164,13 @@ $action = $this->router->fetch_method();
 								<?php if (!isset($_SESSION['login'])): ?>
 									<li role="separator" class="divider"></li>
 									<li>
-										<a href="<?php echo base_url('client/home/register') ?>">Tạo tài khoản</a>
+										<a href="<?php echo base_url('client/account/register') ?>">Tạo tài khoản</a>
 									</li>
 								<?php endif; ?>
 								<?php if (isset($_SESSION['login'])): ?>
 								<li role="separator" class="divider"></li>
 								<li>
-									<a href="<?php echo base_url('client/home/logout') ?>"
+									<a href="<?php echo base_url('client/account/logout') ?>"
 									   onclick="confirm('Bạn có chắc chắn muốn thoát không?')">Thoát</a>
 								</li>
 								<?php endif; ?>
@@ -175,6 +194,8 @@ $action = $this->router->fetch_method();
 <!--<script src="--><?php //echo base_url('public/dist/assets/vendor/chartist/js/chartist.min.js') ?><!--"></script>-->
 <script src="<?php echo base_url('public/dist/assets/scripts/klorofil-common.js') ?>"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.js"></script>
+
 </body>
 </html>

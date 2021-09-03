@@ -54,6 +54,7 @@ $action = $this->router->fetch_method();
 			'ward_list': '<?php echo base_url("admin/home/ajax_ward") ?>',
 			'store_list': '<?php echo base_url("admin/repository/ajax_store_list") ?>',
 			'product_store': '<?php echo base_url("admin/repository/ajax_product_store") ?>',
+			'product_statistic_list': '<?php echo base_url("admin/statistic/ajax_product_statistic") ?>',
 		}
 	</script>
 </head>
@@ -199,8 +200,8 @@ $action = $this->router->fetch_method();
 						</a>
 						<div id="statistic" class="collapse">
 							<ul class="nav">
-								<li><a href="#" class="">Mục 1</a></li>
-								<li><a href="#" class="">Mục 2</a></li>
+								<li><a href="<?php echo base_url('admin/statistic/product') ?>" class="">Thống kê sản phẩm</a></li>
+								<li><a href="#" class="">Thống kê doanh thu</a></li>
 							</ul>
 						</div>
 					</li>

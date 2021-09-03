@@ -4,7 +4,7 @@
 		<h3>Đăng nhập</h3>
 		<span></span>
 		<p>
-			Bạn chưa phải thành viên ?<a href="<?php echo base_url('client/home/register') ?>">Đăng ký ngay</a>
+			Bạn chưa phải thành viên ?<a href="<?php echo base_url('client/account/register') ?>">Đăng ký ngay</a>
 		</p>
 		<div class="form-group">
 			<label for="mobile">Email/Số điện thoại</label>

@@ -54,7 +54,7 @@ class Customer_model extends CI_Model
 	 * Hàm truy vấn địa chỉ của khách hàng
 	 */
 	public function address_customer($id, $is_count, $status_address = false) {
-		$this->db->select('*, addresses.type AS address_type, addresses.status AS address_status,
+		$this->db->select('*, addresses.type AS address_type, addresses.status AS address_status, addresses.id AS address_id,
 						provinces.id AS province_id, provinces.code AS province_code, provinces.name AS province_name, provinces.type AS province_type,
 						districts.id AS district_id, districts.name AS district_name, districts.code AS district_code, districts.type AS district_type,
 						wards.id AS ward_id, wards.name AS ward_name, wards.code AS ward_code, wards.type AS ward_type');
@@ -70,6 +70,7 @@ class Customer_model extends CI_Model
 		if($is_count == true) {
 			$this->db->group_by('addresses.customer_id');
 		}
+		$this->db->order_by('addresses.status', 'DESC');
 		$query = $this->db->get();
 
 		return $query->result_array();
@@ -105,7 +106,9 @@ class Customer_model extends CI_Model
 		$customer['created_at'] = date('Y-m-d H:i:s');
 		$customer['updated_at'] = date('Y-m-d H:i:s');
 		$this->db->insert('customers', $customer);
-		$customer_id = $this->db->insert_id();
+		if(isset($data['address']) && $data['address'] != null) {
+			$customer_id = $this->db->insert_id();
+		}
 		if (isset($data['province']) && $data['province'] != null) {
 			$address['province_id'] = $data['province'];
 		}
@@ -124,10 +127,12 @@ class Customer_model extends CI_Model
 		if (isset($data['status_address']) && $data['status_address'] != null) {
 			$address['status'] = $data['status_address'];
 		}
-		$address['created_at'] = date('Y-m-d H:i:s');
-		$address['updated_at'] = date('Y-m-d H:i:s');
-		$address['customer_id'] = $customer_id;
-		$this->db->insert('addresses', $address);
+		if(isset($customer_id) && $customer_id) {
+			$address['created_at'] = date('Y-m-d H:i:s');
+			$address['updated_at'] = date('Y-m-d H:i:s');
+			$address['customer_id'] = $customer_id;
+			$this->db->insert('addresses', $address);
+		}
 		return '1';
 	}
 
