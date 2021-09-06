@@ -4,22 +4,24 @@
 	</div>
 	<div class="col-lg-9 product-v2-heading">
 		<strong>Đơn hàng</strong>
-		<a class="position-right">Sửa đơn hàng</a>
+		<a href="<?php echo base_url('client/cart/detail'); ?>" class="position-right">Sửa đơn hàng</a>
 	</div>
 	<div class="col-lg-12">
 		<div class="row">
 			<div class="col-lg-9">
 				<div class="col-lg-12" style="background-color:white;">
+					<?php $total = 0; if (isset($product_list) && $product_list): ?>
+					<?php foreach ($product_list as $result_product): ?>
 					<div class="row product-v2-heading">
 						<div class="col-lg-8">
 							<div class="row">
 								<div class="col-lg-3">
-									<img src="<?php echo base_url('public/images/header/iphone-12-den-200x200.jpg') ?>"
-										 style="height:78px; width:78px;" alt="iphone 12">
+									<img src="<?php echo base_url('uploads/product_image/' . $result_product['path']) ?>"
+										 style="height:78px; width:78px;">
 								</div>
 								<div class="col-lg-9" style="margin-left:-30px; width:(100% + 30px);">
 									<div class="row">
-										<strong>Điện thoại Iphone 12 64GB</strong>
+										<strong><?php echo $result_product['name']; ?></strong>
 									</div>
 									<div class="row">
 										<a href="#">Màu: Đen <span class="caret"></span></a>
@@ -28,36 +30,27 @@
 							</div>
 						</div>
 						<div class="col-lg-2">
-							<strong>x1</strong>
+							<strong>x<?php echo $result_product['quantity']; ?></strong>
 						</div>
+						<?php $total += $result_product['total_price'];
+						$str_reverse = strrev($result_product['total_price']);
+						$total_trim = ceil(strlen($result_product['total_price']) / 3);
+						$str_final = '';
+						for ($i = 0; $i < $total_trim; $i++) {
+							$str_trim = substr($str_reverse, ($i) * 3, 3);
+							if ($i < $total_trim - 1) {
+								$str_final .= $str_trim . '.';
+							} else {
+								$str_final .= $str_trim;
+							}
+						}
+						$price = strrev($str_final); ?>
 						<div class="col-lg-2">
-							<strong>22.990.000đ</strong>
+							<strong><?php echo $price; ?>đ</strong>
 						</div>
 					</div>
-					<div class="row product-v2-heading">
-						<div class="col-lg-8">
-							<div class="row">
-								<div class="col-lg-3">
-									<img src="<?php echo base_url('public/images/header/iphone-12-den-200x200.jpg') ?>"
-										 style="height:78px; width:78px;" alt="iphone 12">
-								</div>
-								<div class="col-lg-9" style="margin-left:-30px; width:(100% + 30px);">
-									<div class="row">
-										<strong>Điện thoại Iphone 12 64GB</strong>
-									</div>
-									<div class="row">
-										<a href="#">Màu: Đen <span class="caret"></span></a>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-2">
-							<strong>x1</strong>
-						</div>
-						<div class="col-lg-2">
-							<strong>22.990.000đ</strong>
-						</div>
-					</div>
+					<?php endforeach; ?>
+					<?php endif; ?>
 				</div>
 				<div class="row">
 					<p style="height:10px; background-color:#f5f5f5;"></p>
@@ -101,19 +94,24 @@
 			</div>
 			<div class="col-lg-3">
 				<div class="col-lg-12" style=" background-color:white;">
+					<?php if (isset($customer_address) && $customer_address): ?>
+					<?php foreach ($customer_address as $result_address): ?>
 					<div class="row product-v2-heading">
 						<div class="col-lg-12">
 							<strong>Địa chỉ giao hàng</strong>
-							<a href="#" class="position-right">Sửa</a>
+							<a href="<?php if (isset($_SESSION['login'])) echo base_url('client/payment/shipping');
+									else echo base_url('client/cart/detail'); ?>" class="position-right">Sửa</a>
 						</div>
 						<div class="col-lg-12 product-v2-heading">
-							<strong>Trần Minh Khương</strong>
+							<strong><?php echo $result_address['address_fullname']; ?></strong>
 						</div>
 						<div class="col-lg-12 product-v2-heading">
-							<span>100, Đường A, Phường Mỹ Đình 2, Quận Nam Từ Liêm, Hà Nội</span>
-							<p>Điện thoại: 0385700554</p>
+							<span><?php echo $result_address['address'].', '.$result_address['full_location']; ?></span>
+							<p>Điện thoại: <?php echo $result_address['address_mobile']; ?></p>
 						</div>
 					</div>
+					<?php endforeach; ?>
+					<?php endif; ?>
 					<div class="row">
 						<p style=" height:10px; background-color:#f5f5f5;"></p>
 					</div>
@@ -132,7 +130,19 @@
 					<div class="row product-v2-heading">
 						<div class="col-lg-12">
 							<span>Tạm tính</span>
-							<span class="position-right">22.990.000đ</span>
+							<?php $str_reverse = strrev($total);
+							$total_trim = ceil(strlen($total) / 3);
+							$str_final = '';
+							for ($i = 0; $i < $total_trim; $i++) {
+								$str_trim = substr($str_reverse, ($i) * 3, 3);
+								if ($i < $total_trim - 1) {
+									$str_final .= $str_trim . '.';
+								} else {
+									$str_final .= $str_trim;
+								}
+							}
+							$temporary_price = strrev($str_final); ?>
+							<span class="position-right"><?php echo $temporary_price; ?>đ</span>
 						</div>
 						<div class="col-lg-12">
 							<span>Phí vận chuyển</span>
@@ -145,7 +155,19 @@
 						</div>
 						<div class="col-lg-12">
 							<strong>Tổng cộng:</strong>
-							<strong class="position-right" style="color:#ff424e;font-size: 120%">23.025.000đ</strong>
+							<?php $str_reverse = strrev(($total + 35000));
+							$total_trim = ceil(strlen(($total + 35000)) / 3);
+							$str_final = '';
+							for ($i = 0; $i < $total_trim; $i++) {
+								$str_trim = substr($str_reverse, ($i) * 3, 3);
+								if ($i < $total_trim - 1) {
+									$str_final .= $str_trim . '.';
+								} else {
+									$str_final .= $str_trim;
+								}
+							}
+							$final_price = strrev($str_final); ?>
+							<strong class="position-right" style="color:#ff424e;font-size: 120%"><?php echo $final_price; ?>đ</strong>
 						</div>
 						<div class="col-lg-12">
 							<i class="position-right">(Đã bao gồm VAT nếu có)</i>

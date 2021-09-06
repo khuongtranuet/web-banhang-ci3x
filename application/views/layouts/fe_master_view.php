@@ -51,6 +51,10 @@ $action = $this->router->fetch_method();
 			'cart_list': '<?php echo base_url("client/cart/ajax_list") ?>',
             'district_list': '<?php echo base_url("admin/home/ajax_district") ?>',
             'ward_list': '<?php echo base_url("admin/home/ajax_ward") ?>',
+            'address_list': '<?php echo base_url("client/payment/ajax_address") ?>',
+            'account_address_list': '<?php echo base_url("client/account/ajax_address") ?>',
+            'total_cart': '<?php echo base_url("client/cart/ajax_total_cart") ?>',
+            'carousel_list': '<?php echo base_url("client/product/ajax_carousel") ?>',
 		}
 	</script>
 </head>

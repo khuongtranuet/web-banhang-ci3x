@@ -96,6 +96,8 @@ define('TBL_REPOSITORIES', 'repositories');
 define('TBL_PRODUCT_REPOSITORY', 'product_repository');
 define('TBL_CUSTOMER_PRODUCT', 'customer_product');
 define('TBL_ADDRESSES', 'addresses');
+define('TBL_ORDERS', 'orders');
+define('TBL_ORDER_PRODUCT', 'order_product');
 
 date_default_timezone_set('Asia/Ho_Chi_Minh');
 

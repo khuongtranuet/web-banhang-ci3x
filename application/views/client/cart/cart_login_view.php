@@ -35,7 +35,7 @@
 					<?php $i=0; if (isset($product_list) && $product_list): ?>
 						<?php foreach ($product_list as $result_product): $i++; ?>
 						<div id="div-ajax">
-							<div class="row product-v2-heading">
+							<div class="row product-v2-heading" style="height: 98px;">
 								<div class="col-lg-5">
 									<div class="row">
 										<div class="col-lg-5">
@@ -43,7 +43,7 @@
 												   value="<?php echo $result_product['product_id']; ?>"
 												   style="margin-top:3px; padding-top:3px;">
 											<img src="<?php echo base_url('uploads/product_image/' . $result_product['path']) ?>"
-												 style="height:78px; width:78px;">
+												 style="height:auto; width:78px; max-height: 78px;">
 										</div>
 										<div class="col-lg-7" style="margin-left:-30px; width:(100% + 30px);">
 											<div class="row">
@@ -56,40 +56,16 @@
 									</div>
 								</div>
 								<div class="col-lg-2">
-									<?php $str_reverse = strrev($result_product['price']);
-									$total_trim = ceil(strlen($result_product['price']) / 3);
-									$str_final = '';
-									for ($i = 0; $i < $total_trim; $i++) {
-										$str_trim = substr($str_reverse, ($i) * 3, 3);
-										if ($i < $total_trim - 1) {
-											$str_final .= $str_trim . '.';
-										} else {
-											$str_final .= $str_trim;
-										}
-									}
-									$price = strrev($str_final); ?>
-									<strong><?php echo $price; ?>đ</strong>
+									<strong><?php echo convertPrice($result_product['price']); ?>đ</strong>
 								</div>
 								<div class="col-lg-2">
 									<button name="decrease" class="quatity-cart">-</button>
-									<input type="text" name="quantity"
+									<input type="text" name="quantity" disabled
 										   value="<?php echo $result_product['quantity']; ?>" class="quatity-cart">
 									<button name="increase" class="quatity-cart">+</button>
 								</div>
 								<div class="col-lg-2">
-									<?php $str_reverse = strrev(($result_product['price'] * $result_product['quantity']));
-									$total_trim = ceil(strlen(($result_product['price'] * $result_product['quantity'])) / 3);
-									$str_final = '';
-									for ($i = 0; $i < $total_trim; $i++) {
-										$str_trim = substr($str_reverse, ($i) * 3, 3);
-										if ($i < $total_trim - 1) {
-											$str_final .= $str_trim . '.';
-										} else {
-											$str_final .= $str_trim;
-										}
-									}
-									$price_total = strrev($str_final); ?>
-									<strong style=" color:#ff424e;"><?php echo $price_total; ?>đ</strong>
+									<strong style=" color:#ff424e;"><?php echo convertPrice(($result_product['price'] * $result_product['quantity'])); ?>đ</strong>
 								</div>
 								<div class="col-lg-1">
 									<a href="<?php echo base_url('client/cart/delete?cus_id='.$result_product['customer_id'].'&pd_id='.$result_product['product_id'])?>">
@@ -114,8 +90,8 @@
 							<a href="<?php echo base_url('client/payment/shipping') ?>" class="position-right">Thay đổi</a>
 						</div>
 						<div class="col-lg-12 product-v2-heading">
-							<strong><?php echo $result_address['fullname']; ?></strong>
-							<strong class="position-right"><?php echo $result_address['mobile']; ?></strong>
+							<strong><?php echo $result_address['address_fullname']; ?></strong>
+							<strong class="position-right"><?php echo $result_address['address_mobile']; ?></strong>
 						</div>
 						<div class="col-lg-12 product-v2-heading">
 							<span><?php echo $result_address['address'].', '.$result_address['full_location']; ?></span>
@@ -126,22 +102,22 @@
 					<div class="row">
 						<p style=" height:10px; background-color:#f5f5f5;"></p>
 					</div>
-					<div class="row product-v2-heading">
-						<div class="col-lg-12" style="text-align:center">
-							<a href="#">
-								<i class="fa fa-percent"></i>
-								<span> Dùng mã giảm giá </span>
-								<span class="caret"></span>
-							</a>
-						</div>
-					</div>
-					<div class="row">
-						<p style=" height:10px;background-color:#f5f5f5"></p>
-					</div>
-					<div class="row product-v2-heading">
+<!--					<div class="row product-v2-heading">-->
+<!--						<div class="col-lg-12" style="text-align:center">-->
+<!--							<a href="#">-->
+<!--								<i class="fa fa-percent"></i>-->
+<!--								<span> Dùng mã giảm giá </span>-->
+<!--								<span class="caret"></span>-->
+<!--							</a>-->
+<!--						</div>-->
+<!--					</div>-->
+<!--					<div class="row">-->
+<!--						<p style=" height:10px;background-color:#f5f5f5"></p>-->
+<!--					</div>-->
+					<div class="row product-v2-heading" id="ajax_total">
 						<div class="col-lg-12">
 							<span>Tạm tính</span>
-							<span class="position-right">22.990.000đ</span>
+							<span class="position-right" id="tamtinh">0đ</span>
 						</div>
 						<div class="col-lg-12">
 							<span>Giảm giá</span>
@@ -158,7 +134,7 @@
 						</div>
 						<div class="col-lg-12">
 							<span>Tổng cộng</span>
-							<strong class="position-right" style="color:#ff424e;">22.990.000đ</strong>
+							<strong class="position-right" style="color:#ff424e;">0đ</strong>
 						</div>
 					</div>
 				</div>
@@ -171,6 +147,33 @@
 	var increase = document.getElementsByName('increase');
 	var decrease = document.getElementsByName('decrease');
 	var customer_id = document.querySelector('[name="customer_id"]').value;
+	var product = document.getElementsByName('product');
+
+	var product_id = [];
+	var quantity = [];
+	for (var i = 0; i < product.length; i++) {
+		var button_product = product[i];
+		button_product.addEventListener('click', function () {
+			if(this.checked) {
+				for(var j = 0; j < product.length; j++) {
+					if(product_id[j] == undefined) {
+						product_id[j] = this.value;
+						quantity[j] = (this.parentElement.parentElement.parentElement.parentElement.children[2].children[1]).value;
+					 	break;
+					}
+				}
+			}else{
+				for(var j = 0; j < product.length; j++) {
+					if(product_id[j] == this.value) {
+						product_id.splice(j, 1);
+						quantity.splice(j, 1);
+						break;
+					}
+				}
+			}
+			call(product_id, quantity, window.ajax_url.total_cart);
+		});
+	}
 	var is_delete = '';
 	for (var i = 0; i < increase.length; i++) {
 		var button = increase[i];
@@ -180,7 +183,7 @@
 			var inputValue = input.value;
 			var newValue = parseInt(inputValue) + 1;
 			input.value = newValue;
-			console.log((buttonClicked.parentElement.parentElement.children[0].children[0].children[0].children[0]).value);
+			// console.log((buttonClicked.parentElement.parentElement.children[0].children[0].children[0].children[0]).value);
 			var params = [];
 			params['product_id'] = (buttonClicked.parentElement.parentElement.children[0].children[0].children[0].children[0]).value;
 			params['quantity'] = newValue;
@@ -196,7 +199,7 @@
 			var newValue = parseInt(inputValue) - 1;
 			if (newValue > 0) {
 				input.value = newValue;
-				console.log((buttonClicked.parentElement.parentElement.children[0].children[0].children[0].children[0]).value);
+				// console.log((buttonClicked.parentElement.parentElement.children[0].children[0].children[0].children[0]).value);
 				var params = [];
 				params['product_id'] = (buttonClicked.parentElement.parentElement.children[0].children[0].children[0].children[0]).value;
 				params['quantity'] = newValue;
@@ -254,11 +257,10 @@
 		if(product_id.length == 0) {
 			alert('Bạn vẫn chưa chọn sản phẩm nào để mua!');
 		}else{
-			console.log(product_id);
-			console.log(quantity);
 			var params = [];
 			params['product_id'] = product_id;
 			params['quantity'] = quantity;
+			params['submit'] = 'submit';
 			callAjax(window.ajax_url.cart_list, params);
 		}
 	});
@@ -274,12 +276,32 @@
 				is_delete: is_delete,
 			}
 		}).done(function (result) {
-			location.reload();
-			// console.log(result);
+			if (!params['submit']) {
+				location.reload();
+			}
+			else{
+				location.href = '/web-banhang-ci3x/client/payment/checkout';
+			}
+			// console.log(result);http://localhost:81
 			// $('#div-ajax').html(result);
 		})
 		$(document).ajaxError(function () {
 			$('#data-loading').hide();
+		});
+	}
+	function call(product_id, quantity, url_ajax) {
+		$.ajax({
+			url: url_ajax,
+			type: 'POST',
+			dataType: 'html',
+			data: {
+				product_id: product_id,
+				quantity: quantity,
+			}
+		}).done(function (result) {
+			$('#ajax_total').html(result);
+		})
+		$(document).ajaxError(function () {
 		});
 	}
 </script>

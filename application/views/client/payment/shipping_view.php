@@ -1,3 +1,4 @@
+<?php include ('application/views/errors/error_message_view.php');?>
 <div class="row">
 	<div class="col-lg-12">
 		<h4 class="title-cart">ĐƠN HÀNG VÀ THANH TOÁN</h4>
@@ -16,20 +17,23 @@
 				<div class="col-lg-12" style="background-color:white;">
 					<div class="row">
 						<div class="col-lg-12 product-v2-heading">
-							<strong><?php echo $result_address['fullname']; ?></strong>
+							<strong><?php echo $result_address['address_fullname']; ?></strong>
 							<?php if ($result_address['address_status'] == '1'): ?>
 							<strong class="position-right" style="color: #009900">Mặc định</strong>
 							<?php endif; ?>
 						</div>
 						<div class="col-lg-12">
 							<span class="address_cus">Địa chỉ: <?php echo $result_address['address'].', '.$result_address['full_location'] ?></span>
-							<p>Điện thoại: <?php echo $result_address['mobile'] ?></p>
+							<p>Điện thoại: <?php echo $result_address['address_mobile'] ?></p>
 						</div>
 						<div class="col-lg-12 product-v2-heading">
 							<a href="<?php echo base_url('client/payment/change?cus_id='.$result_address['customer_id'].'&id='.$result_address['address_id'])?>" class="btn btn-primary">Giao đến địa chỉ này</a>
-							<button class="btn" style="border-color: #cccccc">Sửa</button>
+							<a name="edit_address" class="btn" style="border-color: #cccccc">Sửa</a>
+							<input type="hidden" name="address_id" value="<?php echo $result_address['address_id'] ?>">
+							<input type="hidden" name="customer_id" value="<?php echo $result_address['customer_id'] ?>">
 							<?php if ($result_address['address_status'] != '1'): ?>
-							<button class="btn" style="border-color: #cccccc">Xóa</button>
+							<a href="<?php echo base_url('client/payment/delete/'.$result_address['address_id']) ?>"
+							   onclick = "if(!confirm('Bạn muốn xóa địa chỉ này ra khỏi sổ địa chỉ?')) {return false;}" class="btn" style="border-color: #cccccc">Xóa</a>
 							<?php endif; ?>
 						</div>
 					</div>
@@ -163,7 +167,8 @@
 						<div class="col-lg-4">
 						</div>
 						<div class="col-lg-8">
-							<input type="checkbox" id="status" name="status" value="1"> Sử dụng làm địa chỉ mặc định
+							<span>(Chọn giao đến địa chỉ này tự động thêm thành địa chỉ mặc định)</span>
+<!--							<input type="checkbox" id="status" name="status" value="1"> Sử dụng làm địa chỉ mặc định-->
 						</div>
 					</div>
 				</div>
@@ -187,11 +192,29 @@
 		var add_address = document.querySelector('#add_address');
 		var form_address = document.querySelector('#form_address');
 		var remove_address = document.querySelector('#remove_address');
+		var edit_address = document.getElementsByName('edit_address');
 
 		add_address.addEventListener('click', () => {
 			form_address.classList.remove("non_active_form_address");
 			form_address.classList.add("active_form_address");
+			var params = [];
+			params['customer_id'] = '';
+			params['address_id'] = '';
+			callAjaxAddress(params, window.ajax_url.address_list);
 		});
+		for (var i = 0; i < edit_address.length; i++) {
+			var button = edit_address[i];
+			button.addEventListener('click', (event) => {
+				form_address.classList.remove("non_active_form_address");
+				form_address.classList.add("active_form_address");
+				var buttonClicked = event.target;
+				var input = buttonClicked.parentElement;
+				var params = [];
+				params['customer_id'] = input.children[3].value;
+				params['address_id'] = input.children[2].value;
+				callAjaxAddress(params, window.ajax_url.address_list);
+			})
+		}
 		remove_address.addEventListener('click', () => {
 			form_address.classList.remove("active_form_address");
 			form_address.classList.add("non_active_form_address");
@@ -242,7 +265,6 @@
 					id_address: id_address
 				}
 			}).done(function (result) {
-				console.log(result);
 				if (url_ajax == window.ajax_url.district_list) {
 					$('#district').html(result);
 					var html = '';
@@ -252,6 +274,22 @@
 				if (url_ajax == window.ajax_url.ward_list) {
 					$('#ward').html(result);
 				}
+			})
+			$(document).ajaxError(function () {
+			});
+		}
+
+		function callAjaxAddress(params, url_ajax) {
+			$.ajax({
+				url: url_ajax,
+				type: 'POST',
+				dataType: 'html',
+				data: {
+					customer_id: params['customer_id'],
+					address_id: params['address_id'],
+				}
+			}).done(function (result) {
+				$('#add_form').html(result);
 			})
 			$(document).ajaxError(function () {
 			});

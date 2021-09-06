@@ -188,3 +188,23 @@ function isFormValidated($errors)
 		return true;
 	}
 }
+
+function ramdomOrderNumber() {
+	$str = date('md').substr(implode(NULL, array_map('ord', str_split(substr(uniqid(), 7, 13), 1))), 0, 8);
+	return $str;
+}
+
+function convertPrice($str) {
+	$str_reverse = strrev($str);
+	$total_trim = ceil(strlen($str) / 3);
+	$str_final = '';
+	for ($i = 0; $i < $total_trim; $i++) {
+		$str_trim = substr($str_reverse, ($i) * 3, 3);
+		if ($i < $total_trim - 1) {
+			$str_final .= $str_trim . '.';
+		} else {
+			$str_final .= $str_trim;
+		}
+	}
+	return strrev($str_final);
+}

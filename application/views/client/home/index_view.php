@@ -63,7 +63,7 @@
 			<?php if (isset($product_list) && $product_list): ?>
 			<?php foreach ($product_list as $result_phone): ?>
 			<div class="item">
-				<a href="<?php echo base_url('client/product/detail/'.$result_phone['id'])?>">
+				<a href="<?php echo base_url('client/product/detail/'.$result_phone['product_id'])?>">
 					<div class="item-label"></div>
 					<div class="item-img">
 						<img class="img-product" src="<?php echo base_url('uploads/product_image/'.$result_phone['path'].'') ?>"
@@ -109,7 +109,7 @@
 			<?php if (isset($laptop_list) && $laptop_list): ?>
 				<?php foreach ($laptop_list as $result_laptop): ?>
 					<div class="item">
-						<a href="<?php echo base_url('client/product/detail/'.$result_laptop['id'])?> ">
+						<a href="<?php echo base_url('client/product/detail/'.$result_laptop['product_id'])?> ">
 							<div class="item-label"></div>
 							<div class="item-img">
 								<img class="img-product" src="<?php echo base_url('uploads/product_image/'.$result_laptop['path'].'') ?>"
