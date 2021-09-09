@@ -105,4 +105,55 @@ class Product extends CI_Controller
 		$data['list_images'] = $this->product_model->select(' *', TBL_PRODUCT_IMAGES, ' WHERE product_id = '.$params['product_id'].' AND type = 0');
 		$this->load->view('client/product/ajax_carousel_view', $data);
 	}
+
+	public function pd_list($id = null) {
+		if (!isset($id) || $id == NULL) {
+			redirect('client/home/index');
+		}else{
+			$data['id'] = $id;
+		}
+		$data['title_page'] = 'Danh sách sản phẩm';
+		$data['load_page'] = 'client/product/product_list_view';
+		if (is_numeric($id)) {
+			$data['cate'] = $this->product_model->select(' *', TBL_CATEGORIES, ' WHERE id = '.$id);
+			if (count($data['cate']) == 0) {
+				$this->session->set_flashdata('error', 'Danh mục sản phẩm không tồn tại!');
+				redirect('client/home/index');
+			}
+			$data['cate'] = $data['cate'][0];
+			$data['brand'] = $this->product_model->select(' *', TBL_BRANDS, ' WHERE id IN (SELECT brand_id FROM ' . TBL_PRODUCTS . ' WHERE category_id = '.$id.')');
+		}else{
+			$this->session->set_flashdata('error', 'Danh mục sản phẩm không tồn tại!');
+			redirect('client/home/index');
+		}
+		$this->load->view('layouts/fe_master_view', $data);
+	}
+
+	public function ajax_list() {
+		$params['keyword'] = $this->input->post('keyword');
+		$params['brand'] = $this->input->post('brand');
+		$params['sort'] = $this->input->post('sort');
+		$params['cate_id'] = $this->input->post('cate_id');
+		$params['price'] = $this->input->post('price');
+		$params['price_laptop'] = $this->input->post('price_laptop');
+		$params['price_accessory'] = $this->input->post('price_accessory');
+		$params['ram'] = $this->input->post('ram');
+		$params['rom'] = $this->input->post('rom');
+		$params['screen'] = $this->input->post('screen');
+		$params['cpu'] = $this->input->post('cpu');
+		$params['card'] = $this->input->post('card');
+		$params['hard_drive'] = $this->input->post('hard_drive');
+		$params['screen_resolution'] = $this->input->post('screen_resolution');
+		$params['frequency'] = $this->input->post('frequency');
+		$params['page_index'] = $this->input->post('page_index');
+		$params['page_size'] = 10;
+		if ($params['page_index'] < 1) { $params['page_index'] = 1; }
+		$data['from'] = $params['from'] = ($params['page_index'] - 1)* $params['page_size'];
+		$data['total_record'] = $total_record = $this->product_model->product_list($params, true);
+		$data['result_product'] = $this->product_model->product_list($params, false);
+		$data['cate'] = $this->product_model->select(' *', TBL_CATEGORIES, ' WHERE id = '.$params['cate_id']);
+		$data['cate'] = $data['cate'][0];
+		$data['pagination_link'] = paginate_ajax2($total_record, $params['page_index'], $params['page_size']);
+		$this->load->view('client/product/ajax_list_view', $data);
+	}
 }

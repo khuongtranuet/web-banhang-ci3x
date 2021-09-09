@@ -149,5 +149,9 @@
 	<div class="col-lg-12">
 		<h3 style="font-weight: 600;display: inline-block;">PHỤ KIỆN NỔI BẬT NHẤT</h3>
 		<a class="position-right all_product"><h3 style="font-size: 15px;">Xem tất cả phụ kiện</h3></a>
+		<div class="col-lg-12">
+			<div class="listproduct">
+			</div>
+		</div>
 	</div>
 </div>

@@ -7,7 +7,8 @@ class Home extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->model(array(
-			'client/home_model'
+			'client/home_model',
+			'client/product_model',
 		));
 	}
 
@@ -63,5 +64,14 @@ class Home extends CI_Controller
 				$this->load->view('layouts/fe_master_view', $data);
 			}
 		}
+	}
+
+	public function ajax_search() {
+		$params['keyword'] = $this->input->post('keyword');
+		$params['page_size'] = 5;
+		$params['from'] = 0;
+		$params['search'] = true;
+		$data['result_search'] = $this->product_model->product_list($params, false);
+		$this->load->view('client/home/ajax_search', $data);
 	}
 }

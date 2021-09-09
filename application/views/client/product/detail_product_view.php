@@ -97,9 +97,16 @@
 				</div>
 				<h4>Mô tả sản phẩm</h4>
 				<div class="col-lg-12 content-product">
-					<p><?php if ($product_detail['product_description'] != '') echo $product_detail['product_description'];
-							else echo 'Chưa có mô tả cho sản phẩm này';?></p>
+					<p class="content-max" id="div-description"><?php if ($product_detail['product_description'] != ''): echo $product_detail['product_description']; ?>
+					<div class="col-lg-12 more-detail" id="description">
+						<span>Xem thêm <i class="fa fa-caret-down"></i></span>
+					</div>
+					<?php else: ?>
+					<p class="content-max"><?php echo 'Chưa có mô tả cho sản phẩm này'; ?></p>
+					<?php endif; ?>
+<!--						else echo 'Chưa có mô tả cho sản phẩm này';?></p>-->
 				</div>
+
 			</div>
 			<div class="col-lg-5">
 				<div class="row">
@@ -129,7 +136,8 @@
 					</div>
 					<div class="col-lg-12">
 						<?php if (isset($attribute_product) && $attribute_product): ?>
-						<?php foreach ($attribute_product as $attribute): ?>
+						<?php $i=-1; foreach ($attribute_product as $attribute): $i++; ?>
+						<?php if ($i == 9) { break;} ?>
 						<div class="col-lg-4">
 							<p><?php echo $attribute['name']; ?>:</p>
 						</div>
@@ -137,6 +145,21 @@
 							<p><?php echo $attribute['value']; ?></p>
 						</div>
 						<?php endforeach; ?>
+						<div id="more-setting" style="display: none">
+						<?php $j=-1; foreach ($attribute_product as $attribute): $j++; ?>
+							<?php if ($j >= 9): ?>
+							<div class="col-lg-4">
+								<p><?php echo $attribute['name']; ?>:</p>
+							</div>
+							<div class="col-lg-8">
+								<p><?php echo $attribute['value']; ?></p>
+							</div>
+							<?php endif; ?>
+						<?php endforeach; ?>
+						</div>
+						<div class="col-lg-12 more-detail" id="more-detail">
+							<span>Xem thêm cấu hình chi tiết <i class="fa fa-caret-down"></i></span>
+						</div>
 						<?php else: ?>
 						<div class="col-lg-12">
 							<p>Chưa có thông tin cấu hình cho sản phẩm này</p>
@@ -356,7 +379,7 @@
 			var buttonClicked = event.target;
 			buttonClicked.parentElement.parentElement.classList.add('active-product');
 			var child_id = buttonClicked.parentElement.parentElement.parentElement.children[0].value;
-			console.log(child_id);
+			// console.log(child_id);
 			var params = [];
 			params['product_id'] = child_id;
 			callAjax(window.ajax_url.carousel_list, params);
@@ -371,21 +394,6 @@
 		document.querySelector('.popup').classList.remove('active-popup');
 		document.querySelector('.pop').classList.remove('background-popup');
 	});
-	// document.querySelector('[name="increase"]').addEventListener('click', function () {
-	// 	var input = this.parentElement.children[2];
-	// 	var inputValue = input.value;
-	// 	input.value = parseInt(inputValue) + 1;
-	// });
-	// document.querySelector('[name="decrease"]').addEventListener('click', function () {
-	// 	var input = this.parentElement.children[2];
-	// 	var inputValue = input.value;
-	// 	var newValue = parseInt(inputValue) - 1;
-	// 	if (newValue > 1) {
-	// 		input.value = newValue;
-	// 	}else{
-	// 		input.value = 1;
-	// 	}
-	// });
 
 	document.querySelector('#add-cart').addEventListener('click', function () {
 		document.querySelector('[name="quantity"]').value = 1;
@@ -396,21 +404,28 @@
 		document.querySelector('.popup-add').classList.remove('active-popup-add');
 		document.querySelector('.pop').classList.remove('background-popup');
 	});
-	// document.querySelector('[name="increase-add"]').addEventListener('click', function () {
-	// 	var input = this.parentElement.children[2];
-	// 	var inputValue = input.value;
-	// 	input.value = parseInt(inputValue) + 1;
-	// });
-	// document.querySelector('[name="decrease-add"]').addEventListener('click', function () {
-	// 	var input = this.parentElement.children[2];
-	// 	var inputValue = input.value;
-	// 	var newValue = parseInt(inputValue) - 1;
-	// 	if (newValue > 1) {
-	// 		input.value = newValue;
-	// 	}else{
-	// 		input.value = 1;
-	// 	}
-	// });
+	document.querySelector('#description').addEventListener('click',function () {
+		if (document.querySelector('#div-description').className == 'content-max') {
+			document.querySelector('#div-description').classList.remove('content-max');
+			document.querySelector('#description').children[0].children[0].classList.remove('fa-caret-down');
+			document.querySelector('#description').children[0].children[0].classList.add('fa-caret-up');
+		}else{
+			document.querySelector('#div-description').classList.add('content-max');
+			document.querySelector('#description').children[0].children[0].classList.remove('fa-caret-up');
+			document.querySelector('#description').children[0].children[0].classList.add('fa-caret-down');
+		}
+	});
+	document.querySelector('#more-detail').addEventListener('click',function () {
+		if (document.querySelector('#more-setting').style.display == 'none') {
+			document.querySelector('#more-setting').style.display = 'block';
+			document.querySelector('#more-detail').children[0].children[0].classList.remove('fa-caret-down');
+			document.querySelector('#more-detail').children[0].children[0].classList.add('fa-caret-up');
+		}else{
+			document.querySelector('#more-setting').style.display = 'none';
+			document.querySelector('#more-detail').children[0].children[0].classList.remove('fa-caret-up');
+			document.querySelector('#more-detail').children[0].children[0].classList.add('fa-caret-down');
+		}
+	});
 	$(document).ready(function () {
 		$("#buy-form").validate({
 			rules: {

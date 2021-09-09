@@ -89,6 +89,92 @@ if ( ! function_exists('paginate_ajax')) {
 	}
 }
 
+if ( ! function_exists('paginate_ajax2')) {
+	function paginate_ajax2($total_record, $page_index = 1, $page_size = 2, $onclick = 'changePage')
+	{
+		$link = '';
+		$index = 1;
+		$btn_next = '>';
+		$btn_last = '>|';
+		$btn_previous = '<';
+		$btn_first = '|<';
+
+		if ($total_record > 0 && $page_index >= 1 && $page_size >= 1) {
+			$pages = ceil($total_record / $page_size);
+
+			// Previous page
+			if ($page_index > 1) {
+				$link .= '<a class="pms-page2" href="javascript:void(0)" onclick="'.$onclick.'(1)">' . $btn_first . '</a>';
+				$link .= '<a class="pms-page2" href="javascript:void(0)" onclick="'.$onclick.'('.($page_index - 1).')">' . $btn_previous . '</a>';
+			}
+
+			if ($pages <= 10) {
+				for ($index = 1; $index <= $pages; $index++) {
+					if ($index == $page_index) {
+						$link .= '<span class="pms-page-current2">' . $index . '</span>';
+					} else {
+						$link .= '<a class="pms-page2" href="javascript:void(0)" onclick="'.$onclick.'('.$index.')">' . $index . '</a>';
+					}
+				}
+			} else {
+				if ($page_index <= 5) {
+					for ($index = 1; $index <= 5; $index++) {
+						if ($index == $page_index) {
+							$link .= '<span class="pms-page-current2">' . $index . '</span>';
+						} else {
+							$link .= '<a class="pms-page2" href="javascript:void(0)" onclick="'.$onclick.'('.$index.')">' . $index . '</a>';
+						}
+					}
+
+					$link .= '...';
+
+					$link .= '<a class="pms-page2" href="javascript:void(0)" onclick="'.$onclick.'('.($pages - 1).')">' . ($pages - 1) . '</a>';
+					$link .= '<a class="pms-page2" href="javascript:void(0)" onclick="'.$onclick.'('.$pages.')">' . $pages . '</a>';
+
+				} else if ($page_index > 5 && $page_index < ($pages - 4)) {
+					$link .= '<a class="pms-page2" href="javascript:void(0)" onclick="'.$onclick.'(1)">1</a>';
+					$link .= '<a class="pms-page2" href="javascript:void(0)" onclick="'.$onclick.'(2)">2</a>';
+					$link .= '...';
+
+					for ($index = ($page_index - 2); $index <= ($page_index + 2); $index++) {
+						if ($index == $page_index) {
+							$link .= '<span class="pms-page-current2">' . $index . '</span>';
+						} else {
+							$link .= '<a class="pms-page2" href="javascript:void(0)" onclick="'.$onclick.'('.$index.')">' . $index . '</a>';
+						}
+					}
+
+					$link .= '...';
+
+					$link .= '<a class="pms-page2" href="javascript:void(0)" onclick="'.$onclick.'('.($pages - 1).')">' . ($pages - 1) . '</a>';
+					$link .= '<a class="pms-page2" href="javascript:void(0)" onclick="'.$onclick.'('.$pages.')">' . $pages . '</a>';
+
+				} else {
+					$link .= '<a class="pms-page2" href="javascript:void(0)" onclick="'.$onclick.'(1)">1</a>';
+					$link .= '<a class="pms-page2" href="javascript:void(0)" onclick="'.$onclick.'(2)">2</a>';
+					$link .= '...';
+
+					for ($index = ($pages - 4); $index <= $pages; $index++) {
+						if ($index == $page_index) {
+							$link .= '<span class="pms-page-current2">' . $index . '</span>';
+						} else {
+							$link .= '<a class="pms-page2" href="javascript:void(0)" onclick="'.$onclick.'('.$index.')">' . $index . '</a>';
+						}
+					}
+				}
+			}
+
+			// Next page
+			if ($page_index < $pages) {
+				$link .= '<a class="pms-page2" href="javascript:void(0)" onclick="'.$onclick.'('.($page_index + 1).')">' . $btn_next . '</a>';
+				$link .= '<a class="pms-page2" href="javascript:void(0)" onclick="'.$onclick.'('.$pages.')">' . $btn_last . '</a>';
+			}
+
+		}
+
+		return $link;
+	}
+}
 function echo_pre($data, $die = false)
 {
 	echo '<pre>';
@@ -207,4 +293,19 @@ function convertPrice($str) {
 		}
 	}
 	return strrev($str_final);
+}
+
+function dataTree($data, $parent_id = null, $level = 0) {
+	$result = array();
+	foreach ($data as $item) {
+		if ($item['parent_id'] == $parent_id) {
+			$item['level'] = $level;
+//			$result[] = $item;
+			$child = dataTree($data, $item['id'], $level + 1);
+			$item['child'] = $child;
+			$result[] = $item;
+//			$result = array_merge($result, $child);
+		}
+	}
+	return $result;
 }
