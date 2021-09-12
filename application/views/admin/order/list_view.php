@@ -1,32 +1,34 @@
 <?php include ('application/views/errors/error_message_view.php');?>
 <div class="row">
 	<div class="col-lg-12">
-		<h3>Danh sách các danh mục</h3>
+		<h3>Danh sách đơn hàng</h3>
 	</div>
 	<div class="col-lg-12 text-center mb-1" style="position: absolute; top: 110px; right: 0px">
-		<img src="<?php echo base_url('public/images/data-loading.gif') ?>" id="data-loading" style="display: none; width: 65px">
+		<img src="<?php echo base_url('public/images/data-loading.gif') ?>" id="data-loading"
+			 style="display: none; width: 65px">
 	</div>
 	<div class="col-lg-12" style="margin-top: 20px;">
 		<div class="row" style="margin-bottom: 5px">
-			<!-- Tìm kiếm theo từ khóa -->
 			<div class="col-lg-3">
 				<input class="form-control" type="text" name="keyword" id="keyword" value=""
 					   placeholder="Nhập để tìm kiếm">
 			</div>
-			<!-- Lọc theo phòng ban -->
 			<div class="col-lg-3" style="margin-left: -15px">
-				<select class="form-control" name="type" id="type">
-					<option value="-1">Danh mục gốc</option>
-					<option value="0">Cấp 2</option>
-					<option value="1">Cấp 3</option>
+				<select class="form-control" id="payment_status">
+					<option value="0">Trạng thái thanh toán</option>
+					<option value="1">Đã thanh toán</option>
+					<option value="-1">Chưa thanh toán</option>
 				</select>
+			</div>
+			<div class="col-lg-3" style="margin-left: -15px">
+				<input type="datetime-local" class="form-control" id="order_date" >
 			</div>
 			<div class="col-lg-1">
 				<a class="btn btn-primary" id="reset_search" style="margin-left: -15px;">Tải lại</a>
 			</div>
 			<!-- Thêm mới -->
-			<div class="col-lg-2  col-lg-offset-2" style="float: right; text-align: right;">
-				<a href="<?php echo base_url('admin/category/add'); ?>">
+			<div class="col-lg-2" style="float: right; text-align: right;">
+				<a href="<?php echo base_url('admin/order/add'); ?>">
 					<button class="btn btn-primary">Thêm mới</button>
 				</a>
 			</div>
@@ -37,49 +39,53 @@
 		</div>
 	</div>
 	<script type="text/javascript">
-		$(document).ready(function () {
-			callAjax(1, window.ajax_url.category_list);
-			var oldTimeout = '';
 
+		$(document).ready(function () {
+			callAjax(1, window.ajax_url.order_list);
+			var oldTimeout = '';
 			$('#keyword').keyup(function () {
 				$('#data-loading').show();
 
 				clearTimeout(oldTimeout);
 				oldTimeout = setTimeout(function () {
-					callAjax(1, window.ajax_url.category_list);
+					callAjax(1, window.ajax_url.order_list);
 				}, 250);
 			});
 
-			filterBySelectBox('type', window.ajax_url.category_list);
+			filterBySelectBox('order_date', window.ajax_url.order_list);
+			filterBySelectBox('payment_status', window.ajax_url.order_list);
 
 			$('#reset_search').click(function () {
 				$('#keyword').val('');
-				$('#type').val(-1);
-				callAjax(1, window.ajax_url.category_list)
+				$('#payment_status').val(-1);
+				$('#order_date').val('');
+				callAjax(1, window.ajax_url.order_list)
 			});
 		});
 
 		function filterBySelectBox(id, url_ajax) {
 			$('#' + id).change(function () {
-				callAjax(1, window.ajax_url.category_list);
+				callAjax(1, window.ajax_url.order_list);
 			});
 		}
 
 		function changePage(page_index) {
-			callAjax(page_index, window.ajax_url.category_list);
+			callAjax(page_index, window.ajax_url.order_list);
 		}
 
 		function callAjax(page_index, url_ajax) {
 			$('#data-loading').show();
 			var keyword = $('#keyword').val();
-			var type = $('#type').val();
+			var order_date = $('#order_date').val();
+			var payment_status = $('#payment_status').val();
 			$.ajax({
 				url: url_ajax,
 				type: 'POST',
 				dataType: 'html',
 				data: {
 					keyword: keyword,
-					type: type,
+					order_date: order_date,
+					payment_status: payment_status,
 					page_index: page_index
 				}
 			}).done(function (result) {
@@ -92,4 +98,5 @@
 		}
 	</script>
 </div>
+
 

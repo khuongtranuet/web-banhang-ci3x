@@ -53,6 +53,10 @@ $action = $this->router->fetch_method();
 			'ward_list': '<?php echo base_url("admin/home/ajax_ward") ?>',
 			'store_list': '<?php echo base_url("admin/repository/ajax_store_list") ?>',
 			'product_store': '<?php echo base_url("admin/repository/ajax_product_store") ?>',
+            'product_id': '<?php echo base_url("admin/order/get_price") ?>',
+			'customer_id' : '<?php echo base_url("admin/order/get_address") ?>',
+			'get_voucher' : '<?php echo base_url("admin/order/get_voucher") ?>',
+            'order_list' : '<?php echo base_url("admin/order/ajax_list")  ?>',
 		}
 	</script>
 </head>
@@ -159,8 +163,8 @@ $action = $this->router->fetch_method();
 						</a>
 						<div id="order" class="collapse">
 							<ul class="nav">
-								<li><a href="#" class="">Mục 1</a></li>
-								<li><a href="#" class="">Mục 2</a></li>
+								<li><a href="<?php echo base_url('admin/order/index') ?>" class="">Danh sách đơn hàng</a></li>
+								<li><a href="<?php echo base_url('admin/order/add') ?>" class="">Thêm đơn hàng</a></li>
 							</ul>
 						</div>
 					</li>

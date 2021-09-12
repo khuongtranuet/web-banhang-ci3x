@@ -75,7 +75,11 @@ class Category extends CI_Controller
 			$category['description'] = $_POST['description'];
 			$category['parent_id'] = $_POST['parent_id'];
 			$category['status'] = $_POST['status'];
-			$this->category_model->insert($category);
+			if($this->category_model->insert($category)) {
+				$this->session->set_flashdata('success', 'Thêm danh mục mới thành công!');
+			} else {
+				$this->session->set_flashdata('error', 'Thêm danh mục mới thất bại!');
+			}
 			redirect('admin/category/index');
 			die();
 		}
@@ -133,7 +137,11 @@ class Category extends CI_Controller
 			$category['description'] = $_POST['description'];
 			$category['parent_id'] = $_POST['parent_id'];
 			$category['status'] = $_POST['status'];
-			$this->category_model->edit($category);
+			if($this->category_model->edit($category)) {
+				$this->session->set_flashdata('success', 'Cập nhật danh mục thành công!');
+			} else {
+				$this->session->set_flashdata('error', 'Cập nhật danh mục thất bại!');
+			}
 			redirect('admin/category/index');
 			die();
 		}
@@ -160,10 +168,13 @@ class Category extends CI_Controller
 
 	public function delete($id)
 	{
-		$this->category_model->delete($id);
-		$data['title_page'] = 'QL Danh mục';
-		$data['load_page'] = 'admin/category/list_view';
-		$this->load->view('layouts/be_master_view', $data);
+		if($this->category_model->delete($id)) {
+			$this->session->set_flashdata('success', 'Xoá danh mục thành công!');
+		} else {
+			$this->session->set_flashdata('error', 'Xoá danh mục thất bại!');
+		}
+		redirect('admin/category/index');
+		die();
 	}
 
 }
