@@ -12,12 +12,12 @@
 				<div class="col-lg-12" style="background-color:white;">
 					<?php $total = 0; if (isset($product_list) && $product_list): ?>
 					<?php foreach ($product_list as $result_product): ?>
-					<div class="row product-v2-heading">
-						<div class="col-lg-8">
+					<div class="row product-v2-heading" style="height: 98px;">
+						<div class="col-lg-8" >
 							<div class="row">
 								<div class="col-lg-3">
 									<img src="<?php echo base_url('uploads/product_image/' . $result_product['path']) ?>"
-										 style="height:78px; width:78px;">
+										 style="height:auto; width:78px; max-height: 78px;">
 								</div>
 								<div class="col-lg-9" style="margin-left:-30px; width:(100% + 30px);">
 									<div class="row">

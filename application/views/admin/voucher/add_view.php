@@ -3,6 +3,9 @@
 	<div class="col-lg-12">
 		<h3>Thêm mã giảm giá</h3>
 	</div>
+	<div class="col-lg-12">
+		<h5>Ghi chú: Giá trị giảm theo % nằm trong khoảng (0-100)%, Điều kiện giảm giá là giá trị đơn hàng tối thiểu</h5>
+	</div>
 	<div class="col-lg-12 col-sm-12 text-center mb-1" style="position: absolute; top: 110px; right: 0px;">
 		<img src="<?php echo base_url('public/images/data-loading.gif') ?>" id="data-loading" style="display: none; width: 65px">
 	</div>
@@ -52,6 +55,7 @@
 					<div class="col-lg-8">
 						<input type="text" class="form-control" id="discount" name="discount" value="<?php echo set_value('discount'); ?>">
 						<?php echo form_error('discount'); ?>
+						<h5 style="color: red"><?php echo isset($error) ? $error : ''; ?></h5>
 					</div>
 				</div>
 			</div>

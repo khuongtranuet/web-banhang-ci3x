@@ -103,6 +103,10 @@ class Customer extends CI_Controller
 			array('greater_than' => '<h5 style="color: red; height: 0px;">Vui lòng chọn Quận/Huyện!</h5>'));
 		$this->form_validation->set_rules('address', 'Địa chỉ', 'required',
 			array('required' => '<h5 style="color: red; height: 0px;">Trường này không được để trống!</h5>'));
+		$this->form_validation->set_rules('fullname_address', 'Tên người nhận', 'required',
+			array('required' => '<h5 style="color: red; height: 0px;">Trường này không được để trống!</h5>'));
+		$this->form_validation->set_rules('mobile_address', 'Số điện thoại người nhận', 'required',
+			array('required' => '<h5 style="color: red; height: 0px;">Trường này không được để trống!</h5>'));
 		$this->form_validation->set_rules('type_address', 'Loại địa chỉ', 'required',
 			array('required' => '<h5 style="color: red; height: 0px;">Vui lòng chọn trường này!</h5>'));
 		$this->form_validation->set_rules('status_address', 'Cài đặt địa chỉ', 'required',
@@ -171,6 +175,10 @@ class Customer extends CI_Controller
 		$this->form_validation->set_rules('ward', 'Xã/Phường/Thị trấn', 'greater_than[-1]',
 			array('greater_than' => '<h5 style="color: red; height: 0px;">Vui lòng chọn Quận/Huyện!</h5>'));
 		$this->form_validation->set_rules('address', 'Địa chỉ', 'required',
+			array('required' => '<h5 style="color: red; height: 0px;">Trường này không được để trống!</h5>'));
+		$this->form_validation->set_rules('fullname_address', 'Tên người nhận', 'required',
+			array('required' => '<h5 style="color: red; height: 0px;">Trường này không được để trống!</h5>'));
+		$this->form_validation->set_rules('mobile_address', 'Số điện thoại người nhận', 'required',
 			array('required' => '<h5 style="color: red; height: 0px;">Trường này không được để trống!</h5>'));
 		$this->form_validation->set_rules('type_address', 'Loại địa chỉ', 'required',
 			array('required' => '<h5 style="color: red; height: 0px;">Vui lòng chọn trường này!</h5>'));

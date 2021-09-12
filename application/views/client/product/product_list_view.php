@@ -25,19 +25,19 @@
 			<!-- Wrapper for slides -->
 			<div class="carousel-inner" role="listbox">
 				<div class="item active">
-					<img src="<?php echo base_url('public/images/header/slide1.png') ?>" alt="Chania" width="460"
+					<img src="<?php echo base_url('public/images/header/lcd-samsung-800-200-800x200.png') ?>" alt="Flower" width="460"
 						 height="345">
 				</div>
 				<div class="item">
-					<img src="<?php echo base_url('public/images/header/slider2.png') ?>" alt="Chania" width="460"
+					<img src="<?php echo base_url('public/images/header/iphone-12-800-200-800x200.png') ?>" alt="Chania" width="460"
 						 height="345">
 				</div>
 				<div class="item">
-					<img src="<?php echo base_url('public/images/header/slider3.png') ?>" alt="Flower" width="460"
+					<img src="<?php echo base_url('public/images/header/Oppo-A74-800-200-800x200.png') ?>" alt="Chania" width="460"
 						 height="345">
 				</div>
 				<div class="item">
-					<img src="<?php echo base_url('public/images/header/slider4.png') ?>" alt="Flower" width="460"
+					<img src="<?php echo base_url('public/images/header/ipad-800-200-800x200-1.png') ?>" alt="Flower" width="460"
 						 height="345">
 				</div>
 			</div>
@@ -54,17 +54,11 @@
 	</div>
 	<div class="col-lg-3" style="padding-top:20px">
 		<div class="row preorder-hot">
-			<img src="<?php echo base_url('public/images/header/anhvuong1.png') ?>" alt="Anh iphone 11"
-				 class="img-slider"/>
+			<img src="<?php echo base_url('public/images/header/Evogen11-390x97-2.png') ?>" alt="Anh iphone 11"
+				 class="img-slider-detail"/>
 
-			<img src="<?php echo base_url('public/images/header/anhvuong2.png') ?>" alt="Anh iphone"
-				 class="img-slider"/>
-
-			<img src="<?php echo base_url('public/images/header/anhvuong3.png') ?>" alt="Anh iphone 11"
-				 class="img-slider"/>
-
-			<img src="<?php echo base_url('public/images/header/anhvuong4.png') ?>" alt="Anh iphone"
-				 class="img-slider"/>
+			<img src="<?php echo base_url('public/images/header/sticky-micro-390x97.png') ?>" alt="Anh iphone"
+				 class="img-slider-detail"/>
 		</div>
 	</div>
 	<div class="col-lg-12 product-v2-heading">

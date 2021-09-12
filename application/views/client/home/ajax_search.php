@@ -1,9 +1,8 @@
 <?php if (isset($result_search) && $result_search): ?>
 	<div class="col-lg-12">
-		<div class="col-lg-10">
+		<div class="col-lg-12">
 			<strong>Sản phẩm gợi ý</strong>
 		</div>
-		<div class="col-lg-2"><i class="fa fa-remove close-btn"></i></div>
 	</div>
 	<?php foreach ($result_search as $result_product): ?>
 		<div class="col-lg-12">

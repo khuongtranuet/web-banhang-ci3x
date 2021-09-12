@@ -94,10 +94,14 @@ define('TBL_PRODUCT_ATTRIBUTE', 'product_attribute');
 define('TBL_PRODUCT_IMAGES', 'product_images');
 define('TBL_REPOSITORIES', 'repositories');
 define('TBL_PRODUCT_REPOSITORY', 'product_repository');
+define('TBL_PRODUCT_REVIEWS', 'product_reviews');
+define('TBL_PRODUCT_REVIEW_IMAGES', 'product_review_images');
 define('TBL_CUSTOMER_PRODUCT', 'customer_product');
 define('TBL_ADDRESSES', 'addresses');
 define('TBL_ORDERS', 'orders');
 define('TBL_ORDER_PRODUCT', 'order_product');
+define('TBL_PROVINCES', 'provinces');
+define('TBL_WARDS', 'wards');
 
 date_default_timezone_set('Asia/Ho_Chi_Minh');
 

@@ -28,10 +28,25 @@ class Product extends CI_Controller
 			$data['product_image'] = $this->product_model->select(' *', TBL_PRODUCT_IMAGES, ' WHERE product_id ='.$id.' AND type = 0');
 			$data['child_product'] = $this->product_model->product_child($id);
 			$data['product_connect'] = $this->product_model->ramdom_product_connect($id);
+			$data['province'] = $this->product_model->select(' *', TBL_PROVINCES);
+			$data['product_review'] = $this->product_model->product_review($id);
+			$total_stars = 0;
+			for ($i = 0; $i < count($data['product_review']); $i++) {
+				$total_stars += $data['product_review'][$i]['stars'];
+			}
+			if (count($data['product_review']) > 0) {
+				$data['sub_stars'] = round(($total_stars / count($data['product_review'])), 1);
+			}
 			if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add'])) {
 				if (isset($_SESSION['id'])) {
 					$params['customer_id'] = $_SESSION['id'];
 					$params['product_id'] = $this->input->post('product_id');
+					if (isset($_SESSION['cart'])) {
+						$key = array_search($params['product_id'], $_SESSION['cart']);
+						if ($key == '') {
+							array_push($_SESSION['cart'], $params['product_id']);
+						}
+					}
 					$params['quantity'] = $this->input->post('quantity');
 					$insert = $this->cart_model->insert_cart($params);
 					if (isset($insert) && $insert) {
@@ -91,6 +106,10 @@ class Product extends CI_Controller
 						redirect('client/cart/detail');
 					}
 				}
+			}
+			if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['review'])) {
+				echo_pre($_POST);
+				die();
 			}
 		}else{
 			$this->session->set_flashdata('error', 'Sản phẩm không tồn tại!');
@@ -155,5 +174,13 @@ class Product extends CI_Controller
 		$data['cate'] = $data['cate'][0];
 		$data['pagination_link'] = paginate_ajax2($total_record, $params['page_index'], $params['page_size']);
 		$this->load->view('client/product/ajax_list_view', $data);
+	}
+
+	public function ajax_stock_store() {
+		$params['product_id'] = $this->input->post('product_id');
+		$params['province'] = $this->input->post('province');
+		$params['district'] = $this->input->post('district');
+		$data['stock_store'] = $this->product_model->stock_store($params);
+		$this->load->view('client/product/ajax_stock_store', $data);
 	}
 }

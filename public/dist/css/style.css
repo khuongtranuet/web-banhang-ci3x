@@ -202,6 +202,12 @@ p.p-center {
 	height: 150px;
 	width: 150px;
 }
+#avatar_header {
+	width: 30px;
+	height: 30px;
+	border-radius: 15px;
+	border:1px solid white;
+}
 #file {
 	display: none;
 }
@@ -317,6 +323,50 @@ i.close-btn {
 	opacity 200ms ease-in-out 0ms,
 	transform 200ms ease-in-out 0ms;
 }
+.popup-review {
+	background-color: white;
+	border: 1px solid grey;
+	border-radius: 5px;
+	position: fixed;
+	top: -150%;
+	left: 50%;
+	opacity: 0;
+	transform: translate(-50%, -50%) scale(1.25);
+	transition: top 0ms ease-in-out 200ms,
+	opacity 200ms ease-in-out 0ms,
+	transform 200ms ease-in-out 0ms;
+}
+.popup-review.active-popup-add {
+	top: 50%;
+	width: 50%;
+	opacity: 1;
+	transform: translate(-50%, -50%) scale(1);
+	transition: top 0ms ease-in-out 0ms,
+	opacity 200ms ease-in-out 0ms,
+	transform 200ms ease-in-out 0ms;
+}
+.popup-check {
+	background-color: white;
+	border: 1px solid grey;
+	border-radius: 5px;
+	position: fixed;
+	top: -150%;
+	left: 50%;
+	opacity: 0;
+	transform: translate(-50%, -50%) scale(1.25);
+	transition: top 0ms ease-in-out 200ms,
+	opacity 200ms ease-in-out 0ms,
+	transform 200ms ease-in-out 0ms;
+}
+.popup-check.active-popup-add {
+	top: 50%;
+	width: 35%;
+	opacity: 1;
+	transform: translate(-50%, -50%) scale(1);
+	transition: top 0ms ease-in-out 0ms,
+	opacity 200ms ease-in-out 0ms,
+	transform 200ms ease-in-out 0ms;
+}
 .dropdown-category:hover > .dropdown-menu {
 	display: block;
 }
@@ -421,4 +471,65 @@ i.close-btn {
 	cursor: pointer;
 	max-width: 60%;
 	margin-left: 20%;
+}
+.star-widget input{
+	display: none;
+}
+.star-widget label {
+	font-size: 30px;
+	margin-right: 5px;
+	color: #cccccc;
+	float: right;
+	transition: all 0.2s ease;
+}
+.star-widget input:not(:checked) ~ label:hover,
+.star-widget input:not(:checked) ~ label:hover ~ label{
+	color: #ff7033;
+}
+.star-widget input:checked ~ label {
+	color: #ff7033;
+}
+textarea.text-rate{
+	border-color: rgb(185,198,197);
+	border-radius: 5px;
+	height: 100px;
+	width: 100%;
+	max-width: 100%;
+	min-width: 100%;
+	min-height: 100px;
+	max-height: 100px;
+}
+label.file-btn-rate {
+	cursor: pointer;
+	color: #0b5b97;
+}
+.form-border {
+	border-color: rgb(185,198,197);
+	border-radius: 5px;
+}
+button.btn-all-review {
+	margin-top: 15px;
+	background-color: #2f80ed;
+	border-color:#2f80ed;
+	color: white;
+	width: 45%;
+	border-radius: 4px;
+	font-size: 15px;
+	height: 45px;
+}
+button.btn-add-review {
+	width: 45%;
+	background-color: white;
+	color: #0b5b97;
+	margin-left: 10px;
+	margin-top: 15px;
+	border-color:#2f80ed;
+	border-radius: 4px;
+	font-size: 15px;
+	height: 45px;
+}
+.stock_list {
+	height: auto;
+	max-height: 250px;
+	overflow:auto;
 }

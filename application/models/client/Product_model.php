@@ -225,4 +225,38 @@ class Product_model extends CI_Model
 
 		return $query->result_array();
 	}
+
+	public function stock_store($params) {
+		$product_id = isset($params['product_id']) ? $params['product_id'] : '';
+		$province = isset($params['province']) ? $params['province'] : -1;
+		$district = isset($params['district']) ? $params['district'] : -1;
+		$this->db->select('*, '.TBL_REPOSITORIES.'.name AS repository_name, ');
+		$this->db->from(TBL_PRODUCT_REPOSITORY);
+		$this->db->join(TBL_REPOSITORIES, TBL_REPOSITORIES.'.id = '.TBL_PRODUCT_REPOSITORY.'.repository_id');
+		$this->db->join(TBL_WARDS, TBL_WARDS.'.id = '.TBL_REPOSITORIES.'.ward_id');
+		if (isset($province) && $province != -1) {
+			$this->db->where(TBL_REPOSITORIES.'.province_id = '.$province);
+		}
+		if (isset($district) && $district != -1) {
+			$this->db->where(TBL_REPOSITORIES.'.district_id = '.$district);
+		}
+		if (isset($product_id) && $product_id) {
+			$this->db->where(TBL_PRODUCT_REPOSITORY.'.product_id = '.$product_id);
+		}
+		$query = $this->db->get();
+		if (isset($product_id) && $product_id && isset($province) && $province != -1) {
+			return $query->result_array();
+		}else{
+			return '';
+		}
+	}
+
+	public function product_review($id) {
+		$this->db->select(' *');
+		$this->db->from(TBL_PRODUCT_REVIEWS);
+		$this->db->join(TBL_CUSTOMERS, TBL_CUSTOMERS.'.id = '.TBL_PRODUCT_REVIEWS.'.customer_id');
+		$this->db->where(TBL_PRODUCT_REVIEWS.'.product_id = '.$id);
+		$query = $this->db->get();
+		return $query->result_array();
+	}
 }

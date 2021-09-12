@@ -54,6 +54,13 @@ class Home extends CI_Controller
 					$_SESSION['id'] =  $result['id'];
 					$_SESSION['email'] = $result['email'];
 					$_SESSION['fullname'] = $result['fullname'];
+					$_SESSION['avatar'] = $result['avatar'];
+					$_SESSION['cart'] = array();
+					$_SESSION['cart'][0] = 'a';
+					$product_cart = $this->home_model->select(' *', TBL_CUSTOMER_PRODUCT, ' WHERE customer_id = '.$result['id']);
+					foreach ($product_cart as $result_cart) {
+						array_push($_SESSION['cart'], $result_cart['product_id']);
+					}
 					$this->session->set_flashdata('success', 'Chào mừng '.$result['fullname'].' đã trở lại, mua sắm vui vẻ cùng thế giới công nghệ nhé!');
 					redirect('client/home/index');
 				}else{

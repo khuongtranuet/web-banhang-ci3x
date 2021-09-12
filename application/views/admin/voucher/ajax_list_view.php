@@ -17,7 +17,7 @@
 			<tr>
 				<td class="text-center"><?php echo ($from + $key + 1); ?></td>
 				<td><?php echo $voucher_list['code']; ?></td>
-				<td class="text-right"><?php echo $voucher_list['discount']; ?>₫</td>
+				<td class="text-right"><?php echo $voucher_list['discount']; ?><?php echo ($voucher_list['discount_type'] == 1) ? '%' : '₫';?></td>
 				<td><?php if ($voucher_list['discount_type'] == 1) echo 'Giảm giá phần trăm';
 					else echo 'Giảm giá tiền'?></td>
 				<td class="text-right"><?php echo $voucher_list['condition']; ?>₫</td>

@@ -125,6 +125,12 @@ class Customer_model extends CI_Model
 		if (isset($data['address']) && $data['address'] != null) {
 			$address['address'] = $data['address'];
 		}
+		if (isset($data['fullname_address']) && $data['fullname_address'] != null) {
+			$address['fullname'] = $data['fullname_address'];
+		}
+		if (isset($data['mobile_address']) && $data['mobile_address'] != null) {
+			$address['mobile'] = $data['mobile_address'];
+		}
 		if (isset($data['type_address']) && $data['type_address'] != null) {
 			$address['type'] = $data['type_address'];
 		}
@@ -295,9 +301,12 @@ class Customer_model extends CI_Model
 	/**
 	 * Hàm cập nhật thông tin khách hàng
 	 */
-	public function update_customer($data, $id) {
+	public function update_customer($data, $id, $params = null) {
 		$customer = array();
 		$address = array();
+		if (isset($data['avatar']) && $data['avatar'] != null) {
+			$customer['avatar'] = $data['avatar'];
+		}
 		if (isset($data['fullname']) && $data['fullname'] != null) {
 			$customer['fullname'] = $data['fullname'];
 		}
@@ -334,23 +343,33 @@ class Customer_model extends CI_Model
 		if (isset($data['address']) && $data['address'] != null) {
 			$address['address'] = $data['address'];
 		}
+		if (isset($data['fullname_address']) && $data['fullname_address'] != null) {
+			$address['fullname'] = $data['fullname_address'];
+		}
+		if (isset($data['mobile_address']) && $data['mobile_address'] != null) {
+			$address['mobile'] = $data['mobile_address'];
+		}
 		if (isset($data['type_address']) && $data['type_address'] != null) {
 			$address['type'] = $data['type_address'];
 		}
 		if (isset($data['status_address']) && $data['status_address'] != null) {
 			$address['status'] = $data['status_address'];
 		}
-		$address['created_at'] = date('Y-m-d H:i:s');
-		$address['updated_at'] = date('Y-m-d H:i:s');
+		if (!isset($params['update_client'])) {
+			$address['created_at'] = date('Y-m-d H:i:s');
+			$address['updated_at'] = date('Y-m-d H:i:s');
+		}
 
 		$this->db->where('id', $id);
 //		$sql = $this->db->set($customer)->get_compiled_update('customers');
 //		echo $sql;
 		$this->db->update('customers', $customer);
-		$address_id = $this->select('*', 'addresses', "WHERE customer_id = '".$id."' AND status = '1'");
-		$address_id = $address_id[0]['id'];
-		$this->db->where('id', $address_id);
-		$this->db->update('addresses', $address);
+		if (!isset($params['update_client'])) {
+			$address_id = $this->select('*', 'addresses', "WHERE customer_id = '" . $id . "' AND status = '1'");
+			$address_id = $address_id[0]['id'];
+			$this->db->where('id', $address_id);
+			$this->db->update('addresses', $address);
+		}
 		return '1';
 	}
 

@@ -10,7 +10,7 @@
 		<div class="row">
 			<div class="col-lg-4">
 				<span>Địa chỉ người nhận</span>
-				<div class="col-lg-12 back-white product-v2-heading" style="min-height: 140px;">
+				<div class="col-lg-12 back-white product-v2-heading" style="min-height: 140px; border: 1px solid grey">
 					<strong>Trần Minh</strong>
 					<p>Địa chỉ: 100 Đường A, Phường Mỹ Đình 2, Quận Nam Từ Liêm, Hà Nội</p>
 					<p>Điện thoại: 0385700554</p>
@@ -18,14 +18,14 @@
 			</div>
 			<div class="col-lg-4">
 				<span>Hình thức giao hàng</span>
-				<div class="col-lg-12 back-white product-v2-heading" style="min-height: 140px;">
+				<div class="col-lg-12 back-white product-v2-heading" style="min-height: 140px;border: 1px solid grey">
 					<strong>Giao hàng tiết kiệm</strong>
 					<p>Phí vận chuyển: 35.000đ</p>
 				</div>
 			</div>
 			<div class="col-lg-4">
 				<span>Hình thức thanh toán</span>
-				<div class="col-lg-12 back-white product-v2-heading" style="min-height: 140px;">
+				<div class="col-lg-12 back-white product-v2-heading" style="min-height: 140px;border: 1px solid grey">
 					<p>Thanh toán khi nhận hàng</p>
 				</div>
 			</div>
@@ -35,7 +35,7 @@
 		<p style="height:10px; background-color:#f5f5f5;"></p>
 	</div>
 	<div class="col-lg-12">
-		<div class="col-lg-12 back-white product-v2-heading">
+		<div class="col-lg-12 back-white product-v2-heading" style="border: 1px solid grey">
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="col-lg-4">

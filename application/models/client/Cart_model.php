@@ -46,6 +46,10 @@ class Cart_model extends CI_Model
 		$is_delete = isset($data['is_delete']) ? $data['is_delete'] : '';
 		if (is_array($product_id) && $is_delete == true && $customer_id != '') {
 			for($i = 0; $i < count($product_id); $i++) {
+				$key = array_search($product_id[$i], $_SESSION['cart']);
+				if ($key != '') {
+					unset($_SESSION['cart'][$key]);
+				}
 				$this->db->where('customer_id', $customer_id);
 				$this->db->where('product_id', $product_id[$i]);
 				$result = $this->db->delete(TBL_CUSTOMER_PRODUCT);
@@ -112,6 +116,10 @@ class Cart_model extends CI_Model
 			}else{
 				$this->db->where('customer_id', $customer_id);
 				$this->db->where('product_id', $product_id);
+				$key = array_search($product_id, $_SESSION['cart']);
+				if ($key != '') {
+					unset($_SESSION['cart'][$key]);
+				}
 				$result = $this->db->delete(TBL_CUSTOMER_PRODUCT);
 			}
 		}

@@ -118,6 +118,10 @@ class Cart extends CI_Controller
 			if(isset($_GET) && $_GET) {
 				$params['customer_id'] = $_GET['cus_id'];
 				$params['product_id'] = $_GET['pd_id'];
+				$key = array_search($params['product_id'], $_SESSION['cart']);
+				if ($key != '') {
+					unset($_SESSION['cart'][$key]);
+				}
 				$delete = $this->cart_model->delete_cart($params);
 				if (isset($delete) && $delete) {
 					redirect('client/cart/detail');

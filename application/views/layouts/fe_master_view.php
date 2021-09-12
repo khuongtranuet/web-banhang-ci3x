@@ -56,6 +56,7 @@ $cate_list = dataTree($cate_list);
 		window.ajax_url = {
 			'cart_list': '<?php echo base_url("client/cart/ajax_list") ?>',
 			'product_list': '<?php echo base_url("client/product/ajax_list") ?>',
+			'ajax_stock_store': '<?php echo base_url("client/product/ajax_stock_store") ?>',
 			'ajax_search': '<?php echo base_url("client/home/ajax_search") ?>',
             'district_list': '<?php echo base_url("admin/home/ajax_district") ?>',
             'ward_list': '<?php echo base_url("admin/home/ajax_ward") ?>',
@@ -145,10 +146,16 @@ $cate_list = dataTree($cate_list);
 				<div class="col-lg-2">
 					<a href="<?php echo base_url('client/cart/detail') ?>">
 						<div class="row btn" style=" color: white; ">
-							<div class="col-lg-4">
+							<div class="col-lg-4" style="position: relative">
 								<i class="fa fa-shopping-cart list_i"></i>
+								<div class="quantity-cart-header">
+									<span><?php if (isset($_SESSION['product_id']))
+												echo isset($_SESSION['product_id']) ? count($_SESSION['product_id']) : '0';
+										elseif(isset($_SESSION['cart'])) echo isset($_SESSION['cart']) ? (count($_SESSION['cart']) - 1) : '0';
+										else echo '0';?></span>
+								</div>
 							</div>
-							<div class="col-lg-8" style=" margin-top:5px;">
+							<div class="col-lg-8 title-cart-header">
 								<span>Giỏ hàng</span>
 							</div>
 						</div>
@@ -162,7 +169,10 @@ $cate_list = dataTree($cate_list);
 								 aria-expanded="false"
 								 style="color: white;margin-top: 0px;display: flex;margin-left: -30px;">
 								<div class="col-lg-3">
-									<i class="fa fa-user-circle-o list_i"></i>
+<!--									<i class="fa fa-user-circle-o list_i"></i>-->
+									<img src="<?php if (isset($_SESSION['avatar']) && $_SESSION['avatar'] != '')
+										echo base_url('uploads/avatar_image/'.$_SESSION['avatar']);
+									else echo base_url('public/images/avatar-png.jpg') ?>" id="avatar_header">
 								</div>
 								<div class="col-lg-9" style=" float: right; margin-top:5px; ">
 									<span><?php if (isset($_SESSION['fullname'])) echo $_SESSION['fullname'];

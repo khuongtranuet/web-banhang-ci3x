@@ -84,10 +84,17 @@ class Voucher extends CI_Controller
 			foreach ($_POST as $key => $value) {
 				$voucher[$key] = htmlspecialchars($value);
 			}
-			$data['insert_$voucher'] = $this->voucher_model->insert_voucher($voucher);
-			if (isset($data['insert_$voucher']) && $data['insert_$voucher']) {
-				$this->session->set_flashdata('success', 'Thêm mã giảm giá mới thành công!');
-				redirect('admin/voucher/index');
+			if ($voucher['discount_type'] == '1') {
+				if ($voucher['discount'] < 0 || $voucher['discount'] > 100) {
+					$data['error'] = 'Giá trị giảm % nằm trong khoảng (0 - 100)%';
+				}
+			}
+			if (!isset($data['error'])) {
+				$data['insert_$voucher'] = $this->voucher_model->insert_voucher($voucher);
+				if (isset($data['insert_$voucher']) && $data['insert_$voucher']) {
+					$this->session->set_flashdata('success', 'Thêm mã giảm giá mới thành công!');
+					redirect('admin/voucher/index');
+				}
 			}
 			$this->load->view('layouts/be_master_view', $data);
 		}
@@ -156,10 +163,17 @@ class Voucher extends CI_Controller
 					foreach ($_POST as $key => $value) {
 						$voucher[$key] = htmlspecialchars($value);
 					}
-					$data['update_voucher'] = $this->voucher_model->update_voucher($voucher, $id);
-					if (isset($data['update_voucher']) && $data['update_voucher']) {
-						$this->session->set_flashdata('success', 'Chỉnh sửa thông tin mã giảm giá thành công!');
-						redirect('admin/voucher/index');
+					if ($voucher['discount_type'] == '1') {
+						if ($voucher['discount'] < 0 || $voucher['discount'] > 100) {
+							$data['error'] = 'Giá trị giảm % nằm trong khoảng (0 - 100)%';
+						}
+					}
+					if (!isset($data['error'])) {
+						$data['update_voucher'] = $this->voucher_model->update_voucher($voucher, $id);
+						if (isset($data['update_voucher']) && $data['update_voucher']) {
+							$this->session->set_flashdata('success', 'Chỉnh sửa thông tin mã giảm giá thành công!');
+							redirect('admin/voucher/index');
+						}
 					}
 				} else {
 					$this->session->set_flashdata('error', 'Mã giảm giá không tồn tại!');
