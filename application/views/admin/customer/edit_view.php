@@ -3,6 +3,9 @@
 	<div class="col-lg-12">
 		<h3>Chỉnh sửa thông tin người dùng</h3>
 	</div>
+	<div class="col-lg-12">
+		<h5>Ghi chú: Tên người nhận là tên người nhận hàng khi đặt hàng, số điện thoại nhận là số điện thoại nhận hàng khi đặt hàng</h5>
+	</div>
 	<div class="col-lg-12 col-sm-12 text-center mb-1" style="position: absolute; top: 110px; right: 0px;">
 		<img src="<?php echo base_url('public/images/data-loading.gif') ?>" id="data-loading" style="display: none; width: 65px">
 	</div>
@@ -191,6 +194,34 @@
 							   value="<?php $address = set_value('address');
 							   if($address) {echo $address;} else {echo $result['address'];}?>">
 						<?php echo form_error('address'); ?>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-12">
+			<div class="col-lg-6 form-group">
+				<div class="row">
+					<div class="col-lg-4">
+						<label class="control-label" for="fullname_address">Tên người nhận<span style="color: red;">(*)</span>:</label>
+					</div>
+					<div class="col-lg-8">
+						<input type="text" class="form-control" id="fullname_address" name="fullname_address"
+							   value="<?php $fullname_address = set_value('fullname_address');
+							   if($fullname_address) {echo $fullname_address;} else {echo $result['address_fullname'];}?>">
+						<?php echo form_error('fullname_address'); ?>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-6 form-group" style="margin-left: 10px;">
+				<div class="row">
+					<div class="col-lg-4">
+						<label class="control-label" for="mobile_address">Số điện thoại nhận<span style="color: red;">(*)</span>:</label>
+					</div>
+					<div class="col-lg-8">
+						<input type="text" class="form-control" id="mobile_address" name="mobile_address"
+							   value="<?php $mobile_address = set_value('mobile_address');
+							   if($mobile_address) {echo $mobile_address;} else {echo $result['address_mobile'];}?>">
+						<?php echo form_error('mobile_address'); ?>
 					</div>
 				</div>
 			</div>

@@ -314,23 +314,7 @@ class Repository extends CI_Controller
 	 */
 	public function add_store()
 	{
-		$_SESSION['product_store'] = 0;
-		$this->form_validation->set_rules('repository', 'Kho hàng', 'greater_than[-1]',
-			array('greater_than' => '<h5 style="color: red; height: 0px;">Vui lòng chọn trường này!</h5>'));
-		$this->form_validation->set_rules('import_date', 'Ngày nhập', 'required',
-			array('required' => '<h5 style="color: red; height: 0px;">Trường này không được để trống!</h5>'));
-//		$this->form_validation->set_rules('product', 'Sản phẩm', 'greater_than[-1]',
-//			array('greater_than' => '<h5 style="color: red; height: 0px;">Vui lòng chọn trường này!</h5>'));
-//		$this->form_validation->set_rules('import_quantity', 'Số lượng', 'required',
-//			array('required' => '<h5 style="color: red; height: 0px;">Trường này không được để trống!</h5>'));
-		if ($this->form_validation->run() == FALSE) {
-			$data['title'] = 'Thêm mới nhập kho';
-			$data['load_page'] = 'admin/repository/add_store_view';
-			$data['repository'] = $this->repository_model->select(' *', ' repositories');
-			$data['product'] = $this->repository_model->select(' *', 'products', ' ORDER BY products.name ASC');
-
-			$this->load->view('layouts/be_master_view', $data);
-		} else {
+		if ($_SERVER['REQUEST_METHOD'] = 'POST' && $_POST) {
 			$data['title'] = 'Thêm mới nhập kho';
 			$data['load_page'] = 'admin/repository/add_store_view';
 			$data['repository'] = $this->repository_model->select(' *', ' repositories');
@@ -340,12 +324,19 @@ class Repository extends CI_Controller
 			foreach ($_POST as $key => $value) {
 				$receipt[$key] = htmlspecialchars($value);
 			}
-			$receipt['number_store'] = (count($receipt) - 3) / 2;
+			$receipt['number_store'] = (count($receipt) - 3) / 3;
 			$data['insert_store'] = $this->repository_model->insert_store($receipt);
 			if (isset($data['insert_store']) && $data['insert_store']) {
 				$this->session->set_flashdata('success', 'Đã thêm thông tin nhập kho!');
 				redirect('admin/repository/store');
 			}
+			$this->load->view('layouts/be_master_view', $data);
+		} else {
+			$data['title'] = 'Thêm mới nhập kho';
+			$data['load_page'] = 'admin/repository/add_store_view';
+			$data['repository'] = $this->repository_model->select(' *', ' repositories');
+			$data['product'] = $this->repository_model->select(' *', 'products', ' ORDER BY products.name ASC');
+
 			$this->load->view('layouts/be_master_view', $data);
 		}
 	}
@@ -383,8 +374,11 @@ class Repository extends CI_Controller
 		}
 		if (is_numeric($id)) {
 			$params['id'] = $id;
-			$data['store'] = $this->repository_model->store_list($params, false);
-			if (count($data['store']) == 0) {
+			$params['date'] = $_GET['date'];
+			$data['detail_repository'] = $this->repository_model->detail_store($params);
+			$data['detail_product'] = $this->repository_model->detail_store($params, true);
+//			$data['store'] = $this->repository_model->store_list($params, false);
+			if (count($data['detail_repository']) == 0) {
 				$this->session->set_flashdata('error', 'Thông tin nhập kho không tồn tại!');
 				redirect('admin/repository/store');
 			}
@@ -392,48 +386,75 @@ class Repository extends CI_Controller
 			$this->session->set_flashdata('error', 'Thông tin nhập kho không tồn tại!');
 			redirect('admin/repository/store');
 		}
-		$params['repository_id'] = $data['store'][0]['repository_id'];
-		$params['import_date'] = $data['store'][0]['import_date'];
-		$data['product_store'] = $this->repository_model->store_list('', false, $params);
-		$total_valid = count($data['product_store']);
-		$this->form_validation->set_rules('repository', 'Kho hàng', 'greater_than[-1]',
-			array('greater_than' => '<h5 style="color: red; height: 0px;">Vui lòng chọn trường này!</h5>'));
-		$this->form_validation->set_rules('import_date', 'Ngày nhập', 'required',
-			array('required' => '<h5 style="color: red; height: 0px;">Trường này không được để trống!</h5>'));
-		for ($i = 0; $i < $total_valid; $i++) {
-			$this->form_validation->set_rules('product' . $i . '', 'Sản phẩm', 'greater_than[-1]',
-				array('greater_than' => '<h5 style="color: red; height: 0px;">Vui lòng chọn trường này!</h5>'));
-			$this->form_validation->set_rules('import_quantity' . $i . '', 'Số lượng', 'required',
-				array('required' => '<h5 style="color: red; height: 0px;">Trường này không được để trống!</h5>'));
-		}
-		if ($this->form_validation->run() == FALSE) {
-			$data['title_page'] = 'Chỉnh sửa nhập kho';
-			$data['load_page'] = 'admin/repository/edit_store_view';
-			$data['repository'] = $this->repository_model->select(' *', ' repositories');
-			$data['product'] = $this->repository_model->select(' *', 'products');
+		$data['title_page'] = 'Chỉnh sửa thông tin nhập kho';
+		$data['load_page'] = 'admin/repository/edit_store_view';
+		$data['repository'] = $this->repository_model->select(' *', ' repositories');
+		$data['product'] = $this->repository_model->select(' *', 'products');
 
-			$this->load->view('layouts/be_master_view', $data);
-		} else {
-			$data['title_page'] = 'Chỉnh sửa nhập kho';
-			$data['load_page'] = 'admin/repository/edit_store_view';
-			$data['repository'] = $this->repository_model->select(' *', ' repositories');
-			$data['product'] = $this->repository_model->select(' *', 'products');
-
-			$receipt = array();
-			foreach ($_POST as $key => $value) {
-				$receipt[$key] = htmlspecialchars($value);
-			}
-			if ($this->session->flashdata('number_store')) {
-				$receipt['number_store'] = $this->session->flashdata('number_store');
-			}
-			echo_pre($receipt);
-			$data['insert_store'] = $this->repository_model->insert_store($receipt);
-			if (isset($data['insert_store']) && $data['insert_store']) {
-				$this->session->set_flashdata('success', 'Đã thêm thông tin nhập kho!');
+		if (isset($_POST) && $_POST) {
+			$data['update_store'] = $this->repository_model->update_store($_POST, $params);
+			if (isset($data['update_store']) && $data['update_store']) {
+				$this->session->set_flashdata('success', 'Đã chỉnh sửa thông tin nhập kho!');
 				redirect('admin/repository/store');
 			}
-			$this->load->view('layouts/be_master_view', $data);
 		}
+		$this->load->view('layouts/be_master_view', $data);
 	}
 
+	/**
+	 * Thông tin chi tiết nhập kho
+	 * URL: /admin/repository/detail_store/(id kho hàng)
+	 */
+	public function detail_store($id = null)
+	{
+		$data['title'] = 'Thông tin chi tiết nhập kho';
+		$data['load_page'] = 'admin/repository/detail_store_view';
+		if (!isset($id) || $id == NULL) {
+			redirect('admin/repository/store');
+		} else {
+			$data['id'] = $id;
+		}
+		if (is_numeric($id)) {
+			$params['id'] = $id;
+			if (isset($_GET['date']) && $_GET['date']) {
+				$params['date'] = $_GET['date'];
+			}
+//			$params['date'] = str_replace(' ', 'T', $params['date']);
+			$data['detail_repository'] = $this->repository_model->detail_store($params);
+			$data['detail_product'] = $this->repository_model->detail_store($params, true);
+		} else {
+			$this->session->set_flashdata('error', 'Thông tin nhập kho không tồn tại!');
+			redirect('admin/repository/store');
+		}
+		$this->load->view('layouts/be_master_view', $data);
+	}
+
+	/**
+	 * Hàm xóa thông tin nhập kho
+	 * URL: /admin/repository/delete_store/(id kho hàng)
+	 */
+	public function delete_store($id = null)
+	{
+		if (!isset($id) || $id == NULL) {
+			redirect('admin/repository/store');
+		} else {
+			$data['id'] = $id;
+		}
+		$params['date'] = $_GET['date'];
+		if (is_numeric($id)) {
+			$stored = $this->repository_model->select(' *', TBL_PRODUCT_REPOSITORY, " WHERE repository_id = '" . $id . "' AND import_date = '" . $params['date'] . "' ");
+			if (count($stored) == 0) {
+				$this->session->set_flashdata('error', 'Thông tin nhập kho không tồn tại!');
+				redirect('admin/repository/store');
+			}
+			$delete = $this->repository_model->delete_repository($id, true, $params);
+			if (isset($delete) && $delete) {
+				$this->session->set_flashdata('success', 'Xóa thông tin nhập kho thành công!');
+				redirect('admin/repository/store');
+			}
+		} else {
+			$this->session->set_flashdata('error', 'Thông tin nhập kho không tồn tại!');
+			redirect('admin/repository/store');
+		}
+	}
 }

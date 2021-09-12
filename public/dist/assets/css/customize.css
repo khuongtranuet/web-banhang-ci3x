@@ -85,6 +85,12 @@
     height: 148px;
     width: 139px;
 }
+.img-slider-detail {
+	padding-left: 10px;
+	margin-bottom: 10px;
+	height: 101px;
+	width: 278px;
+}
 .logo_web {
     width: 160px;
     height: 45px;
@@ -209,6 +215,21 @@ a {
     font-size: 20px;
     font-weight: 600;
     line-height: 28px; 
+}
+.title-cart-header {
+	margin-top: 5px;
+	margin-left: -10px;
+}
+.quantity-cart-header {
+	background-color: rgb(255, 208, 0);
+	border-radius: 10px;
+	color: black;
+	height: 20px;
+	line-height: 20px;
+	position: absolute;
+	right: -5px;
+	top: 0;
+	width: 20px;
 }
 .product-v2-heading {
     padding-top: 10px;

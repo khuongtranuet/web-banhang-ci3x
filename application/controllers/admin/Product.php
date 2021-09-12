@@ -184,7 +184,7 @@ class Product extends CI_Controller
 		} else {
 			$data['errors'] = $errors;
 			$data['title_page'] = 'QL Sản phẩm';
-			$data['attribute'] = $this->product_model->query('id,name', TBL_ATTRIBUTES, 'ORDER BY name ASC');
+			$data['attribute'] = $this->product_model->query('id,name', TBL_ATTRIBUTES, ' ORDER BY name ASC');
 			$data['category'] = $this->product_model->query('id,name', TBL_CATEGORIES);
 			$data['brand'] = $this->product_model->query('id,name', TBL_BRANDS);
 			$data['load_page'] = 'admin/product/add_view';
