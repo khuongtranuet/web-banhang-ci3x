@@ -363,7 +363,8 @@ class Order extends CI_Controller
 			$data['load_page'] = 'admin/order/detail_view';
 			$data['order'] = $this->order_model->detail($id)[0];
 			$data['product'] = $this->order_model->get_order_product($id);
-			$data['voucher'] = $this->order_model->voucher($id)[0];
+			$data['voucher'] = $this->order_model->voucher($id);
+			if (count($data['voucher']) > 0) {$data['voucher'] = $data['voucher'][0];}
 			$this->load->view('layouts/be_master_view', $data);
 		} else {
 			$this->session->set_flashdata('error', 'Không tìm thấy đơn hàng!');

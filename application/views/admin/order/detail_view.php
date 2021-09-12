@@ -94,7 +94,7 @@
 		<div class="form-group col-lg-6">
 			<label class="col-lg-4" for="voucher_id">Mã giảm giá sản phẩm:</label>
 			<div class="col-lg-8">
-				<?php echo $voucher['name'] ? $voucher['name'] : 'Không có mã giảm giá' ?>
+				<?php echo isset($voucher['name']) ? $voucher['name'] : 'Không có mã giảm giá' ?>
 			</div>
 		</div>
 	</div>
