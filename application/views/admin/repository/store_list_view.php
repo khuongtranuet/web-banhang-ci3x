@@ -23,7 +23,6 @@
 						<input type="date" class="form-control" id="start_date" name="start_date" value="">
 					</div>
 				</div>
-
 			</div>
 			<div class="col-lg-3 col-sm-12 col-xs-12" style="margin-left: -15px">
 				<div class="row">

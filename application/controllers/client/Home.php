@@ -7,7 +7,8 @@ class Home extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->model(array(
-			'client/home_model'
+			'client/home_model',
+			'client/product_model',
 		));
 	}
 
@@ -45,12 +46,21 @@ class Home extends CI_Controller
 					setcookie("password", '');
 				}
 				$result = $this->home_model->select(' *', ' customers', ' WHERE (email = "'.$_POST['mobile'].'" OR mobile = "'.$_POST['mobile'].'")');
-				$result = $result[0];
+				if(count($result) > 0) {
+					$result = $result[0];
+				}
 				if(count($result) > 0 && $_POST['password'] == $result['password']) {
 					$_SESSION['login'] = true;
 					$_SESSION['id'] =  $result['id'];
 					$_SESSION['email'] = $result['email'];
 					$_SESSION['fullname'] = $result['fullname'];
+					$_SESSION['avatar'] = $result['avatar'];
+					$_SESSION['cart'] = array();
+					$_SESSION['cart'][0] = 'a';
+					$product_cart = $this->home_model->select(' *', TBL_CUSTOMER_PRODUCT, ' WHERE customer_id = '.$result['id']);
+					foreach ($product_cart as $result_cart) {
+						array_push($_SESSION['cart'], $result_cart['product_id']);
+					}
 					$this->session->set_flashdata('success', 'Chào mừng '.$result['fullname'].' đã trở lại, mua sắm vui vẻ cùng thế giới công nghệ nhé!');
 					redirect('client/home/index');
 				}else{
@@ -63,23 +73,12 @@ class Home extends CI_Controller
 		}
 	}
 
-	public function logout() {
-		$logout = $this->uri->segment('3');
-		if (isset($logout) && $logout == 'logout') {
-			session_destroy();
-			redirect('client/home/index');
-		}
-	}
-
-	public function register() {
-		$data['title_page'] = 'Đăng ký';
-		$data['load_page'] = 'client/home/register_view';
-		$this->load->view('layouts/fe_master_view', $data);
-	}
-
-	public function cart() {
-		$data['title_page'] = 'Giỏ hàng';
-		$data['load_page'] = 'client/cart/cart_login_view';
-		$this->load->view('layouts/fe_master_view', $data);
+	public function ajax_search() {
+		$params['keyword'] = $this->input->post('keyword');
+		$params['page_size'] = 5;
+		$params['from'] = 0;
+		$params['search'] = true;
+		$data['result_search'] = $this->product_model->product_list($params, false);
+		$this->load->view('client/home/ajax_search', $data);
 	}
 }

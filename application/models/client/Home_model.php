@@ -18,7 +18,7 @@ class Home_model extends CI_Model
 	}
 
 	public function product_list($type = null) {
-		$this->db->select(' *, product_images.id AS product_images_id');
+		$this->db->select(' *, products.id AS product_id ,product_images.id AS product_images_id');
 		$this->db->from(' products');
 		$this->db->join('product_images', 'product_images.product_id = products.id');
 		if(isset($type) && $type == 1) {
@@ -27,6 +27,8 @@ class Home_model extends CI_Model
 		if(isset($type) && $type == 2) {
 			$this->db->where("products.category_id = '2'");
 		}
+		$this->db->where(TBL_PRODUCTS.".parent_id IS NULL");
+		$this->db->where(TBL_PRODUCT_IMAGES.".type = '1'");
 		$this->db->order_by('products.sold', 'DESC');
 		$this->db->limit('10');
 		$query = $this->db->get();
