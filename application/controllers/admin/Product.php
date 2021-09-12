@@ -192,8 +192,7 @@ class Product extends CI_Controller
 		}
 	}
 
-	public
-	function edit($id)
+	public function edit($id)
 	{
 		$errors = array();
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {

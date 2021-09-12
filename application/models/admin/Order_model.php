@@ -22,6 +22,7 @@ class Order_model extends CI_Model
 		$this->db->from(TBL_ORDERS . ' AS o');
 		$this->db->join(TBL_CUSTOMERS . ' AS c', 'o.customer_id = c.id', 'LEFT');
 		$this->db->where('o.delete', 0);
+		$this->db->where('o.status != -2');
 		if ($keyword) {
 			$this->db->like('o.code', $keyword, 'both');
 		}
