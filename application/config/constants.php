@@ -93,6 +93,7 @@ define('TBL_ATTRIBUTES', 'attributes');
 define('TBL_PRODUCT_ATTRIBUTE', 'product_attribute');
 define('TBL_PRODUCT_IMAGES', 'product_images');
 define('TBL_REPOSITORIES', 'repositories');
+define('TBL_ORDER_VOUCHER', 'order_voucher');
 define('TBL_PRODUCT_REPOSITORY', 'product_repository');
 define('TBL_PRODUCT_REVIEWS', 'product_reviews');
 define('TBL_PRODUCT_REVIEW_IMAGES', 'product_review_images');

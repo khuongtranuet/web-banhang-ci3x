@@ -53,7 +53,7 @@
 		<div class="form-group">
 			<label class="control-label col-lg-2" for="description">Mô tả:</label>
 			<div class="col-lg-9">
-				<textarea style="resize: vertical;border: 1px solid black; min-height: 200px;width: 895px"
+				<textarea style="border-radius:5px;resize: vertical;border: 1px solid lightgray; min-height: 200px;width: 895px"
 						  name="description" id="description"><?php echo set_value('description') ?></textarea>
 			</div>
 		</div>
@@ -144,8 +144,8 @@
 				<div class="row">
 					<div class="col-lg-6">
 						<div class="radio">
-							<label><input type="radio" value="1" name="priority"
-										<?php echo (set_value('priority') == 1) ? 'checked' : ''; ?>>Có</label>
+							<input type="checkbox" value="1" name="priority"
+										<?php echo (set_value('priority') == 1) ? 'checked' : ''; ?>>
 						</div>
 					</div>
 				</div>

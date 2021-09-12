@@ -4,7 +4,7 @@
 		<th class="text-center">STT</th>
 		<th class="text-center">Tên sản phẩm</th>
 		<th class="text-center">Thương hiệu</th>
-		<td class="text-center">Danh mục</td>
+		<th class="text-center">Danh mục</th>
 		<th class="text-center">Đơn giá</th>
 		<th class="text-center">Tình trạng</th>
 		<th class="text-center">Đã bán</th>
@@ -48,15 +48,15 @@
 				</td>
 				<td style="text-align: right"><?php echo $data['sold']; ?></td>
 				<td class="text-center " style="width: 110px;">
-					<a href="<?php echo base_url('admin/category/detail/'.$data['id'].'') ?>"
+					<a href="<?php echo base_url('admin/product/detail/'.$data['id'].'') ?>"
 					   title="Nhấn để xem chi tiết">
 						<i class="fa fa-eye"></i>
 					</a>&nbsp
-					<a href="<?php echo base_url('admin/category/edit/'.$data['id'].'') ?>"
+					<a href="<?php echo base_url('admin/product/edit/'.$data['id'].'') ?>"
 					   title="Nhấn để chỉnh sửa">
 						<i class="fa fa-pencil-square"></i>
 					</a>&nbsp
-					<a href="<?php echo base_url('admin/category/delete/'.$data['id'].'') ?>"
+					<a href="<?php echo base_url('admin/product/delete/'.$data['id'].'') ?>"
 					   title="Nhấn để xóa" style="color: red"
 					   onclick="return confirm('Bạn muốn xóa người dùng <?php echo $data['name']; ?> này không?')">
 						<i class="fa fa-trash"></i>
