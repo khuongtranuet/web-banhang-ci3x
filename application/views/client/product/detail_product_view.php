@@ -21,16 +21,17 @@
 						<h4 style="display: inline-block"><?php echo $product_detail['category_name'] . ' ' . $product_detail['product_name']; ?></h4>
 						<div class="detail-rate" style="display: inline-block">
 							<?php if (isset($sub_stars)): ?>
-							<p>
-								<?php for ($i = 0; $i < round($sub_stars); $i++): ?>
-								<i class="fa fa-star"></i>
-								<?php endfor; ?>
-								<?php for ($i = 0; $i < (5-round($sub_stars)); $i++): ?>
-								<i class="fa fa-star-o" style="color: #ff7033"></i>
-								<?php endfor; ?>
-							</p>
+								<p>
+									<?php for ($i = 0; $i < round($sub_stars); $i++): ?>
+										<i class="fa fa-star"></i>
+									<?php endfor; ?>
+									<?php for ($i = 0; $i < (5 - round($sub_stars)); $i++): ?>
+										<i class="fa fa-star-o" style="color: #ff7033"></i>
+									<?php endfor; ?>
+								</p>
 							<?php endif; ?>
-							<p class="detail-rate-total"><?php echo isset($product_review) ? count($product_review) : '0'; ?> <span>đánh giá</span></p>
+							<p class="detail-rate-total"><?php echo isset($product_review) ? count($product_review) : '0'; ?>
+								<span>đánh giá</span></p>
 							<p class="detail-rate-total"><i class="fa fa-plus-circle"></i> So sánh</p>
 						</div>
 					</div>
@@ -105,27 +106,29 @@
 						<div class="col-lg-12 content-product">
 							<p class="content-max"
 							   id="div-description"><?php if ($product_detail['product_description'] != ''):
-								echo $product_detail['product_description']; ?>
-							<?php else: ?>
-								<p class="content-max"><?php echo 'Chưa có mô tả cho sản phẩm này'; ?></p>
+									echo $product_detail['product_description']; ?>
+								<?php else: ?>
+							<p class="content-max"><?php echo 'Chưa có mô tả cho sản phẩm này'; ?></p>
 							<?php endif; ?>
 							<div class="col-lg-12 more-detail" id="description">
 								<span>Xem thêm <i class="fa fa-caret-down"></i></span>
 							</div>
 						</div>
-						<div class="col-lg-12 back-white alert-login" style="border: 1px solid #cccccc; border-radius: 10px">
-							<h4>Đánh giá <?php echo $product_detail['category_name'] . ' ' . $product_detail['product_name']; ?></h4>
+						<div class="col-lg-12 back-white alert-login"
+							 style="border: 1px solid #cccccc; border-radius: 10px">
+							<h4>Đánh
+								giá <?php echo $product_detail['category_name'] . ' ' . $product_detail['product_name']; ?></h4>
 							<div class="detail-rate" style="display: inline-block">
 								<?php if (isset($sub_stars)): ?>
-								<p>
-									<b style="font-size: 20px;color: #ff7033"><?php echo isset($sub_stars) ? $sub_stars : '0' ?></b>
-									<?php for ($i = 0; $i < round($sub_stars); $i++): ?>
-										<i class="fa fa-star"></i>
-									<?php endfor; ?>
-									<?php for ($i = 0; $i < (5-round($sub_stars)); $i++): ?>
-										<i class="fa fa-star-o" style="color: #ff7033"></i>
-									<?php endfor; ?>
-								</p>
+									<p>
+										<b style="font-size: 20px;color: #ff7033"><?php echo isset($sub_stars) ? $sub_stars : '0' ?></b>
+										<?php for ($i = 0; $i < round($sub_stars); $i++): ?>
+											<i class="fa fa-star"></i>
+										<?php endfor; ?>
+										<?php for ($i = 0; $i < (5 - round($sub_stars)); $i++): ?>
+											<i class="fa fa-star-o" style="color: #ff7033"></i>
+										<?php endfor; ?>
+									</p>
 								<?php endif; ?>
 								<span><?php echo isset($product_review) ? count($product_review) : '0'; ?> đánh giá</span>
 							</div>
@@ -134,39 +137,49 @@
 									<p style="height:1px; background-color: #cccccc;"></p>
 								</div>
 							</div>
-							<?php $max_show = 0; if(isset($product_review) && $product_review): ?>
-							<?php foreach ($product_review as $result_review): $max_show++; ?>
-								<?php if ($max_show == 6) break; ?>
-							<div class="row">
-								<div class="col-lg-12">
-									<img src="<?php if (isset($result_review['avatar']) && $result_review['avatar'])
-										echo base_url('uploads/avatar_image/' . $result_review['avatar']);
-									else echo base_url('public/images/avatar-png.jpg') ?>" id="avatar_header"
-										 style="border-color: grey">
-									<strong><?php echo $result_review['fullname']; ?></strong>
-								</div>
-								<div class="col-lg-12">
-									<div class="detail-rate" style="display: inline-block">
-										<p>
-											<?php for($i = 0; $i < $result_review['stars']; $i++): ?>
-											<i class="fa fa-star"></i>
-											<?php endfor; ?>
-											<?php for($i = 0; $i < (5-$result_review['stars']); $i++): ?>
-											<i class="fa fa-star-o" style="color: #ff7033"></i>
-											<?php endfor; ?>
-										</p>
+							<?php $max_show = 0;
+							if (isset($product_review) && $product_review): ?>
+								<?php foreach ($product_review as $result_review): $max_show++; ?>
+									<?php if ($max_show == 5) break; ?>
+									<div class="row">
+										<div class="col-lg-12">
+											<img src="<?php if (isset($result_review['avatar']) && $result_review['avatar'])
+												echo base_url('uploads/avatar_image/' . $result_review['avatar']);
+											else echo base_url('public/images/avatar-png.jpg') ?>" id="avatar_header"
+												 style="border-color: grey">
+											<strong><?php echo $result_review['fullname']; ?></strong>
+										</div>
+										<div class="col-lg-12">
+											<div class="detail-rate" style="display: inline-block">
+												<p>
+													<?php for ($i = 0; $i < $result_review['stars']; $i++): ?>
+														<i class="fa fa-star"></i>
+													<?php endfor; ?>
+													<?php for ($i = 0; $i < (5 - $result_review['stars']); $i++): ?>
+														<i class="fa fa-star-o" style="color: #ff7033"></i>
+													<?php endfor; ?>
+												</p>
+											</div>
+										</div>
+										<div class="col-lg-12 content-product">
+											<p><?php echo $result_review['content']; ?></p>
+										</div>
+										<?php if (count($result_review['path']) > 0): ?>
+											<?php foreach ($result_review['path'] as $img): ?>
+												<img src="<?php echo base_url('uploads/review_image/' . $img['path']) ?>"
+													 alt="<?php echo $img['path'] ?>" height="125px"
+													 width="125px" class="review_image"
+													 style="margin-left: 7px; margin-bottom: 7px; border-radius: 10px"
+												>
+											<?php endforeach; ?>
+										<?php endif; ?>
 									</div>
-								</div>
-								<div class="col-lg-12 content-product">
-									<p><?php echo $result_review['content']; ?></p>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-lg-12">
-									<p style="height:1px; background-color: #cccccc;"></p>
-								</div>
-							</div>
-							<?php endforeach; ?>
+									<div class="row">
+										<div class="col-lg-12">
+											<p style="height:1px; background-color: #cccccc;"></p>
+										</div>
+									</div>
+								<?php endforeach; ?>
 							<?php endif; ?>
 							<div class="row product-v2-heading text-center">
 								<div class="col-lg-12">
@@ -204,7 +217,8 @@
 								<p class="p-center">Gọi đặt mua <a>1800.0000</a> (7h30 - 22h)</p>
 							</div>
 							<div class="col-lg-12">
-								<h4>Cấu hình <?php echo $product_detail['category_name'] . ' ' . $product_detail['product_name'] ?></h4>
+								<h4>Cấu
+									hình <?php echo $product_detail['category_name'] . ' ' . $product_detail['product_name'] ?></h4>
 							</div>
 							<div class="col-lg-12">
 								<?php if (isset($attribute_product) && $attribute_product): ?>
@@ -450,7 +464,7 @@
 	</form>
 </div>
 <div class="popup-review">
-	<form method="POST" id="review-form">
+	<form method="POST" id="review-form" enctype="multipart/form-data">
 		<div class="row" style="margin-top: 10px">
 			<div class="col-lg-12">
 				<div class="col-lg-10">
@@ -465,11 +479,15 @@
 			</div>
 			<div class="col-lg-12">
 				<div class="col-lg-12">
-					<textarea class="form-control text-rate" placeholder="Mời bạn chia sẻ một số cảm nhận"></textarea>
+					<textarea class="form-control text-rate" placeholder="Mời bạn chia sẻ một số cảm nhận"
+							  name="content"><?php echo set_value('content') ?></textarea>
+					<span style="color: red"><?php echo form_error('content') ?></span>
 				</div>
 				<div class="col-lg-12 product-v2-heading">
-					<input type="file" id="img-review" name="img-review" style="display: none">
-					<label for="img-review" class="file-btn-rate"><i class="fa fa-camera"></i> Gửi hình chụp thực tế</label>
+					<input type="file" id="img-review" name="img-review[]" style="display: none" multiple>
+					<label for="img-review" class="file-btn-rate"><i class="fa fa-camera"></i> Gửi hình chụp thực
+						tế</label>
+					<span style="color: red"><?php echo form_error('img-review') ?></span>
 				</div>
 			</div>
 			<div class="col-lg-12">
@@ -480,33 +498,45 @@
 						</div>
 						<div class="col-lg-6 text-center">
 							<div class="star-widget" style="display: inline-block;">
-								<input type="radio" name="rate" id="rate-5" value="5">
+								<input type="radio" name="rate" id="rate-5" value="5"
+										<?php echo set_value('rate') == 5 ? 'checked' : '' ?>>
 								<label for="rate-5" class="fa fa-star"></label>
-								<input type="radio" name="rate" id="rate-4" value="4">
+								<input type="radio" name="rate" id="rate-4" value="4"
+										<?php echo set_value('rate') == 4 ? 'checked' : '' ?>>
 								<label for="rate-4" class="fa fa-star"></label>
-								<input type="radio" name="rate" id="rate-3" value="3">
+								<input type="radio" name="rate" id="rate-3" value="3"
+										<?php echo set_value('rate') == 3 ? 'checked' : '' ?>>
 								<label for="rate-3" class="fa fa-star"></label>
-								<input type="radio" name="rate" id="rate-2" value="2">
+								<input type="radio" name="rate" id="rate-2" value="2"
+										<?php echo set_value('rate') == 2 ? 'checked' : '' ?>>
 								<label for="rate-2" class="fa fa-star"></label>
-								<input type="radio" name="rate" id="rate-1" value="1">
+								<input type="radio" name="rate" id="rate-1" value="1"
+										<?php echo set_value('rate') == 1 ? 'checked' : '' ?>>
 								<label for="rate-1" class="fa fa-star"></label>
 							</div>
+							<span style="color: red"><?php echo form_error('rate') ?></span>
 						</div>
 					</div>
 				</div>
 			</div>
 			<?php if (!isset($_SESSION['login'])): ?>
-			<div class="col-lg-12">
-				<div class="col-lg-4">
-					<input type="text" id="name" name="name" class="form-control form-border" placeholder="Họ và tên">
+				<div class="col-lg-12">
+					<div class="col-lg-4">
+						<input type="text" id="fullname" name="fullname" class="form-control form-border"
+							   placeholder="Họ và tên" value="<?php echo set_value('fullname') ?>">
+						<span style="color: red"><?php echo form_error('fullname') ?></span>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" id="mobile" name="mobile" class="form-control form-border"
+							   placeholder="Số điện thoại" value="<?php echo set_value('mobile') ?>">
+						<span style="color: red"><?php echo form_error('mobile') ?></span>
+					</div>
+					<div class="col-lg-4">
+						<input type="text" id="email" name="email" class="form-control form-border"
+							   placeholder="Email" value="<?php echo set_value('email') ?>">
+						<span style="color: red"><?php echo form_error('email') ?></span>
+					</div>
 				</div>
-				<div class="col-lg-4">
-					<input type="text" id="mobile" name="mobile" class="form-control form-border" placeholder="Số điện thoại">
-				</div>
-				<div class="col-lg-4">
-					<input type="text" id="email" name="email" class="form-control form-border" placeholder="Email">
-				</div>
-			</div>
 			<?php endif; ?>
 			<div class="col-lg-12" style="margin-bottom: 10px">
 				<div class="col-lg-12">
@@ -572,8 +602,8 @@
 				<div class="col-lg-6">
 					<select class="form-control form-border" name="province" id="province">
 						<option value="-1">- Tỉnh/TP -</option>
-						<?php if(isset($province) && $province):?>
-							<?php foreach ($province as $result_province):?>
+						<?php if (isset($province) && $province): ?>
+							<?php foreach ($province as $result_province): ?>
 								<option value="<?php echo $result_province['id']; ?>"><?php echo $result_province['name']; ?></option>
 							<?php endforeach; ?>
 						<?php endif; ?>
@@ -675,7 +705,7 @@
 	});
 
 	var product_id = document.getElementsByName('product_id');
-	for (i = 0; i < product_id.length ; i++) {
+	for (i = 0; i < product_id.length; i++) {
 		var input = product_id[i];
 		input.addEventListener('click', function () {
 			var params = [];
@@ -684,7 +714,8 @@
 			params['district'] = document.getElementById('district').value;
 			callAjaxAddress(params, window.ajax_url.ajax_stock_store);
 		})
-	};
+	}
+	;
 
 	document.getElementById('district').addEventListener('change', function () {
 		var params = [];
@@ -765,6 +796,7 @@
 		});
 		filterAddress('province', window.ajax_url.district_list);
 	});
+
 	function filterAddress(id, url_ajax) {
 		$('#' + id).change(function () {
 			document.getElementById('district').value = -1;
@@ -777,6 +809,7 @@
 			callAjaxAddress(params, window.ajax_url.ajax_stock_store);
 		});
 	}
+
 	function callAjaxAddress(params, url_ajax) {
 		$.ajax({
 			url: url_ajax,
@@ -793,6 +826,7 @@
 		$(document).ajaxError(function () {
 		});
 	}
+
 	function getDistrictStockStoreByProvince(id_address, url_ajax) {
 		$.ajax({
 			url: url_ajax,
