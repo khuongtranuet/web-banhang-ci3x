@@ -130,6 +130,10 @@ class Cart_model extends CI_Model
 		$product_id = isset($data['product_id']) ? $data['product_id'] : '';
 		$customer_id = isset($data['customer_id']) ? $data['customer_id'] : '';
 		if ($product_id != '' && $customer_id != '') {
+			$key = array_search($product_id, $_SESSION['cart']);
+			if ($key != '') {
+				unset($_SESSION['cart'][$key]);
+			}
 			$this->db->where('customer_id', $customer_id);
 			$this->db->where('product_id', $product_id);
 			$result = $this->db->delete(TBL_CUSTOMER_PRODUCT);

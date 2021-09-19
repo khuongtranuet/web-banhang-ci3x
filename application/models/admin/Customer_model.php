@@ -158,7 +158,7 @@ class Customer_model extends CI_Model
 			  AND '.TBL_ORDERS.'.status = -2');
 			if (count($check_exist) > 0) {
 				$check_address = $this->select(' *', TBL_ORDERS, ' WHERE address_id = '.$check_exist[0]['address_id']);
-				if (count($check_address) == 1) {
+				if (count($check_address) == 1 && $check_address[0]['status'] = -2) {
 					$check_address_customer = $this->select(' *', TBL_ADDRESSES, ' WHERE customer_id = '.$check_address[0]['customer_id']);
 					if (count($check_address_customer) == 1) {
 						$this->db->where('order_id', $check_exist[0]['order_id']);
@@ -195,20 +195,38 @@ class Customer_model extends CI_Model
 				$check_address_exist = $this->select(' *', TBL_ADDRESSES, ' WHERE customer_id = '.$check_customer_exist[0]['id'].' AND mobile = '
 				.$data['mobile']);
 				if (count($check_address_exist) > 0) {
-					if ($check_address_exist[0]['province_id'] == $data['province'] && $check_address_exist[0]['district_id'] == $data['district'] &&
-						$check_address_exist[0]['ward_id'] == $data['ward']) {
-						$update_address = array(
-							'fullname' => $data['fullname'],
-							'address' => $data['address'],
-						);
-						$this->db->where('id', $check_address_exist[0]['id']);
-						$this->db->update(TBL_ADDRESSES, $update_address);
-						$params['address_id'] = $check_address_exist[0]['id'];
-					}else{
+					for ($i = 0; $i < count($check_address_exist); $i++) {
+						if ($check_address_exist[$i]['province_id'] == $data['province'] && $check_address_exist[$i]['district_id'] == $data['district'] &&
+							$check_address_exist[$i]['ward_id'] == $data['ward']) {
+							$update_address = array(
+								'fullname' => $data['fullname'],
+								'address' => $data['address'],
+							);
+							$this->db->where('id', $check_address_exist[$i]['id']);
+							$this->db->update(TBL_ADDRESSES, $update_address);
+							$params['address_id'] = $check_address_exist[$i]['id'];
+							$is_update = true;
+						}
+					}
+					if (!isset($is_update)) {
 						$address['customer_id'] = $check_customer_exist[0]['id'];
 						$this->db->insert(TBL_ADDRESSES, $address);
 						$params['address_id'] = $this->db->insert_id();
 					}
+//					if ($check_address_exist[0]['province_id'] == $data['province'] && $check_address_exist[0]['district_id'] == $data['district'] &&
+//						$check_address_exist[0]['ward_id'] == $data['ward']) {
+//						$update_address = array(
+//							'fullname' => $data['fullname'],
+//							'address' => $data['address'],
+//						);
+//						$this->db->where('id', $check_address_exist[0]['id']);
+//						$this->db->update(TBL_ADDRESSES, $update_address);
+//						$params['address_id'] = $check_address_exist[0]['id'];
+//					}else{
+//						$address['customer_id'] = $check_customer_exist[0]['id'];
+//						$this->db->insert(TBL_ADDRESSES, $address);
+//						$params['address_id'] = $this->db->insert_id();
+//					}
 				}else{
 					$address['customer_id'] = $check_customer_exist[0]['id'];
 					$this->db->insert(TBL_ADDRESSES, $address);

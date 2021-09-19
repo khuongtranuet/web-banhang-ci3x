@@ -54,10 +54,10 @@ $action = $this->router->fetch_method();
 			'ward_list': '<?php echo base_url("admin/home/ajax_ward") ?>',
 			'store_list': '<?php echo base_url("admin/repository/ajax_store_list") ?>',
 			'product_store': '<?php echo base_url("admin/repository/ajax_product_store") ?>',
-      'product_id': '<?php echo base_url("admin/order/get_price") ?>',
+            'product_id': '<?php echo base_url("admin/order/get_price") ?>',
 			'customer_id' : '<?php echo base_url("admin/order/get_address") ?>',
 			'get_voucher' : '<?php echo base_url("admin/order/get_voucher") ?>',
-      'order_list' : '<?php echo base_url("admin/order/ajax_list")  ?>',
+            'order_list' : '<?php echo base_url("admin/order/ajax_list")  ?>',
 			'product_statistic_list': '<?php echo base_url("admin/statistic/ajax_product_statistic") ?>',
 		}
 	</script>

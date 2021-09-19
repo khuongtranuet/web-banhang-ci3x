@@ -309,3 +309,31 @@ function dataTree($data, $parent_id = null, $level = 0) {
 	}
 	return $result;
 }
+
+function statusOrder($status) {
+	switch ($status) {
+		case 0: return 'Chờ tiếp nhận';
+		case -1: return 'Hủy đơn hàng';
+		case 1: return 'Chưa tiếp nhận';
+		case 2: return 'Đã tiếp nhận';
+		case 3: return 'Đã lấy hàng/Đã nhập kho';
+		case 4: return 'Đã điều phối giao hàng/Đang giao hàng';
+		case 5: return 'Đã giao hàng/Chưa đối soát';
+		case 6: return 'Đã đối soát';
+		case 7: return 'Không lấy được hàng';
+		case 8: return 'Hoãn lấy hàng';
+		case 9: return 'Không giao được hàng';
+		case 10: return 'Delay giao hàng';
+		case 11: return 'Đã đối soát công nợ trả hàng';
+		case 12: return 'Đã điều phối lấy hàng/Đang lấy hàng';
+		case 13: return 'Đơn hàng bồi hoàn';
+		case 20: return 'Đang trả hàng (COD cầm hàng đi trả)';
+		case 21: return 'Đã trả hàng (COD đã trả xong hàng)';
+		case 123: return 'Shipper báo đã lấy hàng';
+		case 127: return 'Shipper (nhân viên lấy/giao hàng) báo không lấy được hàng';
+		case 128: return 'Shipper báo delay lấy hàng';
+		case 45: return 'Shipper báo đã giao hàng';
+		case 49: return 'Shipper báo không giao được giao hàng';
+		case 410: return 'Shipper báo delay giao hàng';
+	}
+}
