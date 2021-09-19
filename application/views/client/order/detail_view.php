@@ -2,18 +2,20 @@
 	<div class="col-lg-12">
 		<h4 class="title-cart">CHI TIẾT ĐƠN HÀNG</h4>
 	</div>
+	<?php if (isset($order) && $order): ?>
+	<?php foreach ($order as $result): ?>
 	<div class="col-lg-12">
-		<strong>#293015 - Đang giao</strong>
-		<span class="position-right">Ngày đặt: 28/08/2021</span>
+		<strong><?php echo '#'.$result['order_code'].' - '.statusOrder($result['order_status']) ?></strong>
+		<span class="position-right">Ngày đặt: <?php echo date('H:i:s d-m-Y', strtotime($result['order_date'])); ?></span>
 	</div>
 	<div class="col-lg-12 product-v2-heading">
 		<div class="row">
 			<div class="col-lg-4">
 				<span>Địa chỉ người nhận</span>
 				<div class="col-lg-12 back-white product-v2-heading" style="min-height: 140px; border: 1px solid grey">
-					<strong>Trần Minh</strong>
-					<p>Địa chỉ: 100 Đường A, Phường Mỹ Đình 2, Quận Nam Từ Liêm, Hà Nội</p>
-					<p>Điện thoại: 0385700554</p>
+					<strong><?php echo $result['fullname']; ?></strong>
+					<p>Địa chỉ: <?php echo $result['address'].', '.$result['full_location']; ?></p>
+					<p>Điện thoại: <?php echo $result['mobile']; ?></p>
 				</div>
 			</div>
 			<div class="col-lg-4">
@@ -26,7 +28,8 @@
 			<div class="col-lg-4">
 				<span>Hình thức thanh toán</span>
 				<div class="col-lg-12 back-white product-v2-heading" style="min-height: 140px;border: 1px solid grey">
-					<p>Thanh toán khi nhận hàng</p>
+					<p><?php if ($result['payment_method'] == 1) echo 'Thanh toán VNPay';
+							else echo 'Thanh toán khi nhận hàng'; ?></p>
 				</div>
 			</div>
 		</div>
@@ -55,33 +58,36 @@
 					</div>
 				</div>
 			</div>
+			<?php if (isset($order_product) && $order_product): ?>
+			<?php foreach ($order_product as $result_product): ?>
 			<div class="row product-v2-heading">
-				<div class="col-lg-12">
+				<div class="col-lg-12" style="height: 78px;">
 					<div class="col-lg-4">
 						<div class="row">
 							<div class="col-lg-5">
-								<img src="<?php echo base_url('public/images/header/iphone-12-den-200x200.jpg') ?>"
-									 style="height:78px; width:78px;" alt="iphone 12">
+								<img src="<?php echo base_url('uploads/product_image/'.$result_product['path']) ?>"
+									 style="height: auto; max-height:78px; width:78px;" alt="iphone 12">
 							</div>
 							<div class="col-lg-7" style="margin-left:-30px; width:(100% + 30px);">
 								<div class="row">
-									<span>Điện thoại Iphone 12 64GB</span>
-									<p>Màu Đen</p>
+									<span><?php echo $result_product['name']; ?></span>
+									<p><?php if (isset($result_product['color']) && $result_product['color'] != '' )
+										echo 'Màu '.$result_product['color']; ?></p>
 								</div>
 							</div>
 						</div>
 					</div>
 					<div class="col-lg-2 text-center">
-						<span>22.990.000đ</span>
+						<span><?php echo convertPrice($result_product['price']); ?>đ</span>
 					</div>
 					<div class="col-lg-2 text-center">
-						<span>1</span>
+						<span><?php echo $result_product['quantity']; ?></span>
 					</div>
 					<div class="col-lg-2 text-center">
 						<span>0đ</span>
 					</div>
 					<div class="col-lg-2 text-center">
-						<span>22.990.000đ</span>
+						<span><?php echo convertPrice($result_product['price']*$result_product['quantity']); ?>đ</span>
 					</div>
 				</div>
 			</div>
@@ -90,12 +96,14 @@
 					<p style="height:1px;background-color:#cccccc"></p>
 				</div>
 			</div>
+			<?php endforeach; ?>
+			<?php endif; ?>
 			<div class="row product-v2-heading">
 				<div class="col-lg-12">
 					<div class="col-lg-4 position-right">
 						<div class="col-lg-12">
 							<span>Tạm tính</span>
-							<strong class="position-right">22.990.000đ</strong>
+							<strong class="position-right"><?php echo convertPrice($result['total_bill']); ?>đ</strong>
 						</div>
 						<div class="col-lg-12">
 							<span>Giảm giá</span>
@@ -107,11 +115,13 @@
 						</div>
 						<div class="col-lg-12">
 							<span>Tổng cộng</span>
-							<strong class="position-right" style="color: #ff424e">23.025.000đ</strong>
+							<strong class="position-right" style="color: #ff424e"><?php echo convertPrice($result['total_bill'] + 35000); ?>đ</strong>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	<?php endforeach; ?>
+	<?php endif; ?>
 </div>

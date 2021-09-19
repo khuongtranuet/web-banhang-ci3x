@@ -64,6 +64,7 @@ $cate_list = dataTree($cate_list);
             'account_address_list': '<?php echo base_url("client/account/ajax_address") ?>',
             'total_cart': '<?php echo base_url("client/cart/ajax_total_cart") ?>',
             'carousel_list': '<?php echo base_url("client/product/ajax_carousel") ?>',
+            'order_list': '<?php echo base_url("client/order/ajax_list") ?>',
 		}
 	</script>
 </head>

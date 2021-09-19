@@ -103,6 +103,7 @@ define('TBL_ORDERS', 'orders');
 define('TBL_ORDER_PRODUCT', 'order_product');
 define('TBL_PROVINCES', 'provinces');
 define('TBL_WARDS', 'wards');
+define('TBL_PAYMENTS', 'payments');
 
 date_default_timezone_set('Asia/Ho_Chi_Minh');
 

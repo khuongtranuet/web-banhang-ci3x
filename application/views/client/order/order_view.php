@@ -5,10 +5,10 @@
 	<div class="col-lg-12">
 		<div class="col-lg-12 back-white">
 			<div class="row product-v2-heading">
-				<div class="col-lg-1">
+				<div class="col-lg-2 text-center">
 					<strong>Mã đơn</strong>
 				</div>
-				<div class="col-lg-1 text-center">
+				<div class="col-lg-2 text-center">
 					<strong>Ngày mua</strong>
 				</div>
 				<div class="col-lg-3 text-center">
@@ -20,55 +20,41 @@
 				<div class="col-lg-2 text-center">
 					<strong>Trạng thái</strong>
 				</div>
-				<div class="col-lg-3 text-center">
+				<div class="col-lg-1 text-center">
 					<strong>Thao tác</strong>
 				</div>
 			</div>
 			<div class="row">
 				<p style="height:1px;background-color:#cccccc"></p>
 			</div>
-			<div class="row product-v2-heading">
-				<div class="col-lg-1">
-					<a>293015</a>
-				</div>
-				<div class="col-lg-1">
-					<p>28/08/2021</p>
-				</div>
-				<div class="col-lg-3">
-					<p>Điện thoại iPhone 12 64GB</p>
-				</div>
-				<div class="col-lg-2 text-center">
-					<p>25.035.000đ</p>
-				</div>
-				<div class="col-lg-2 text-center">
-					<p>Đang giao</p>
-				</div>
-				<div class="col-lg-3 text-center">
-					<button class="">Hủy đơn</button>
-					<button class="">Đã nhận hàng</button>
-				</div>
-			</div>
-			<div class="row product-v2-heading">
-				<div class="col-lg-1">
-					<a>293015</a>
-				</div>
-				<div class="col-lg-1">
-					<p>28/08/2021</p>
-				</div>
-				<div class="col-lg-3">
-					<p>Điện thoại iPhone 12 64GB</p>
-				</div>
-				<div class="col-lg-2 text-center">
-					<p>25.035.000đ</p>
-				</div>
-				<div class="col-lg-2 text-center">
-					<p>Đang giao</p>
-				</div>
-				<div class="col-lg-3 text-center">
-					<button class="">Hủy đơn</button>
-					<button class="">Đã nhận hàng</button>
-				</div>
-			</div>
+			<div id="div-ajax"></div>
 		</div>
 	</div>
+	<script type="text/javascript">
+		$(document).ready(function () {
+			callAjax(1, window.ajax_url.order_list);
+		});
+
+		function changePage(page_index) {
+			callAjax(page_index, window.ajax_url.order_list);
+		}
+
+		function callAjax(page_index, url_ajax) {
+			$('#data-loading').show();
+			$.ajax({
+				url: url_ajax,
+				type: 'POST',
+				dataType: 'html',
+				data: {
+					page_index: page_index,
+				}
+			}).done(function (result) {
+				$('#data-loading').hide();
+				$('#div-ajax').html(result);
+			})
+			$(document).ajaxError(function () {
+				$('#data-loading').hide();
+			});
+		}
+	</script>
 </div>
