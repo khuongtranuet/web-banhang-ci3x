@@ -309,3 +309,10 @@ function dataTree($data, $parent_id = null, $level = 0) {
 	}
 	return $result;
 }
+
+function unique_img($fileName) {
+	$fileExt = explode('.', $fileName);
+	$fileActualExt = strtolower(end($fileExt));
+	$allowed = array('jpg', 'jpeg', 'png');
+	return $img = uniqid('img-', true) . "." . $fileActualExt;
+}

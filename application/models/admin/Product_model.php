@@ -102,11 +102,16 @@ class Product_model extends CI_Model
 
 	public function insert_eav($product_id, $attribute_id, $value)
 	{
-		$data = array(
-			'product_id' => $product_id,
-			'attribute_id' => $attribute_id,
-			'value' => $value
-		);
+		$data = array();
+		if (isset($product_id)) {
+			$data['product_id'] = $product_id;
+		}
+		if (isset($attribute_id)) {
+			$data['attribute_id'] = $attribute_id;
+		}
+		if (isset($product_id)) {
+			$data['value'] = $value;
+		}
 		$this->db->insert(TBL_PRODUCT_ATTRIBUTE, $data);
 	}
 
@@ -148,8 +153,9 @@ class Product_model extends CI_Model
 
 	public function delete_attribute($id){
 		$this->db->where('product_id',$id);
-		$this->db->delete(TBL_PRODUCT_ATTRIBUTE);
+		return $this->db->delete(TBL_PRODUCT_ATTRIBUTE);
 	}
+
 	public  function delete_img($id,$main = false) {
 		$this->db->where('product_id',$id);
 		if ($main == true) {
@@ -157,7 +163,21 @@ class Product_model extends CI_Model
 		} else {
 			$this->db->where('type',0);
 		}
-		$this->db->delete(TBL_PRODUCT_IMAGES);
+		return $this->db->delete(TBL_PRODUCT_IMAGES);
+	}
+
+	public function unlink_img($id,$main = false) {
+		if ($main == true) {
+			$query = $this->db->get_where(TBL_PRODUCT_IMAGES, array('product_id' => $id,'type' => 1));
+		} else {
+			$query = $this->db->get_where(TBL_PRODUCT_IMAGES, array('product_id' => $id,'type' => 0));
+		}
+		foreach ($query->result() as $record) {
+			$file_name = 'uploads/product_image/'.$record->path;
+			if (file_exists($file_name)) {
+				unlink($file_name);
+			}
+		}
 	}
 
 	public function edit($product,$parent_name = null) {

@@ -15,7 +15,7 @@
 				<?php if (!$product['parent_id']): ?>
 					<input type="text" class="form-control" id="name" name="name"
 						   value="<?php echo $_SERVER['REQUEST_METHOD'] == 'POST' ? set_value('name') : $product['name'] ?>">
-					<span class="errors"><?php echo isset($errors['name']) ? $errors['name'] : '' ?></span>
+					<span class="errors"><?php echo form_error('name') ?></span>
 				<?php else: ?>
 					<p><?php echo $product['name'] ?></p>
 				<?php endif; ?>
@@ -54,7 +54,7 @@
 			<div class="col-lg-8">
 				<input type="number" class="form-control" id="price" name="price"
 					   value="<?php echo $_SERVER['REQUEST_METHOD'] == 'POST' ? set_value('price') : $product['price'] ?>">
-				<span class="errors"><?php echo isset($errors['price']) ? $errors['price'] : '' ?></span>
+				<span class="errors"><?php echo form_error('price') ?></span>
 			</div>
 		</div>
 		<div class="form-group col-lg-6">
@@ -104,10 +104,10 @@
 					</div>
 					<div class="row">
 						<div class="col-lg-5"><span
-									class="errors"><?php echo isset($errors['attribute_id']) ? $errors['attribute_id'] : '' ?></span>
+									class="errors"><?php echo form_error('attribute_id[]') ?></span>
 						</div>
 						<div class="col-lg-5"><span
-									class="errors"><?php echo isset($errors['value']) ? $errors['value'] : '' ?></span>
+									class="errors"><?php  echo form_error('value[]') ?></span>
 						</div>
 					</div>
 					<?php if ($_SERVER['REQUEST_METHOD'] == 'POST'): ?>
@@ -179,9 +179,8 @@
 			<div class="col-lg-9">
 				<div class="row">
 					<div class="col-lg-5">
-						<input class="form-control" type="file" id="main_img" name="main_img" accept="image/*"
-							   onchange="loadFile(event)">
-						<span class="errors"><?php echo isset($errors['main_img']) ? $errors['main_img'] : '' ?></span>
+						<input class="form-control" type="file" id="main_img" name="main_img">
+						<span class="errors"><?php echo form_error('main_img') ?></span>
 					</div>
 				</div>
 			</div>
@@ -195,7 +194,7 @@
 					<div class="row">
 						<div class="col-lg-5">
 							<input class="form-control" type="file" name="img[]" id="img" multiple>
-							<span class="errors"><?php echo isset($errors['img']) ? $errors['img'] : '' ?></span>
+							<span class="errors"><?php echo form_error('img[]') ?></span>
 						</div>
 					</div>
 				</div>
@@ -235,7 +234,7 @@
 								</ul>
 							</small>
 						<?php endif; ?>
-						<span class="errors"><?php echo isset($errors['color']) ? $errors['color'] : '' ?></span>
+						<span class="errors"><?php echo form_error('color') ?></span>
 					</div>
 				</div>
 			</div>

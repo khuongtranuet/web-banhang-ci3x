@@ -5,7 +5,7 @@
 			<label class="control-label col-lg-4" for="name">Tên sản phẩm(*):</label>
 			<div class="col-lg-8">
 				<input type="text" class="form-control" id="name" name="name" value="<?php echo set_value('name') ?>">
-				<span class="errors"><?php echo isset($errors['name']) ? $errors['name'] : '' ?></span>
+				<span class="errors"><?php echo form_error('name') ?></span>
 			</div>
 		</div>
 		<div class="form-group col-lg-6">
@@ -30,7 +30,7 @@
 			<div class="col-lg-8">
 				<input type="number" class="form-control" id="price" name="price"
 					   value="<?php echo set_value('price') ?>">
-				<span class="errors"><?php echo isset($errors['price']) ? $errors['price'] : '' ?></span>
+				<span class="errors"><?php echo form_error('price') ?></span>
 			</div>
 		</div>
 		<div class="form-group col-lg-6">
@@ -63,48 +63,47 @@
 		<div class="form-group">
 			<label class="control-label col-lg-2" for="attribute_id">Thông số:</label>
 			<div class="col-lg-9" id="container">
-				<div class="col-lg-12" style="text-align: center; padding-bottom: 7px">
-					<a href="javascript:void(0)" class="btn btn-success" id="add">Thêm</a>
-				</div>
 				<div class="row">
-					<div class="col-lg-5"><span
-								class="errors"><?php echo isset($errors['attribute_id']) ? $errors['attribute_id'] : '' ?></span>
+					<div class="col-lg-5">
+						<span class="errors"><?php echo form_error('attribute_id[]') ?></span>
 					</div>
-					<div class="col-lg-5"><span
-								class="errors"><?php echo isset($errors['value']) ? $errors['value'] : '' ?></span>
+					<div class="col-lg-5">
+						<span class="errors"><?php echo form_error('value[]') ?></span>
 					</div>
 				</div>
 				<?php if ($_SERVER['REQUEST_METHOD'] == 'POST'): ?>
-					<?php if (isset($_POST['attribute_id']) && isset($_POST['value'])): ?>
-						<?php for ($i = 0; $i < count(set_value('attribute_id')); $i++): ?>
-							<div class="row" style="padding-top:7px">
-								<div class="col-lg-5">
-									<select class="form-control" name="attribute_id[]">
+					<?php if (isset($_POST['attribute_id']) && isset($_POST['value'])):
+							$count = count(set_value('attribute_id')); ?>
+						<?php for ($i = 0; $i < $count; $i++): ?>
+						<div class="row" style="padding-top:7px">
+							<div class="col-lg-5">
+								<select class="form-control" name="attribute_id[]">
 										<option value="-1">Chọn thông số</option>
 										<?php if (isset($attribute) && $attribute): ?>
 											<?php foreach ($attribute as $data): ?>
 												<option value="<?php echo $data['id'] ?>"
 														<?php
-														if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 															echo (set_value('attribute_id')[$i] == $data['id']) ? 'selected' : '';
-														}
 														?>
 												><?php echo $data['name'] ?></option>
 											<?php endforeach; ?>
 										<?php endif; ?>
 									</select>
-								</div>
-								<div class="col-lg-5">
-									<input type="text" name="value[]" class="form-control"
-										   value="<?php echo ($_SERVER['REQUEST_METHOD'] == 'POST') ? set_value('value')[$i] : '' ?>">
-								</div>
-								<div class="col-lg-2">
-									<a href="javascript:void(0)" class="btn btn-danger" id="delete">Xoá</a>
-								</div>
 							</div>
-						<?php endfor; ?>
+							<div class="col-lg-5">
+								<input type="text" name="value[]" class="form-control"
+								value="<?php echo set_value('value')[$i] ?>">
+							</div>
+							<div class="col-lg-2 add_container">
+								<a href="javascript:void(0)" class="btn btn-danger" id="delete">Xoá</a>
+							</div>
+						</div>
+					<?php endfor; ?>
 					<?php endif; ?>
 				<?php endif; ?>
+				<div class="col-lg-12" style="text-align: center; padding-bottom: 7px">
+					<a href="javascript:void(0)" class="btn btn-success" id="add">Thêm</a>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -114,9 +113,8 @@
 			<div class="col-lg-9">
 				<div class="row">
 					<div class="col-lg-5">
-						<input class="form-control" type="file" id="main_img" name="main_img" accept="image/*"
-							   onchange="loadFile(event)">
-						<span class="errors"><?php echo isset($errors['main_img']) ? $errors['main_img'] : '' ?></span>
+						<input class="form-control" type="file" id="main_img" name="main_img">
+						<span class="errors"><?php echo form_error('main_img') ?></span>
 					</div>
 				</div>
 			</div>
@@ -130,7 +128,7 @@
 				<div class="row">
 					<div class="col-lg-5">
 						<input class="form-control" type="file" name="img[]" id="img" multiple>
-						<span class="errors"><?php echo isset($errors['img']) ? $errors['img'] : '' ?></span>
+						<span class="errors"><?php echo form_error('img[]') ?></span>
 					</div>
 				</div>
 			</div>
@@ -167,7 +165,7 @@
 								<li>Màu đầu tiên sẽ là màu mặc định</li>
 							</ul>
 						</small>
-						<span class="errors"><?php echo isset($errors['color']) ? $errors['color'] : '' ?></span>
+						<span class="errors"><?php echo form_error('color') ?></span>
 					</div>
 				</div>
 			</div>
@@ -216,7 +214,6 @@
 				'<a href="javascript:void(0)" class="btn btn-danger" id="delete">Xoá</a>' +
 				'</div>' +
 				'</div>'
-
 		$('#add').click(function (e) {
 			$('#container').append(html);
 		})
@@ -226,14 +223,4 @@
 		})
 	})
 </script>
-<!--<script>-->
-<!--	var loadFile = function (event) {-->
-<!--		var output = document.getElementById('output');-->
-<!--		document.getElementById('main_img').append("<img id="output" width="100" height="70" style="border: none"/>");-->
-<!--		output.src = URL.createObjectURL(event.target.files[0]);-->
-<!--		output.onload = function () {-->
-<!--			URL.revokeObjectURL(output.src) // free memory-->
-<!--		}-->
-<!--	};-->
-<!--</script>-->
 
